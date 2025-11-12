@@ -45,7 +45,8 @@ defmodule WizHome.Voice.VoiceController do
       state = %{
         api_key: api_key,
         light_ips: light_ips,
-        processing: false
+        processing: false,
+        pending_chunks: []
       }
 
       Logger.info("VoiceController iniciado con #{length(light_ips)} luz(es) configurada(s)")
@@ -55,8 +56,13 @@ defmodule WizHome.Voice.VoiceController do
 
   @impl true
   def handle_info({:audio_chunk, buffers, stream_format}, state) do
-    # Procesar en background para no bloquear
-    if not state.processing do
+    # Si ya hay un procesamiento en curso, agregar a la cola
+    if state.processing do
+      Logger.debug("Chunk en cola (procesamiento en curso). Cola: #{length(state.pending_chunks) + 1}")
+      new_state = %{state | pending_chunks: state.pending_chunks ++ [{buffers, stream_format}]}
+      {:noreply, new_state}
+    else
+      # Procesar inmediatamente
       new_state = %{state | processing: true}
 
       # Procesar de forma asíncrona
@@ -68,10 +74,6 @@ defmodule WizHome.Voice.VoiceController do
       end)
 
       {:noreply, new_state}
-    else
-      # Si ya hay un procesamiento en curso, ignorar este chunk
-      Logger.debug("Ignorando chunk, procesamiento en curso")
-      {:noreply, state}
     end
   end
 
@@ -83,7 +85,29 @@ defmodule WizHome.Voice.VoiceController do
 
   @impl true
   def handle_cast(:processing_complete, state) do
-    {:noreply, %{state | processing: false}}
+    # Procesar el siguiente chunk de la cola si hay alguno
+    case state.pending_chunks do
+      [] ->
+        # No hay chunks pendientes, solo marcar como no procesando
+        {:noreply, %{state | processing: false}}
+
+      [{buffers, stream_format} | rest] ->
+        # Hay chunks pendientes, procesar el siguiente
+        Logger.debug("Procesando chunk de la cola. Quedan #{length(rest)} en cola")
+
+        Task.start(fn ->
+          process_audio_chunk(buffers, stream_format, state)
+          GenServer.cast(__MODULE__, :processing_complete)
+        end)
+
+        new_state = %{
+          state
+          | processing: true,
+            pending_chunks: rest
+        }
+
+        {:noreply, new_state}
+    end
   end
 
   @impl true
