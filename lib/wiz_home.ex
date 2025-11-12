@@ -172,7 +172,10 @@ defmodule WizHome do
 
           case Membrane.Pipeline.start_link(WizHome.Voice.VoicePipeline, pipeline_opts) do
             {:ok, pipeline_pid, _supervisor_pid} ->
-              IO.puts("🎤 Control por voz iniciado. Di 'apaga las luces' o 'prende las luces'")
+              IO.puts("🎤 Control por voz iniciado con #{length(light_ips)} foco(s)")
+              IO.puts("   Comandos disponibles:")
+              IO.puts("   - 'apaga las luces' / 'prende las luces' (todos los focos)")
+              IO.puts("   - 'apaga el foco 1' / 'prende el foco 1' (foco específico)")
               {:ok, pipeline_pid, controller_pid}
 
             {:error, reason} ->

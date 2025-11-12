@@ -102,8 +102,8 @@ defmodule WizHome.Voice.VoiceController do
 
         # Procesar comando
         case WizHome.Voice.CommandProcessor.process(text, state.light_ips) do
-          {:ok, command} ->
-            Logger.info("Comando ejecutado: #{command}")
+          {:ok, command, affected_ips} ->
+            Logger.info("Comando ejecutado: #{command} en #{length(affected_ips)} foco(s)")
 
           :no_command ->
             Logger.debug("No se detectó comando")
