@@ -61,6 +61,15 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Voice Control Configuration
+config :wiz_home,
+  # OpenAI API Key - puede venir de variable de entorno o config
+  openai_api_key: System.get_env("OPENAI_API_KEY"),
+  # IPs de luces por defecto (pueden ser sobrescritas al iniciar)
+  default_light_ips: [],
+  # Duración de chunks de audio en milisegundos
+  voice_chunk_duration_ms: 3000
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

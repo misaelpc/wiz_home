@@ -123,6 +123,104 @@ defmodule WizHome do
     GenServer.stop(pid)
   end
 
+  # --- Voice Control ---
+
+  @doc """
+  Inicia el sistema de control por voz.
+
+  ## Parámetros
+  - `device_id`: ID del dispositivo de audio (entero) o `:default`
+  - `light_ips`: Lista de IPs de las luces a controlar (requerido)
+  - `api_key`: Clave de API de OpenAI (opcional, puede venir de config)
+  - `chunk_duration_ms`: Duración de chunks de audio en ms (default: 3000)
+  - `debug_output`: Ruta opcional para guardar audio WAV para debug
+
+  ## Ejemplo
+      # Iniciar con una luz
+      WizHome.start_voice_control(light_ips: ["192.168.1.100"])
+
+      # Iniciar con múltiples luces y dispositivo específico
+      WizHome.start_voice_control(
+        device_id: 0,
+        light_ips: ["192.168.1.100", "192.168.1.101"],
+        chunk_duration_ms: 2000
+      )
+  """
+  def start_voice_control(opts) do
+    light_ips = Keyword.get(opts, :light_ips, [])
+
+    if length(light_ips) == 0 do
+      {:error, :no_light_ips}
+    else
+      # Iniciar VoiceController
+      controller_opts = [
+        api_key: Keyword.get(opts, :api_key),
+        light_ips: light_ips
+      ]
+
+      case WizHome.Voice.VoiceController.start_link(controller_opts) do
+        {:ok, controller_pid} ->
+          # Iniciar pipeline de voz
+          pipeline_opts = [
+            device_id: Keyword.get(opts, :device_id, :default),
+            controller_pid: controller_pid,
+            channels: Keyword.get(opts, :channels),
+            sample_rate: Keyword.get(opts, :sample_rate),
+            chunk_duration_ms: Keyword.get(opts, :chunk_duration_ms, 3000),
+            debug_output: Keyword.get(opts, :debug_output)
+          ]
+
+          case Membrane.Pipeline.start_link(WizHome.Voice.VoicePipeline, pipeline_opts) do
+            {:ok, pipeline_pid, _supervisor_pid} ->
+              IO.puts("🎤 Control por voz iniciado. Di 'apaga las luces' o 'prende las luces'")
+              {:ok, pipeline_pid, controller_pid}
+
+            {:error, reason} ->
+              # Detener controller si el pipeline falla
+              GenServer.stop(controller_pid)
+              IO.puts("❌ Error al iniciar pipeline de voz: #{inspect(reason)}")
+              {:error, reason}
+          end
+
+        {:error, reason} ->
+          IO.puts("❌ Error al iniciar VoiceController: #{inspect(reason)}")
+          {:error, reason}
+      end
+    end
+  end
+
+  @doc """
+  Detiene el sistema de control por voz.
+
+  ## Parámetros
+  - `pipeline_pid`: PID del pipeline (retornado por start_voice_control)
+  - `controller_pid`: PID del controller (retornado por start_voice_control)
+  """
+  def stop_voice_control(pipeline_pid, controller_pid) when is_pid(pipeline_pid) and is_pid(controller_pid) do
+    GenServer.stop(pipeline_pid)
+    GenServer.stop(controller_pid)
+    IO.puts("🛑 Control por voz detenido")
+    :ok
+  end
+
+  @doc """
+  Actualiza las IPs de las luces a controlar.
+
+  ## Parámetros
+  - `light_ips`: Lista de IPs de las luces
+  """
+  def configure_lights(light_ips) when is_list(light_ips) do
+    case WizHome.Voice.VoiceController.get_pid() do
+      {:ok, _pid} ->
+        WizHome.Voice.VoiceController.update_light_ips(light_ips)
+        IO.puts("✅ IPs de luces actualizadas: #{inspect(light_ips)}")
+        :ok
+
+      {:error, :not_started} ->
+        {:error, :controller_not_started}
+    end
+  end
+
   # --- Internals ---
 
   defp send_cmd(ip, cmd) do
