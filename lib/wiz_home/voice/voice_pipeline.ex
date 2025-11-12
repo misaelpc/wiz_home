@@ -44,16 +44,16 @@ defmodule WizHome.Voice.VoicePipeline do
       })
 
     # Opcional: agregar serializer WAV para debug
+    # Si no hay debug, usar Fake.Sink para descartar los datos del output
     spec =
       if debug_output do
         spec
         |> child(:wav_serializer, Membrane.WAV.Serializer)
         |> child(:sink, %Membrane.File.Sink{location: debug_output})
       else
-        # Si no hay debug, solo tenemos el filter que procesa chunks
-        # El filter reenvía buffers al output, pero no hay nada conectado
-        # Esto está bien - el filter procesa los chunks internamente
+        # Conectar a Fake.Sink para descartar los datos (el filter ya procesó los chunks)
         spec
+        |> child(:fake_sink, Membrane.Fake.Sink)
       end
 
     {[spec: spec], %{}}
