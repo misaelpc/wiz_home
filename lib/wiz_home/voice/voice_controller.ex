@@ -100,8 +100,8 @@ defmodule WizHome.Voice.VoiceController do
       {:ok, text} ->
         Logger.info("Transcripción: #{text}")
 
-        # Procesar comando
-        case WizHome.Voice.CommandProcessor.process(text, state.light_ips) do
+        # Procesar comando usando LLM (con regex como fallback)
+        case WizHome.Voice.CommandProcessor.process(text, state.light_ips, state.api_key) do
           {:ok, command, affected_ips} ->
             Logger.info("Comando ejecutado: #{command} en #{length(affected_ips)} foco(s)")
 

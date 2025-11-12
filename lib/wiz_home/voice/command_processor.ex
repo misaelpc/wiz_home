@@ -2,48 +2,74 @@ defmodule WizHome.Voice.CommandProcessor do
   @moduledoc """
   Procesa texto transcrito y detecta comandos de voz para controlar las luces.
 
-  Detecta comandos como:
-  - "apaga las luces" / "apaga la luz" / "apaga todas las luces" (controla todos los focos)
-  - "apaga el foco 1" / "apaga el primer foco" (controla foco específico)
-  - "prende las luces" / "prende la luz" / "enciende las luces"
-  - "prende el foco 1" / "prende el primer foco"
+  Usa un LLM (GPT) para interpretar la intención del comando, lo que permite
+  reconocer variaciones y comandos más naturales.
+
+  También mantiene regex como fallback si el LLM falla.
   """
 
   require Logger
 
-  # Patrones para apagar/prender todas las luces
-  @turn_off_all_patterns ~r/(apaga|apagar|apágame|apágala|apágalas)\s*(las?\s*)?(todas?\s*)?(luz|luces|bombilla|bombillas)/i
-  @turn_on_all_patterns ~r/(prende|prender|enciende|encender|enciéndeme|enciéndela|enciéndelas)\s*(las?\s*)?(todas?\s*)?(luz|luces|bombilla|bombillas)/i
+  # Patrones para apagar/prender todas las luces (fallback)
+  @turn_off_all_patterns ~r/(apaga|apagar|apágame|apágala|apágalas|prendan)\s*(las?\s*)?(todas?\s*)?(luz|luces|bombilla|bombillas)/i
+  @turn_on_all_patterns ~r/(prende|prender|enciende|encender|enciéndeme|enciéndela|enciéndelas|prendan)\s*(las?\s*)?(todas?\s*)?(luz|luces|bombilla|bombillas)/i
 
-  # Patrones para controlar focos específicos (foco 1, primer foco, etc.)
+  # Patrones para controlar focos específicos (fallback)
   @turn_off_specific_patterns ~r/(apaga|apagar)\s*(el\s*)?(foco|focos|bombilla|bombillas|luce?)\s*(\d+|primero|segundo|tercero|cuarto|quinto|uno|dos|tres|cuatro|cinco)/i
   @turn_on_specific_patterns ~r/(prende|prender|enciende|encender)\s*(el\s*)?(foco|focos|bombilla|bombillas|luce?)\s*(\d+|primero|segundo|tercero|cuarto|quinto|uno|dos|tres|cuatro|cinco)/i
 
   @doc """
-  Procesa texto transcrito y detecta comandos.
+  Procesa texto transcrito y detecta comandos usando LLM primero, luego regex como fallback.
 
   ## Parámetros
   - `text`: Texto transcrito del audio
   - `light_ips`: Lista de IPs de las luces a controlar (ordenadas: [foco1_ip, foco2_ip, ...])
+  - `api_key`: Clave de API de OpenAI (opcional, para usar LLM)
 
   ## Retorna
   - `{:ok, :turn_off, ips}` - Comando para apagar luces específicas
   - `{:ok, :turn_on, ips}` - Comando para prender luces específicas
   - `:no_command` - No se detectó ningún comando
   """
-  def process(text, light_ips) when is_binary(text) and is_list(light_ips) do
+  def process(text, light_ips, api_key \\ nil) when is_binary(text) and is_list(light_ips) do
+    # Intentar primero con LLM si tenemos API key
+    result = if api_key do
+      case WizHome.Voice.LLMCommandParser.parse_command(text, light_ips, api_key) do
+        {:ok, action, affected_ips} ->
+          execute_command(action, affected_ips)
+          {:ok, action, affected_ips}
+
+        :no_command ->
+          # Fallback a regex si LLM no detecta comando
+          Logger.debug("LLM no detectó comando, intentando con regex")
+          try_regex_fallback(text, light_ips)
+
+        {:error, reason} ->
+          Logger.warning("Error en LLM, usando regex fallback: #{inspect(reason)}")
+          try_regex_fallback(text, light_ips)
+      end
+    else
+      # Sin API key, usar solo regex
+      try_regex_fallback(text, light_ips)
+    end
+
+    result
+  end
+
+  # Fallback a regex cuando LLM no está disponible o falla
+  defp try_regex_fallback(text, light_ips) do
     normalized_text = String.downcase(String.trim(text))
 
     cond do
       # Comando para apagar todas las luces
       Regex.match?(@turn_off_all_patterns, normalized_text) ->
-        Logger.info("Comando detectado: APAGAR todas las luces")
+        Logger.info("Comando detectado (regex): APAGAR todas las luces")
         execute_command(:turn_off, light_ips)
         {:ok, :turn_off, light_ips}
 
       # Comando para prender todas las luces
       Regex.match?(@turn_on_all_patterns, normalized_text) ->
-        Logger.info("Comando detectado: PRENDER todas las luces")
+        Logger.info("Comando detectado (regex): PRENDER todas las luces")
         execute_command(:turn_on, light_ips)
         {:ok, :turn_on, light_ips}
 
@@ -52,7 +78,7 @@ defmodule WizHome.Voice.CommandProcessor do
         case extract_foco_number(normalized_text, length(light_ips)) do
           {:ok, foco_index} when foco_index > 0 and foco_index <= length(light_ips) ->
             ip = Enum.at(light_ips, foco_index - 1)
-            Logger.info("Comando detectado: APAGAR foco #{foco_index} (#{ip})")
+            Logger.info("Comando detectado (regex): APAGAR foco #{foco_index} (#{ip})")
             execute_command(:turn_off, [ip])
             {:ok, :turn_off, [ip]}
 
@@ -66,7 +92,7 @@ defmodule WizHome.Voice.CommandProcessor do
         case extract_foco_number(normalized_text, length(light_ips)) do
           {:ok, foco_index} when foco_index > 0 and foco_index <= length(light_ips) ->
             ip = Enum.at(light_ips, foco_index - 1)
-            Logger.info("Comando detectado: PRENDER foco #{foco_index} (#{ip})")
+            Logger.info("Comando detectado (regex): PRENDER foco #{foco_index} (#{ip})")
             execute_command(:turn_on, [ip])
             {:ok, :turn_on, [ip]}
 
@@ -79,10 +105,6 @@ defmodule WizHome.Voice.CommandProcessor do
         Logger.debug("No se detectó comando en: #{text}")
         :no_command
     end
-  end
-
-  def process(_text, _light_ips) do
-    :no_command
   end
 
   # Extrae el número del foco del texto
