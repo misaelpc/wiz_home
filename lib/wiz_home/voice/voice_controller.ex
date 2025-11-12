@@ -45,15 +45,17 @@ defmodule WizHome.Voice.VoiceController do
       # Configuración: acumular chunks antes de procesar
       batch_size = Keyword.get(opts, :batch_size, 2) # Procesar cada 2 chunks
       batch_timeout_ms = Keyword.get(opts, :batch_timeout_ms, 2000) # O después de 2 segundos
+      debounce_ms = Keyword.get(opts, :debounce_ms, 1000) # Debounce de 1 segundo entre comandos
 
       state = %{
         api_key: api_key,
         light_ips: light_ips,
-        processing: false,
         pending_chunks: [],
         batch_size: batch_size,
         batch_timeout_ms: batch_timeout_ms,
-        batch_timer: nil
+        batch_timer: nil,
+        last_command_time: 0,
+        debounce_ms: debounce_ms
       }
 
       Logger.info("VoiceController iniciado con #{length(light_ips)} luz(es) configurada(s)")
@@ -76,9 +78,9 @@ defmodule WizHome.Voice.VoiceController do
 
     new_state = %{state | pending_chunks: new_pending, batch_timer: timer}
 
-    # Si alcanzamos el tamaño del batch y no estamos procesando, procesar inmediatamente
-    if length(new_pending) >= state.batch_size and not state.processing do
-      process_batch(new_state)
+    # Si alcanzamos el tamaño del batch, procesar inmediatamente en paralelo
+    if length(new_pending) >= state.batch_size do
+      process_batch_parallel(new_state)
     else
       Logger.debug("Chunk acumulado. Total: #{length(new_pending)}/#{state.batch_size}")
       {:noreply, new_state}
@@ -88,8 +90,8 @@ defmodule WizHome.Voice.VoiceController do
   @impl true
   def handle_info(:process_batch_timeout, state) do
     # Timeout alcanzado, procesar chunks acumulados si hay alguno
-    if length(state.pending_chunks) > 0 and not state.processing do
-      process_batch(state)
+    if length(state.pending_chunks) > 0 do
+      process_batch_parallel(state)
     else
       {:noreply, %{state | batch_timer: nil}}
     end
@@ -102,15 +104,18 @@ defmodule WizHome.Voice.VoiceController do
   end
 
   @impl true
-  def handle_cast(:processing_complete, state) do
-    # Marcar como no procesando
-    new_state = %{state | processing: false}
+  def handle_cast({:execute_command, command, affected_ips, command_time}, state) do
+    # Verificar debounce
+    time_since_last_command = command_time - state.last_command_time
 
-    # Si hay chunks pendientes, procesar el siguiente batch
-    if length(new_state.pending_chunks) > 0 do
-      process_batch(new_state)
+    if time_since_last_command >= state.debounce_ms do
+      # Ejecutar comando
+      execute_command_action(command, affected_ips)
+      Logger.info("Comando ejecutado: #{command} en #{length(affected_ips)} foco(s)")
+      {:noreply, %{state | last_command_time: command_time}}
     else
-      {:noreply, new_state}
+      Logger.debug("Comando ignorado por debounce (#{time_since_last_command}ms < #{state.debounce_ms}ms)")
+      {:noreply, state}
     end
   end
 
@@ -120,12 +125,12 @@ defmodule WizHome.Voice.VoiceController do
     {:noreply, %{state | light_ips: light_ips}}
   end
 
-  # Procesa un batch de chunks acumulados
-  defp process_batch(state) when length(state.pending_chunks) == 0 do
+  # Procesa chunks en paralelo usando Task.async_stream
+  defp process_batch_parallel(state) when length(state.pending_chunks) == 0 do
     {:noreply, state}
   end
 
-  defp process_batch(state) do
+  defp process_batch_parallel(state) do
     # Cancelar timer si existe
     if state.batch_timer do
       Process.cancel_timer(state.batch_timer)
@@ -133,44 +138,48 @@ defmodule WizHome.Voice.VoiceController do
 
     # Tomar todos los chunks acumulados
     chunks_to_process = state.pending_chunks
-    remaining_chunks = []
 
-    Logger.debug("Procesando batch de #{length(chunks_to_process)} chunk(s)")
+    Logger.info("Procesando #{length(chunks_to_process)} chunk(s) en paralelo")
 
-    # Combinar todos los chunks en uno solo
-    {combined_buffers, stream_format} = combine_chunks(chunks_to_process)
+    # Procesar cada chunk en paralelo usando Task.async_stream
+    chunks_to_process
+    |> Task.async_stream(
+      fn {buffers, stream_format} ->
+        # Transcribir y procesar comando, retornar resultado
+        transcribe_and_process(buffers, stream_format, state)
+      end,
+      max_concurrency: 5, # Procesar hasta 5 chunks en paralelo
+      timeout: 30_000, # Timeout de 30 segundos por chunk
+      on_timeout: :kill_task
+    )
+    |> Enum.each(fn
+      {:ok, {:command, command, affected_ips}} ->
+        # Verificar debounce antes de ejecutar
+        current_time = System.system_time(:millisecond)
+        GenServer.cast(__MODULE__, {:execute_command, command, affected_ips, current_time})
 
-    # Procesar de forma asíncrona
-    Task.start(fn ->
-      process_audio_chunk(combined_buffers, stream_format, state)
-      GenServer.cast(__MODULE__, :processing_complete)
+      {:ok, :no_command} ->
+        :ok
+
+      {:ok, {:error, reason}} ->
+        Logger.error("Error procesando chunk: #{inspect(reason)}")
+
+      {:error, reason} ->
+        Logger.error("Error procesando chunk en paralelo: #{inspect(reason)}")
     end)
 
+    # Limpiar chunks procesados
     new_state = %{
       state
-      | processing: true,
-        pending_chunks: remaining_chunks,
+      | pending_chunks: [],
         batch_timer: nil
     }
 
     {:noreply, new_state}
   end
 
-  # Combina múltiples chunks en uno solo
-  defp combine_chunks(chunks) when length(chunks) > 0 do
-    # Todos los chunks deberían tener el mismo stream_format
-    {_buffers, stream_format} = List.first(chunks)
-
-    # Combinar todos los buffers de todos los chunks
-    combined_buffers =
-      chunks
-      |> Enum.flat_map(fn {buffers, _format} -> buffers end)
-
-    {combined_buffers, stream_format}
-  end
-
-  # Procesa un chunk de audio
-  defp process_audio_chunk(buffers, stream_format, state) do
+  # Transcribe y procesa comando (llamado desde Task.async_stream)
+  defp transcribe_and_process(buffers, stream_format, state) do
     Logger.debug("Procesando chunk de audio (#{length(buffers)} buffers)")
 
     case WizHome.Voice.WhisperClient.transcribe(buffers, stream_format, state.api_key) do
@@ -180,15 +189,35 @@ defmodule WizHome.Voice.VoiceController do
         # Procesar comando usando LLM (con regex como fallback)
         case WizHome.Voice.CommandProcessor.process(text, state.light_ips, state.api_key) do
           {:ok, command, affected_ips} ->
-            Logger.info("Comando ejecutado: #{command} en #{length(affected_ips)} foco(s)")
+            {:command, command, affected_ips}
 
           :no_command ->
-            Logger.debug("No se detectó comando")
+            :no_command
         end
 
       {:error, reason} ->
         Logger.error("Error en transcripción: #{inspect(reason)}")
+        {:error, reason}
     end
+  end
+
+  # Ejecuta la acción del comando
+  defp execute_command_action(:turn_on, light_ips) do
+    Enum.each(light_ips, fn ip ->
+      case WizHome.set_state(ip, true) do
+        {:ok, _} -> Logger.info("Luz prendida: #{ip}")
+        {:error, reason} -> Logger.error("Error al prender luz #{ip}: #{inspect(reason)}")
+      end
+    end)
+  end
+
+  defp execute_command_action(:turn_off, light_ips) do
+    Enum.each(light_ips, fn ip ->
+      case WizHome.set_state(ip, false) do
+        {:ok, _} -> Logger.info("Luz apagada: #{ip}")
+        {:error, reason} -> Logger.error("Error al apagar luz #{ip}: #{inspect(reason)}")
+      end
+    end)
   end
 
   @doc """

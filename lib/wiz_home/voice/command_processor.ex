@@ -36,7 +36,6 @@ defmodule WizHome.Voice.CommandProcessor do
     result = if api_key do
       case WizHome.Voice.LLMCommandParser.parse_command(text, light_ips, api_key) do
         {:ok, action, affected_ips} ->
-          execute_command(action, affected_ips)
           {:ok, action, affected_ips}
 
         :no_command ->
@@ -64,13 +63,11 @@ defmodule WizHome.Voice.CommandProcessor do
       # Comando para apagar todas las luces
       Regex.match?(@turn_off_all_patterns, normalized_text) ->
         Logger.info("Comando detectado (regex): APAGAR todas las luces")
-        execute_command(:turn_off, light_ips)
         {:ok, :turn_off, light_ips}
 
       # Comando para prender todas las luces
       Regex.match?(@turn_on_all_patterns, normalized_text) ->
         Logger.info("Comando detectado (regex): PRENDER todas las luces")
-        execute_command(:turn_on, light_ips)
         {:ok, :turn_on, light_ips}
 
       # Comando para apagar foco específico
@@ -79,7 +76,6 @@ defmodule WizHome.Voice.CommandProcessor do
           {:ok, foco_index} when foco_index > 0 and foco_index <= length(light_ips) ->
             ip = Enum.at(light_ips, foco_index - 1)
             Logger.info("Comando detectado (regex): APAGAR foco #{foco_index} (#{ip})")
-            execute_command(:turn_off, [ip])
             {:ok, :turn_off, [ip]}
 
           _ ->
@@ -93,7 +89,6 @@ defmodule WizHome.Voice.CommandProcessor do
           {:ok, foco_index} when foco_index > 0 and foco_index <= length(light_ips) ->
             ip = Enum.at(light_ips, foco_index - 1)
             Logger.info("Comando detectado (regex): PRENDER foco #{foco_index} (#{ip})")
-            execute_command(:turn_on, [ip])
             {:ok, :turn_on, [ip]}
 
           _ ->
@@ -145,28 +140,4 @@ defmodule WizHome.Voice.CommandProcessor do
     end) || {:error, :foco_no_encontrado}
   end
 
-  # Ejecuta el comando en las luces especificadas
-  defp execute_command(:turn_off, light_ips) when is_list(light_ips) do
-    Enum.each(light_ips, fn ip ->
-      case WizHome.set_state(ip, false) do
-        {:ok, _} ->
-          Logger.info("Luz apagada: #{ip}")
-
-        {:error, reason} ->
-          Logger.error("Error al apagar luz #{ip}: #{inspect(reason)}")
-      end
-    end)
-  end
-
-  defp execute_command(:turn_on, light_ips) when is_list(light_ips) do
-    Enum.each(light_ips, fn ip ->
-      case WizHome.set_state(ip, true) do
-        {:ok, _} ->
-          Logger.info("Luz prendida: #{ip}")
-
-        {:error, reason} ->
-          Logger.error("Error al prender luz #{ip}: #{inspect(reason)}")
-      end
-    end)
-  end
 end
