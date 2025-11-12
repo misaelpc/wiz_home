@@ -91,13 +91,18 @@ defmodule WizHome do
   - `device_id`: ID del dispositivo (entero) o `:default` para el dispositivo por defecto.
                  Usa `list_audio_devices/0` para encontrar el ID correcto.
   - `output_file`: Ruta del archivo WAV donde se guardará la grabación (default: "capture.wav")
+  - `channels`: Número de canales (1=mono, 2=estéreo). Si es `nil`, usa el valor por defecto del dispositivo.
+  - `sample_rate`: Frecuencia de muestreo (ej: 44100, 16000). Si es `nil`, usa el valor por defecto del dispositivo.
 
   ## Ejemplo
-      # Usar dispositivo por defecto
+      # Usar dispositivo por defecto con valores por defecto del dispositivo
       WizHome.start_recording()
 
-      # Usar dispositivo específico (ejemplo: device_id 2)
-      WizHome.start_recording(device_id: 2, output_file: "mi_grabacion.wav")
+      # Usar dispositivo específico
+      WizHome.start_recording(device_id: 0, output_file: "mi_grabacion.wav")
+
+      # Especificar parámetros personalizados
+      WizHome.start_recording(device_id: 0, channels: 1, sample_rate: 16000)
   """
   def start_recording(opts \\ []) do
     case Membrane.Pipeline.start_link(WizHome.MicToWav, opts) do
