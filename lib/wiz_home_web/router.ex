@@ -18,7 +18,11 @@ defmodule WizHomeWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
-    live "/lights", LightsLive, :index
+
+    live_session :lights do
+      live "/lights", LightsLive, :index
+      live "/lights/:section", LightsLive, :index
+    end
   end
 
   # Other scopes may use custom stacks.

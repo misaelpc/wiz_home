@@ -1,386 +1,343 @@
-<div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-  <div class="mb-8">
-    <h1 class="text-3xl font-bold text-gray-900">Wiz Light Control</h1>
-    <p class="mt-2 text-sm text-gray-600">Control your Wiz smart lights</p>
-  </div>
-
-  <.flash_group flash={@flash} />
-
-  <!-- Bulb Registration Section -->
-  <div class="mb-8 bg-white shadow rounded-lg p-6">
-    <h2 class="text-xl font-semibold mb-4">Register Bulbs</h2>
-    
-    <.simple_form for={@form} phx-submit="add_bulb">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <.input
-          field={@form[:ip]}
-          type="text"
-          label="IP Address"
-          placeholder="192.168.1.100"
-          required
-        />
-        <.input
-          field={@form[:name]}
-          type="text"
-          label="Name (optional)"
-          placeholder="Living Room"
-        />
-        <div class="flex items-end">
-          <.button type="submit" class="w-full">Add Bulb</.button>
-        </div>
-      </div>
-    </.simple_form>
-
-    <div class="mt-6">
-      <h3 class="text-sm font-medium text-gray-700 mb-2">Registered Bulbs</h3>
-      <div class="space-y-2">
-        <%= if Enum.empty?(@bulbs) do %>
-          <p class="text-sm text-gray-500">No bulbs registered yet</p>
-        <% else %>
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2">
-            <%= for bulb <- @bulbs do %>
-              <div class="flex items-center justify-between bg-gray-50 rounded p-3">
-                <div>
-                  <span class="font-medium text-gray-900"><%= bulb.name || bulb.ip %></span>
-                  <span class="text-sm text-gray-500 ml-2">(<%= bulb.ip %>)</span>
-                </div>
-                <button
-                  phx-click="remove_bulb"
-                  phx-value-id={bulb.id}
-                  class="text-red-600 hover:text-red-800 text-sm"
-                >
-                  Remove
-                </button>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
-      </div>
+<!-- Register Section -->
+  <%= if @current_section == "register" do %>
+    <div class="mb-6">
+      <h1 class="text-title-lg font-semibold text-black dark:text-white mb-2">Register Bulbs</h1>
+      <p class="text-body dark:text-bodydark">Add and manage your Wiz smart light bulbs</p>
     </div>
-  </div>
 
-  <!-- Individual Light Controls -->
-  <%= if not Enum.empty?(@bulbs) do %>
-    <div class="mb-8">
-      <h2 class="text-xl font-semibold mb-4">Individual Controls</h2>
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <%= for bulb <- @bulbs do %>
-          <div class="bg-white shadow rounded-lg p-6">
-            <div class="flex items-center justify-between mb-4">
-              <div>
-                <h3 class="text-lg font-semibold text-gray-900"><%= bulb.name || bulb.ip %></h3>
-                <p class="text-sm text-gray-500"><%= bulb.ip %></p>
+    <.card title="Add New Bulb" class="mb-6">
+      <.simple_form for={@form} phx-submit="add_bulb" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <.input
+            field={@form[:ip]}
+            type="text"
+            label="IP Address"
+            placeholder="192.168.1.100"
+            required
+            class="rounded-lg border-stroke dark:border-strokedark bg-white dark:bg-boxdark"
+          />
+          <.input
+            field={@form[:name]}
+            type="text"
+            label="Name (optional)"
+            placeholder="Living Room"
+            class="rounded-lg border-stroke dark:border-strokedark bg-white dark:bg-boxdark"
+          />
+          <div class="flex items-end">
+            <.button
+              type="submit"
+              class="w-full bg-primary hover:bg-[#274CC5] text-white font-medium py-2.5 px-4 rounded-lg transition-colors"
+            >
+              Add Bulb
+            </.button>
+          </div>
+        </div>
+      </.simple_form>
+    </.card>
+
+    <.card title="Registered Bulbs">
+      <%= if Enum.empty?(@bulbs) do %>
+        <p class="text-body dark:text-bodydark text-center py-8">No bulbs registered yet</p>
+      <% else %>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <%= for bulb <- @bulbs do %>
+            <div class="flex items-center justify-between bg-gray dark:bg-graydark rounded-lg border border-stroke dark:border-strokedark p-4">
+              <div class="flex-1 min-w-0">
+                <p class="font-medium text-black dark:text-white truncate">
+                  <%= bulb.name || bulb.ip %>
+                </p>
+                <p class="text-sm text-body dark:text-bodydark truncate">
+                  <%= bulb.ip %>
+                </p>
               </div>
               <button
-                phx-click="toggle_light"
+                phx-click="remove_bulb"
                 phx-value-id={bulb.id}
-                class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                class="ml-3 text-meta-1 hover:text-danger text-sm font-medium transition-colors"
               >
-                Toggle
+                Remove
               </button>
             </div>
+          <% end %>
+        </div>
+      <% end %>
+    </.card>
+  <% end %>
 
-            <button
-              phx-click="select_bulb"
-              phx-value-id={bulb.id}
-              class={[
-                "w-full px-4 py-2 rounded mb-4",
-                if(@selected_bulb && @selected_bulb.id == bulb.id,
-                  do: "bg-blue-600 text-white",
-                  else: "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                )
-              ]}
-            >
-              <%= if @selected_bulb && @selected_bulb.id == bulb.id do %>
-                Selected
-              <% else %>
-                Select for Color Control
-              <% end %>
-            </button>
-
-            <%= if bulb.last_color_r && bulb.last_color_g && bulb.last_color_b do %>
-              <div class="mt-2">
-                <p class="text-xs text-gray-500 mb-1">Last Color:</p>
-                <div
-                  class="w-full h-8 rounded border"
-                  style={"background-color: rgb(#{bulb.last_color_r}, #{bulb.last_color_g}, #{bulb.last_color_b})"}
-                ></div>
-              </div>
-            <% end %>
-          </div>
-        <% end %>
+  <!-- Admin Section -->
+  <%= if @current_section == "admin" do %>
+    <%= if Enum.empty?(@bulbs) do %>
+      <div class="mb-6">
+        <h1 class="text-title-lg font-semibold text-black dark:text-white mb-2">Light Control</h1>
+        <p class="text-body dark:text-bodydark">No bulbs registered. Please register bulbs first.</p>
       </div>
-    </div>
+    <% else %>
+      <div class="mb-6">
+        <h1 class="text-title-lg font-semibold text-black dark:text-white mb-2">Light Control</h1>
+        <p class="text-body dark:text-bodydark">Control individual lights and apply colors to all bulbs</p>
+      </div>
 
-    <!-- Color Picker Section -->
-    <%= if @selected_bulb do %>
-      <div class="mb-8 bg-white shadow rounded-lg p-6">
-        <h2 class="text-xl font-semibold mb-4">
-          Color Control: <%= @selected_bulb.name || @selected_bulb.ip %>
-        </h2>
+      <!-- Individual Light Controls -->
+      <.card title="Individual Controls" class="mb-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <%= for bulb <- @bulbs do %>
+            <div class="bg-gray dark:bg-graydark rounded-lg border border-stroke dark:border-strokedark p-4">
+              <div class="flex items-center justify-between mb-4">
+                <div class="flex-1 min-w-0">
+                  <h3 class="text-lg font-semibold text-black dark:text-white truncate">
+                    <%= bulb.name || bulb.ip %>
+                  </h3>
+                  <p class="text-sm text-body dark:text-bodydark truncate">
+                    <%= bulb.ip %>
+                  </p>
+                </div>
+                <button
+                  phx-click="toggle_light"
+                  phx-value-id={bulb.id}
+                  class="ml-3 px-4 py-2 bg-primary hover:bg-[#274CC5] text-white rounded-lg text-sm font-medium transition-colors"
+                >
+                  Toggle
+                </button>
+              </div>
 
+              <button
+                phx-click="select_bulb"
+                phx-value-id={bulb.id}
+                class={[
+                  "flex items-center justify-center w-full px-3 py-2 rounded-lg mb-4 text-sm font-medium transition-colors",
+                  if(@selected_bulb && @selected_bulb.id == bulb.id,
+                    do: "bg-primary text-white hover:bg-[#274CC5]",
+                    else: "bg-stroke dark:bg-strokedark text-black dark:text-white hover:bg-gray dark:hover:bg-graydark"
+                  )
+                ]}
+                title="Color Control"
+              >
+                <.icon name="hero-paint-brush" class="w-5 h-5 mr-2" />
+                <span>Color</span>
+              </button>
+
+              <%= if bulb.last_color_r && bulb.last_color_g && bulb.last_color_b do %>
+                <div class="mt-2">
+                  <p class="text-xs text-body dark:text-bodydark mb-1">Last Color:</p>
+                  <div
+                    class="w-full h-8 rounded border border-stroke dark:border-strokedark"
+                    style={"background-color: rgb(#{bulb.last_color_r}, #{bulb.last_color_g}, #{bulb.last_color_b})"}
+                  ></div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </.card>
+
+      <!-- Control All Lights -->
+      <.card title="Control All Lights">
         <div class="space-y-6">
-          <!-- HTML5 Color Input -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Color Picker</label>
-              <input
-                type="color"
-                value={"##{String.pad_leading(Integer.to_string(@color.r, 16), 2, "0")}#{String.pad_leading(Integer.to_string(@color.g, 16), 2, "0")}#{String.pad_leading(Integer.to_string(@color.b, 16), 2, "0")}"}
-                phx-change="update_color_from_hex"
-                phx-debounce="100"
-                name="hex"
-                class="w-full h-12 rounded cursor-pointer"
-              />
+          <!-- Toggle All -->
+          <div class="flex gap-4">
+            <button
+              phx-click="set_all_state"
+              phx-value-state="true"
+              class="flex-1 px-4 py-3 bg-secondary hover:bg-[#10A882] text-white rounded-lg font-medium transition-colors"
+            >
+              Turn All On
+            </button>
+            <button
+              phx-click="set_all_state"
+              phx-value-state="false"
+              class="flex-1 px-4 py-3 bg-meta-1 hover:bg-danger text-white rounded-lg font-medium transition-colors"
+            >
+              Turn All Off
+            </button>
           </div>
 
-          <!-- RGB Sliders -->
-          <div class="space-y-4">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">
-                Red: <%= @color.r %>
-              </label>
+          <!-- Color Controls for All -->
+          <div class="border-t border-stroke dark:border-strokedark pt-6">
+            <h3 class="text-lg font-semibold text-black dark:text-white mb-4">Set Color for All Lights</h3>
+
+            <div class="space-y-4">
+              <!-- Preset Colors -->
+              <div>
+                <label class="block text-sm font-medium text-black dark:text-white mb-2">Preset Colors</label>
+                <div class="flex gap-2 flex-wrap">
+                  <button
+                    phx-click="set_preset_color"
+                    phx-value-color="deep_blue"
+                    class="px-4 py-2 bg-[#00008B] hover:bg-[#000070] text-white rounded-lg text-sm font-medium transition-colors"
+                    title="Deep Blue - Calm Focus"
+                  >
+                    💙 Deep Blue
+                  </button>
+                  <button
+                    phx-click="set_preset_color"
+                    phx-value-color="soft_teal"
+                    class="px-4 py-2 bg-[#40E0D0] hover:bg-[#35C5B8] text-white rounded-lg text-sm font-medium transition-colors"
+                    title="Soft Teal - Balanced Productivity"
+                  >
+                    🌿 Soft Teal
+                  </button>
+                  <button
+                    phx-click="set_preset_color"
+                    phx-value-color="cool_green"
+                    class="px-4 py-2 bg-[#008080] hover:bg-[#006666] text-white rounded-lg text-sm font-medium transition-colors"
+                    title="Cool Green - Refresh and Clarity"
+                  >
+                    🍃 Cool Green
+                  </button>
+                  <button
+                    phx-click="set_preset_color"
+                    phx-value-color="muted_cyan"
+                    class="px-4 py-2 bg-[#00BFFF] hover:bg-[#00A5E5] text-white rounded-lg text-sm font-medium transition-colors"
+                    title="Muted Cyan - Tech Zen Mode"
+                  >
+                    🔵 Muted Cyan
+                  </button>
+                  <button
+                    phx-click="set_preset_color"
+                    phx-value-color="warm_white"
+                    class="px-4 py-2 bg-[#FFF4E5] hover:bg-[#FFE8CC] text-amber-900 rounded-lg text-sm font-medium transition-colors border border-amber-200 dark:border-amber-800"
+                    title="Warm White - Evening Wind Down"
+                  >
+                    🔅 Warm White
+                  </button>
+                  <button
+                    phx-click="set_preset_color"
+                    phx-value-color="pure_white"
+                    class="px-4 py-2 bg-white dark:bg-boxdark text-black dark:text-white rounded-lg text-sm font-medium transition-colors border border-stroke dark:border-strokedark hover:bg-gray dark:hover:bg-graydark"
+                    title="Pure White"
+                  >
+                    ⚪ Pure White
+                  </button>
+                </div>
+              </div>
+
+              <!-- Global Color Picker Button -->
+              <button
+                phx-click="open_global_color_modal"
+                class="w-full px-4 py-3 bg-primary hover:bg-[#274CC5] text-white rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
+              >
+                <.icon name="hero-paint-brush" class="w-5 h-5" />
+                <span>Set Color for All Lights</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </.card>
+    <% end %>
+  <% end %>
+
+  <!-- Color Control Modal -->
+  <%= if @show_color_modal && (@selected_bulb || @color_modal_mode == :all) do %>
+    <% hsl = @color_hsl || %{hue: 0, saturation: 100, lightness: 50} %>
+    <.modal
+      id="color-modal"
+      show={@show_color_modal}
+      on_cancel={JS.push("close_color_modal") |> hide_modal("color-modal")}
+    >
+      <div class="space-y-6">
+        <div>
+          <h2 class="text-title-lg font-semibold text-black dark:text-white mb-2">
+            <%= if @color_modal_mode == :all do %>
+              Color Control: All Lights
+            <% else %>
+              Color Control: <%= @selected_bulb.name || @selected_bulb.ip %>
+            <% end %>
+          </h2>
+        </div>
+
+        <!-- Color Wheel -->
+        <div class="flex flex-col items-center gap-6 w-full">
+          <div
+            id="color-wheel-container"
+            phx-hook="ColorWheel"
+            phx-update="ignore"
+            data-hue={hsl.hue}
+            data-saturation={hsl.saturation}
+            data-brightness={hsl.lightness}
+            class="flex flex-col items-center"
+          >
+            <!-- Hue Wheel -->
+            <div class="flex flex-col items-center">
+              <label class="block text-sm font-medium text-black dark:text-white mb-2">Hue</label>
+              <canvas
+                data-hue-canvas
+                width="200"
+                height="200"
+                class="rounded-full cursor-pointer border-2 border-stroke dark:border-strokedark"
+              ></canvas>
+            </div>
+          </div>
+
+          <!-- Color Temperature Slider -->
+          <div class="w-full max-w-md">
+            <label class="block text-sm font-medium text-black dark:text-white mb-2">
+              Color Temperature: <%= if @color.temperature, do: "#{@color.temperature}K", else: "Not set" %>
+            </label>
+            <form phx-change="update_temperature" phx-debounce="100">
               <input
                 type="range"
-                min="0"
-                max="255"
-                value={@color.r}
-                phx-change="update_color"
-                phx-debounce="100"
-                name="color[r]"
-                class="w-full"
+                min="2200"
+                max="6500"
+                value={@color.temperature || 4000}
+                name="temperature"
+                class="w-full h-2 bg-stroke dark:bg-strokedark rounded-lg appearance-none cursor-pointer accent-warning"
               />
+            </form>
+            <div class="flex justify-between text-xs text-body dark:text-bodydark mt-1">
+              <span>2200K (Warm)</span>
+              <span>6500K (Cool)</span>
             </div>
+          </div>
 
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">
-                Green: <%= @color.g %>
-              </label>
-              <input
-                type="range"
-                min="0"
-                max="255"
-                value={@color.g}
-                phx-change="update_color"
-                phx-debounce="100"
-                name="color[g]"
-                class="w-full"
-              />
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">
-                Blue: <%= @color.b %>
-              </label>
-              <input
-                type="range"
-                min="0"
-                max="255"
-                value={@color.b}
-                phx-change="update_color"
-                phx-debounce="100"
-                name="color[b]"
-                class="w-full"
-              />
-            </div>
-
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">
-                Brightness: <%= @color.brightness %>
-              </label>
+          <!-- Brightness Slider -->
+          <div class="w-full max-w-md">
+            <label class="block text-sm font-medium text-black dark:text-white mb-2">
+              Brightness: <%= @color.brightness %>%
+            </label>
+            <form phx-change="update_color" phx-debounce="100">
               <input
                 type="range"
                 min="10"
                 max="100"
                 value={@color.brightness}
-                phx-change="update_color"
-                phx-debounce="100"
                 name="color[brightness]"
-                class="w-full"
+                class="w-full h-2 bg-stroke dark:bg-strokedark rounded-lg appearance-none cursor-pointer accent-warning"
               />
-            </div>
+            </form>
           </div>
 
-          <!-- Color Preview -->
-          <div>
-            <label class="block text-sm font-medium text-gray-700 mb-2">Preview</label>
+          <!-- Large Color Preview -->
+          <div class="w-full max-w-md">
+            <label class="block text-sm font-medium text-black dark:text-white mb-2">Preview</label>
             <div
-              class="w-full h-24 rounded border-2 border-gray-300"
+              class="w-full h-32 rounded-lg border-2 border-stroke dark:border-strokedark"
               style={"background-color: rgb(#{@color.r}, #{@color.g}, #{@color.b}); opacity: #{@color.brightness / 100}"}
             ></div>
+            <p class="text-xs text-body dark:text-bodydark mt-2 text-center">
+              RGB: <%= @color.r %>, <%= @color.g %>, <%= @color.b %> | Brightness: <%= @color.brightness %>%
+            </p>
           </div>
 
-          <!-- Apply Button -->
-          <button
-            phx-click="set_color"
-            class="w-full px-4 py-3 bg-green-600 text-white rounded hover:bg-green-700 font-medium"
-          >
-            Apply Color to Selected Bulb
-          </button>
-        </div>
-      </div>
-    <% end %>
-
-    <!-- All Lights Control -->
-    <div class="bg-white shadow rounded-lg p-6">
-      <h2 class="text-xl font-semibold mb-4">Control All Lights</h2>
-
-      <div class="space-y-6">
-        <!-- Toggle All -->
-        <div class="flex gap-4">
-          <button
-            phx-click="set_all_state"
-            phx-value-state="true"
-            class="flex-1 px-4 py-3 bg-green-600 text-white rounded hover:bg-green-700 font-medium"
-          >
-            Turn All On
-          </button>
-          <button
-            phx-click="set_all_state"
-            phx-value-state="false"
-            class="flex-1 px-4 py-3 bg-red-600 text-white rounded hover:bg-red-700 font-medium"
-          >
-            Turn All Off
-          </button>
-        </div>
-
-        <!-- Color Picker for All -->
-        <div class="border-t pt-6">
-          <h3 class="text-lg font-medium mb-4">Set Color for All Lights</h3>
-
-          <div class="space-y-4">
-            <!-- HTML5 Color Input -->
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Color Picker</label>
-              <input
-                type="color"
-                value={"##{String.pad_leading(Integer.to_string(@color.r, 16), 2, "0")}#{String.pad_leading(Integer.to_string(@color.g, 16), 2, "0")}#{String.pad_leading(Integer.to_string(@color.b, 16), 2, "0")}"}
-                phx-change="update_color_from_hex"
-                phx-debounce="100"
-                name="hex"
-                class="w-full h-12 rounded cursor-pointer"
-              />
-            </div>
-
-            <!-- RGB Sliders -->
-            <div class="grid grid-cols-2 gap-4">
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">
-                  Red: <%= @color.r %>
-                </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="255"
-                  value={@color.r}
-                  phx-change="update_color"
-                  phx-debounce="100"
-                  name="color[r]"
-                  class="w-full"
-                />
-              </div>
-
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">
-                  Green: <%= @color.g %>
-                </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="255"
-                  value={@color.g}
-                  phx-change="update_color"
-                  phx-debounce="100"
-                  name="color[g]"
-                  class="w-full"
-                />
-              </div>
-
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">
-                  Blue: <%= @color.b %>
-                </label>
-                <input
-                  type="range"
-                  min="0"
-                  max="255"
-                  value={@color.b}
-                  phx-change="update_color"
-                  phx-debounce="100"
-                  name="color[b]"
-                  class="w-full"
-                />
-              </div>
-
-              <div>
-                <label class="block text-sm font-medium text-gray-700 mb-2">
-                  Brightness: <%= @color.brightness %>
-                </label>
-                <input
-                  type="range"
-                  min="10"
-                  max="100"
-                  value={@color.brightness}
-                  phx-change="update_color"
-                  phx-debounce="100"
-                  name="color[brightness]"
-                  class="w-full"
-                />
-              </div>
-            </div>
-
-            <!-- Preset Colors -->
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-2">Preset Colors</label>
-              <div class="flex gap-2 flex-wrap">
-                <button
-                  phx-click="set_preset_color"
-                  phx-value-color="red"
-                  class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 text-sm"
-                >
-                  Red
-                </button>
-                <button
-                  phx-click="set_preset_color"
-                  phx-value-color="blue"
-                  class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm"
-                >
-                  Blue
-                </button>
-                <button
-                  phx-click="set_preset_color"
-                  phx-value-color="green"
-                  class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 text-sm"
-                >
-                  Green
-                </button>
-                <button
-                  phx-click="set_preset_color"
-                  phx-value-color="white"
-                  class="px-4 py-2 bg-gray-200 text-gray-700 rounded hover:bg-gray-300 text-sm"
-                >
-                  White
-                </button>
-                <button
-                  phx-click="set_preset_color"
-                  phx-value-color="warm_white"
-                  class="px-4 py-2 bg-orange-400 text-white rounded hover:bg-orange-500 text-sm"
-                >
-                  Warm White
-                </button>
-              </div>
-            </div>
-
-            <!-- Apply to All Button -->
+          <!-- Action Buttons -->
+          <div class="flex gap-4 w-full max-w-md">
             <button
-              phx-click="set_all_color"
-              class="w-full px-4 py-3 bg-purple-600 text-white rounded hover:bg-purple-700 font-medium"
+              phx-click="close_color_modal"
+              class="flex-1 px-4 py-3 bg-stroke dark:bg-strokedark hover:bg-gray dark:hover:bg-graydark text-black dark:text-white rounded-lg font-medium transition-colors"
             >
-              Apply Color to All Lights
+              Cancel
+            </button>
+            <button
+              phx-click="set_color"
+              class="flex-1 px-4 py-3 bg-secondary hover:bg-[#10A882] text-white rounded-lg font-medium transition-colors"
+            >
+              <%= if @color_modal_mode == :all do %>
+                Apply to All Lights
+              <% else %>
+                Apply Color
+              <% end %>
             </button>
           </div>
         </div>
       </div>
-    </div>
+    </.modal>
   <% end %>
-</div>
-

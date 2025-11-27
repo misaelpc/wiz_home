@@ -1,0 +1,26 @@
+<div class="overflow-hidden">
+  <!-- Header -->
+  <WizHomeWeb.Components.Header.header
+    user_dropdown_open={assigns[:user_dropdown_open] || false}
+  />
+
+  <!-- Sidebar -->
+  <WizHomeWeb.Components.Sidebar.sidebar
+    current_section={assigns[:current_section] || "register"}
+    sidebar_open={assigns[:sidebar_open] || false}
+  />
+
+  <!-- Main Content -->
+  <main 
+    class={[
+      "pt-22.5 lg:pt-19.5",
+      "pr-4 md:pr-6 2xl:pr-11",
+      "pb-4 md:pb-6 2xl:pb-11",
+      "main-content-padding"
+    ]}
+  >
+    <.flash_group flash={assigns[:flash]} />
+    {@inner_content}
+  </main>
+</div>
+
