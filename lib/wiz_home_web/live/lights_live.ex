@@ -9,25 +9,39 @@ defmodule WizHomeWeb.LightsLive do
 
   import WizHomeWeb.Components.Card
 
+  @default_color %{r: 255, g: 255, b: 255, brightness: 75, temperature: nil}
+  @mood_image_map %{
+    deep_blue: "http://localhost:3845/assets/0b0bc3ce7861c106e0cc441745db66c1e2f87a15.png",
+    soft_teal: "http://localhost:3845/assets/ff4f8c29046cf6a06ad1bc40427f0bf1356008cc.png",
+    cool_green: "http://localhost:3845/assets/a5ebc4619eb2941d17bbc4a8a518d9817b532c03.png",
+    muted_cyan: "http://localhost:3845/assets/2af0e6d9e4f82d75f7f19b94d0c9254661c182e6.png",
+    warm_white: "http://localhost:3845/assets/38b5e4da69a5e63791f6ebd6f1f52e8e78b67f65.png",
+    pure_white: "http://localhost:3845/assets/826d11ede70b3c6f6bdd2c94e9b45f911eeb5ff7.png"
+  }
+
   @impl true
   def mount(_params, _session, socket) do
     bulbs = Lights.list_bulbs()
-
-    default_color = %{r: 255, g: 255, b: 255, brightness: 75, temperature: nil}
-    default_hsl = rgb_to_hsl(default_color)
+    bulb_states = load_bulb_states(bulbs)
+    default_hsl = rgb_to_hsl(@default_color)
 
     socket =
       socket
       |> assign(:bulbs, bulbs)
+      |> assign(:bulb_states, bulb_states)
+      |> assign(:all_lights_on, all_lights_on?(bulbs, bulb_states))
       |> assign(:selected_bulb, nil)
-      |> assign(:color, default_color)
+      |> assign(:color, @default_color)
       |> assign(:color_hsl, default_hsl)
+      |> assign(:original_color, @default_color)
       |> assign(:form, to_form(Bulb.changeset(%Bulb{}, %{})))
       |> assign(:current_section, "register")
       |> assign(:sidebar_open, false)
       |> assign(:user_dropdown_open, false)
       |> assign(:show_color_modal, false)
-      |> assign(:color_modal_mode, :single) # :single or :all
+      |> assign(:color_modal_mode, :single)
+      |> assign(:picker_anchor_id, nil)
+      |> assign(:mood_presets, mood_presets())
 
     {:ok, socket}
   end
@@ -41,7 +55,13 @@ defmodule WizHomeWeb.LightsLive do
 
     socket = assign(socket, :current_section, current_section)
 
-    # Redirect if section was invalid
+    socket =
+      if current_section == "admin" do
+        refresh_lights(socket)
+      else
+        socket
+      end
+
     socket =
       if current_section != section do
         push_patch(socket, to: ~p"/lights/#{current_section}")
@@ -71,12 +91,10 @@ defmodule WizHomeWeb.LightsLive do
   def handle_event("add_bulb", %{"bulb" => bulb_params}, socket) do
     case Lights.create_bulb(bulb_params) do
       {:ok, _bulb} ->
-        bulbs = Lights.list_bulbs()
-
         socket =
           socket
           |> put_flash(:info, "Bulb added successfully")
-          |> assign(:bulbs, bulbs)
+          |> refresh_lights()
           |> assign(:form, to_form(Bulb.changeset(%Bulb{}, %{})))
 
         {:noreply, socket}
@@ -96,26 +114,33 @@ defmodule WizHomeWeb.LightsLive do
     bulb = Lights.get_bulb!(id)
     Lights.delete_bulb(bulb)
 
-    bulbs = Lights.list_bulbs()
+    selected_bulb =
+      if socket.assigns.selected_bulb && socket.assigns.selected_bulb.id == String.to_integer(id) do
+        nil
+      else
+        socket.assigns.selected_bulb
+      end
 
     socket =
       socket
       |> put_flash(:info, "Bulb removed")
-      |> assign(:bulbs, bulbs)
-      |> assign(:selected_bulb, if(socket.assigns.selected_bulb && socket.assigns.selected_bulb.id == String.to_integer(id), do: nil, else: socket.assigns.selected_bulb))
+      |> refresh_lights()
+      |> assign(:selected_bulb, selected_bulb)
 
     {:noreply, socket}
   end
 
   @impl true
-  def handle_event("select_bulb", %{"id" => id}, socket) do
+  def handle_event("select_bulb", %{"id" => id} = params, socket) do
     bulb = Lights.get_bulb!(id)
+    picker_anchor_id = Map.get(params, "anchor", "color-bulb-#{id}")
 
     color =
       cond do
         # If temperature is set, use it
         bulb.last_temperature ->
           {r, g, b} = kelvin_to_rgb(bulb.last_temperature)
+
           %{
             r: r,
             g: g,
@@ -123,6 +148,7 @@ defmodule WizHomeWeb.LightsLive do
             brightness: bulb.last_brightness || 75,
             temperature: bulb.last_temperature
           }
+
         # Otherwise use RGB if available
         bulb.last_color_r && bulb.last_color_g && bulb.last_color_b && bulb.last_brightness ->
           %{
@@ -132,6 +158,7 @@ defmodule WizHomeWeb.LightsLive do
             brightness: bulb.last_brightness,
             temperature: nil
           }
+
         # Default
         true ->
           %{r: 255, g: 255, b: 255, brightness: 75, temperature: nil}
@@ -143,26 +170,31 @@ defmodule WizHomeWeb.LightsLive do
       socket
       |> assign(:selected_bulb, bulb)
       |> assign(:color, color)
-      |> assign(:original_color, color) # Store original color for cancel
+      # Store original color for cancel
+      |> assign(:original_color, color)
       |> assign(:color_hsl, hsl)
       |> assign(:color_modal_mode, :single)
+      |> assign(:picker_anchor_id, picker_anchor_id)
       |> assign(:show_color_modal, true)
 
     {:noreply, socket}
   end
 
   @impl true
-  def handle_event("open_global_color_modal", _params, socket) do
+  def handle_event("open_global_color_modal", params, socket) do
     # Use default color or last used color
     color = Map.put_new(socket.assigns.color, :temperature, nil)
     hsl = rgb_to_hsl(color)
+    picker_anchor_id = Map.get(params, "anchor", "add-mood-button")
 
     socket =
       socket
       |> assign(:color, color)
-      |> assign(:original_color, color) # Store original color for cancel
+      # Store original color for cancel
+      |> assign(:original_color, color)
       |> assign(:color_hsl, hsl)
       |> assign(:color_modal_mode, :all)
+      |> assign(:picker_anchor_id, picker_anchor_id)
       |> assign(:show_color_modal, true)
 
     {:noreply, socket}
@@ -179,6 +211,7 @@ defmodule WizHomeWeb.LightsLive do
       |> assign(:show_color_modal, false)
       |> assign(:color, original_color)
       |> assign(:color_hsl, hsl)
+      |> assign(:picker_anchor_id, nil)
 
     {:noreply, socket}
   end
@@ -232,17 +265,17 @@ defmodule WizHomeWeb.LightsLive do
 
   @impl true
   def handle_event("update_color_from_hex", params, socket) do
-    # HTML5 color input sends value directly or as "hex" depending on name attribute
-    hex = params["hex"] || params["value"] || Map.values(params) |> List.first()
+    raw_hex = params["hex"] || params["value"] || Map.values(params) |> List.first()
 
-    if hex do
-      {r, g, b} = hex_to_rgb(hex)
-      color = Map.merge(socket.assigns.color, %{r: r, g: g, b: b})
-      hsl = rgb_to_hsl(color)
+    case normalize_hex(raw_hex) do
+      {:ok, hex} ->
+        {r, g, b} = hex_to_rgb(hex)
+        color = Map.merge(socket.assigns.color, %{r: r, g: g, b: b})
+        hsl = rgb_to_hsl(color)
+        {:noreply, socket |> assign(:color, color) |> assign(:color_hsl, hsl)}
 
-      {:noreply, socket |> assign(:color, color) |> assign(:color_hsl, hsl)}
-    else
-      {:noreply, socket}
+      :error ->
+        {:noreply, socket}
     end
   end
 
@@ -253,41 +286,8 @@ defmodule WizHomeWeb.LightsLive do
 
     case mode do
       :all ->
-        # Apply to all bulbs
         bulbs = socket.assigns.bulbs
-
-        results =
-          Enum.map(bulbs, fn bulb ->
-            result =
-              if color.temperature do
-                # Use temperature if set
-                WizHome.set_temp(bulb.ip, color.temperature, color.brightness)
-              else
-                # Otherwise use RGB
-                WizHome.set_rgb(bulb.ip, {color.r, color.g, color.b}, color.brightness)
-              end
-
-            case result do
-              {:ok, _} ->
-                # Update bulb color in database
-                Lights.update_bulb_color(bulb, %{
-                  last_color_r: color.r,
-                  last_color_g: color.g,
-                  last_color_b: color.b,
-                  last_brightness: color.brightness,
-                  last_temperature: color.temperature
-                })
-                {:ok, bulb}
-
-              {:error, reason} ->
-                {:error, bulb, reason}
-            end
-          end)
-
-        successful = Enum.filter(results, fn r -> match?({:ok, _}, r) end)
-        failed = Enum.filter(results, fn r -> match?({:error, _, _}, r) end)
-
-        bulbs = Lights.list_bulbs()
+        {successful, failed} = apply_color_to_bulbs(bulbs, color)
 
         socket =
           socket
@@ -295,47 +295,30 @@ defmodule WizHomeWeb.LightsLive do
             :info,
             "Color applied to #{length(successful)} light(s)#{if length(failed) > 0, do: ", #{length(failed)} failed", else: ""}"
           )
-          |> assign(:bulbs, bulbs)
+          |> refresh_lights()
           |> assign(:show_color_modal, false)
+          |> assign(:picker_anchor_id, nil)
 
         {:noreply, socket}
 
       :single ->
-        # Apply to single bulb
         if socket.assigns.selected_bulb do
           bulb = socket.assigns.selected_bulb
-
-          # Update bulb color in database
-          Lights.update_bulb_color(bulb, %{
-            last_color_r: color.r,
-            last_color_g: color.g,
-            last_color_b: color.b,
-            last_brightness: color.brightness,
-            last_temperature: color.temperature
-          })
-
-          # Apply color to light (use temperature if set, otherwise RGB)
-          result =
-            if color.temperature do
-              WizHome.set_temp(bulb.ip, color.temperature, color.brightness)
-            else
-              WizHome.set_rgb(bulb.ip, {color.r, color.g, color.b}, color.brightness)
-            end
+          result = apply_color_to_bulb(bulb, color)
 
           case result do
-            {:ok, _} ->
-              bulbs = Lights.list_bulbs()
-
+            {:ok, _bulb} ->
               socket =
                 socket
                 |> put_flash(:info, "Color applied to #{bulb.name || bulb.ip}")
-                |> assign(:bulbs, bulbs)
+                |> refresh_lights()
                 |> assign(:selected_bulb, Lights.get_bulb!(bulb.id))
                 |> assign(:show_color_modal, false)
+                |> assign(:picker_anchor_id, nil)
 
               {:noreply, socket}
 
-            {:error, reason} ->
+            {:error, _failed_bulb, reason} ->
               {:noreply, put_flash(socket, :error, "Failed to set color: #{inspect(reason)}")}
           end
         else
@@ -348,30 +331,7 @@ defmodule WizHomeWeb.LightsLive do
   def handle_event("set_all_color", _params, socket) do
     color = socket.assigns.color
     bulbs = socket.assigns.bulbs
-
-    results =
-      Enum.map(bulbs, fn bulb ->
-        case WizHome.set_rgb(bulb.ip, {color.r, color.g, color.b}, color.brightness) do
-          {:ok, _} ->
-            # Update bulb color in database
-            Lights.update_bulb_color(bulb, %{
-              last_color_r: color.r,
-              last_color_g: color.g,
-              last_color_b: color.b,
-              last_brightness: color.brightness
-            })
-            {:ok, bulb}
-          {:error, reason} -> {:error, bulb, reason}
-        end
-      end)
-
-    {successful, failed} =
-      Enum.split_with(results, fn
-        {:ok, _} -> true
-        {:error, _, _} -> false
-      end)
-
-    bulbs = Lights.list_bulbs()
+    {successful, failed} = apply_color_to_bulbs(bulbs, color)
 
     socket =
       socket
@@ -379,7 +339,7 @@ defmodule WizHomeWeb.LightsLive do
         :info,
         "Color applied to #{length(successful)} bulb(s)#{if length(failed) > 0, do: ", #{length(failed)} failed", else: ""}"
       )
-      |> assign(:bulbs, bulbs)
+      |> refresh_lights()
 
     {:noreply, socket}
   end
@@ -395,12 +355,10 @@ defmodule WizHomeWeb.LightsLive do
 
         case WizHome.set_state(bulb.ip, new_state) do
           {:ok, _} ->
-            bulbs = Lights.list_bulbs()
-
             socket =
               socket
               |> put_flash(:info, "Light #{if new_state, do: "turned on", else: "turned off"}")
-              |> assign(:bulbs, bulbs)
+              |> refresh_lights()
 
             {:noreply, socket}
 
@@ -412,12 +370,10 @@ defmodule WizHomeWeb.LightsLive do
         # If we can't get status, try to turn it on
         case WizHome.set_state(bulb.ip, true) do
           {:ok, _} ->
-            bulbs = Lights.list_bulbs()
-
             socket =
               socket
               |> put_flash(:info, "Light turned on")
-              |> assign(:bulbs, bulbs)
+              |> refresh_lights()
 
             {:noreply, socket}
 
@@ -446,15 +402,13 @@ defmodule WizHomeWeb.LightsLive do
         {:error, _, _} -> false
       end)
 
-    bulbs = Lights.list_bulbs()
-
     socket =
       socket
       |> put_flash(
         :info,
         "#{length(successful)} light(s) #{if state, do: "turned on", else: "turned off"}#{if length(failed) > 0, do: ", #{length(failed)} failed", else: ""}"
       )
-      |> assign(:bulbs, bulbs)
+      |> refresh_lights()
 
     {:noreply, socket}
   end
@@ -464,6 +418,51 @@ defmodule WizHomeWeb.LightsLive do
     color = preset_color(color_name)
     hsl = rgb_to_hsl(color)
     {:noreply, socket |> assign(:color, color) |> assign(:color_hsl, hsl)}
+  end
+
+  @impl true
+  def handle_event("apply_mood", %{"color" => color_name}, socket) do
+    color = preset_color(color_name)
+    bulbs = socket.assigns.bulbs
+    {successful, failed} = apply_color_to_bulbs(bulbs, color)
+    hsl = rgb_to_hsl(color)
+
+    socket =
+      socket
+      |> assign(:color, color)
+      |> assign(:color_hsl, hsl)
+      |> refresh_lights()
+      |> put_flash(
+        :info,
+        "Mood applied to #{length(successful)} light(s)#{if length(failed) > 0, do: ", #{length(failed)} failed", else: ""}"
+      )
+
+    {:noreply, socket}
+  end
+
+  @impl true
+  def handle_event(
+        "update_bulb_brightness",
+        %{"id" => id, "brightness" => brightness_raw},
+        socket
+      ) do
+    case Integer.parse(brightness_raw) do
+      {brightness, _} when brightness >= 10 and brightness <= 100 ->
+        bulb = Lights.get_bulb!(id)
+        color = bulb_color_payload(bulb, brightness)
+
+        case apply_color_to_bulb(bulb, color) do
+          {:ok, _updated_bulb} ->
+            {:noreply, refresh_lights(socket)}
+
+          {:error, _failed_bulb, reason} ->
+            {:noreply,
+             put_flash(socket, :error, "Failed to update brightness: #{inspect(reason)}")}
+        end
+
+      _ ->
+        {:noreply, socket}
+    end
   end
 
   # Helper functions
@@ -483,6 +482,139 @@ defmodule WizHomeWeb.LightsLive do
     {g, _} = Integer.parse(String.slice(hex, 2, 2), 16)
     {b, _} = Integer.parse(String.slice(hex, 4, 2), 16)
     {r, g, b}
+  end
+
+  defp normalize_hex(hex) when is_binary(hex) do
+    parsed_hex =
+      hex
+      |> String.trim()
+      |> String.trim_leading("#")
+      |> String.upcase()
+
+    if String.match?(parsed_hex, ~r/\A[0-9A-F]{6}\z/) do
+      {:ok, parsed_hex}
+    else
+      :error
+    end
+  end
+
+  defp normalize_hex(_), do: :error
+
+  defp rgb_to_hex(%{r: r, g: g, b: b}) do
+    [r, g, b]
+    |> Enum.map(fn value -> value |> Integer.to_string(16) |> String.pad_leading(2, "0") end)
+    |> Enum.join("")
+    |> String.upcase()
+  end
+
+  defp refresh_lights(socket) do
+    bulbs = Lights.list_bulbs()
+    bulb_states = load_bulb_states(bulbs)
+
+    socket
+    |> assign(:bulbs, bulbs)
+    |> assign(:bulb_states, bulb_states)
+    |> assign(:all_lights_on, all_lights_on?(bulbs, bulb_states))
+  end
+
+  defp load_bulb_states(bulbs) do
+    Enum.reduce(bulbs, %{}, fn bulb, acc ->
+      Map.put(acc, bulb.id, bulb_on?(bulb))
+    end)
+  end
+
+  defp all_lights_on?([], _states), do: false
+
+  defp all_lights_on?(bulbs, states) do
+    Enum.all?(bulbs, fn bulb -> Map.get(states, bulb.id, false) end)
+  end
+
+  defp bulb_on?(bulb) do
+    case WizHome.get_status(bulb.ip) do
+      {:ok, %{"result" => %{"state" => state}}} when is_boolean(state) -> state
+      _ -> false
+    end
+  end
+
+  defp apply_color_to_bulbs(bulbs, color) do
+    results = Enum.map(bulbs, fn bulb -> apply_color_to_bulb(bulb, color) end)
+
+    successful =
+      Enum.filter(results, fn
+        {:ok, _} -> true
+        _ -> false
+      end)
+
+    failed =
+      Enum.filter(results, fn
+        {:error, _, _} -> true
+        _ -> false
+      end)
+
+    {successful, failed}
+  end
+
+  defp apply_color_to_bulb(bulb, color) do
+    result =
+      if color.temperature do
+        WizHome.set_temp(bulb.ip, color.temperature, color.brightness)
+      else
+        WizHome.set_rgb(bulb.ip, {color.r, color.g, color.b}, color.brightness)
+      end
+
+    case result do
+      {:ok, _} ->
+        case Lights.update_bulb_color(bulb, %{
+               last_color_r: color.r,
+               last_color_g: color.g,
+               last_color_b: color.b,
+               last_brightness: color.brightness,
+               last_temperature: color.temperature
+             }) do
+          {:ok, updated_bulb} -> {:ok, updated_bulb}
+          {:error, changeset} -> {:error, bulb, changeset}
+        end
+
+      {:error, reason} ->
+        {:error, bulb, reason}
+    end
+  end
+
+  defp bulb_color_payload(bulb, brightness) do
+    cond do
+      bulb.last_temperature ->
+        {r, g, b} = kelvin_to_rgb(bulb.last_temperature)
+        %{r: r, g: g, b: b, brightness: brightness, temperature: bulb.last_temperature}
+
+      bulb.last_color_r && bulb.last_color_g && bulb.last_color_b ->
+        %{
+          r: bulb.last_color_r,
+          g: bulb.last_color_g,
+          b: bulb.last_color_b,
+          brightness: brightness,
+          temperature: nil
+        }
+
+      true ->
+        %{r: 255, g: 255, b: 255, brightness: brightness, temperature: nil}
+    end
+  end
+
+  defp bulb_color_style(bulb) do
+    color = bulb_color_payload(bulb, bulb.last_brightness || 60)
+
+    "background-color: rgb(#{color.r}, #{color.g}, #{color.b}); opacity: #{max(color.brightness, 25) / 100}"
+  end
+
+  defp mood_presets do
+    [
+      %{key: "deep_blue", label: "My mood 01", image: @mood_image_map.deep_blue},
+      %{key: "soft_teal", label: "My mood 02", image: @mood_image_map.soft_teal},
+      %{key: "cool_green", label: "My mood 03", image: @mood_image_map.cool_green},
+      %{key: "muted_cyan", label: "My mood 04", image: @mood_image_map.muted_cyan},
+      %{key: "warm_white", label: "My mood 05", image: @mood_image_map.warm_white},
+      %{key: "pure_white", label: "My mood 06", image: @mood_image_map.pure_white}
+    ]
   end
 
   defp rgb_to_hsl(%{r: r, g: g, b: b}) do
@@ -527,12 +659,18 @@ defmodule WizHomeWeb.LightsLive do
   end
 
   # Preset colors optimized for coding/productivity
-  defp preset_color("deep_blue"), do: %{r: 0, g: 0, b: 139, brightness: 75, temperature: nil}  # Deep Blue (Calm Focus)
-  defp preset_color("soft_teal"), do: %{r: 64, g: 224, b: 208, brightness: 75, temperature: nil}  # Soft Teal (Balanced Productivity)
-  defp preset_color("cool_green"), do: %{r: 0, g: 128, b: 128, brightness: 75, temperature: nil}  # Cool Green (Refresh and Clarity)
-  defp preset_color("muted_cyan"), do: %{r: 0, g: 191, b: 255, brightness: 75, temperature: nil}  # Muted Cyan (Tech Zen Mode)
-  defp preset_color("warm_white"), do: %{r: 255, g: 244, b: 229, brightness: 75, temperature: nil}  # Warm White (Evening Wind Down)
-  defp preset_color("pure_white"), do: %{r: 255, g: 255, b: 255, brightness: 75, temperature: nil}  # Pure White
+  # Deep Blue (Calm Focus)
+  defp preset_color("deep_blue"), do: %{r: 0, g: 0, b: 139, brightness: 75, temperature: nil}
+  # Soft Teal (Balanced Productivity)
+  defp preset_color("soft_teal"), do: %{r: 64, g: 224, b: 208, brightness: 75, temperature: nil}
+  # Cool Green (Refresh and Clarity)
+  defp preset_color("cool_green"), do: %{r: 0, g: 128, b: 128, brightness: 75, temperature: nil}
+  # Muted Cyan (Tech Zen Mode)
+  defp preset_color("muted_cyan"), do: %{r: 0, g: 191, b: 255, brightness: 75, temperature: nil}
+  # Warm White (Evening Wind Down)
+  defp preset_color("warm_white"), do: %{r: 255, g: 244, b: 229, brightness: 75, temperature: nil}
+  # Pure White
+  defp preset_color("pure_white"), do: %{r: 255, g: 255, b: 255, brightness: 75, temperature: nil}
   defp preset_color(_), do: %{r: 255, g: 255, b: 255, brightness: 75, temperature: nil}
 
   # Convert Kelvin temperature to RGB
@@ -544,7 +682,9 @@ defmodule WizHomeWeb.LightsLive do
     # Calculate red
     r =
       cond do
-        temp <= 66 -> 255
+        temp <= 66 ->
+          255
+
         true ->
           red = temp - 60
           red = 329.698727446 * :math.pow(red, -0.1332047592)
@@ -560,6 +700,7 @@ defmodule WizHomeWeb.LightsLive do
           green = 99.4708025861 * :math.log(green) - 161.1195681661
           green = max(0, min(255, green))
           round(green)
+
         true ->
           green = temp - 60
           green = 288.1221695283 * :math.pow(green, -0.0755148492)
@@ -570,8 +711,12 @@ defmodule WizHomeWeb.LightsLive do
     # Calculate blue
     b =
       cond do
-        temp >= 66 -> 255
-        temp <= 19 -> 0
+        temp >= 66 ->
+          255
+
+        temp <= 19 ->
+          0
+
         true ->
           blue = temp - 10
           blue = 138.5177312231 * :math.log(blue) - 305.0447927307

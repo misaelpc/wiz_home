@@ -33,11 +33,21 @@ export const ColorWheel = {
     });
     
     this.isDraggingHue = false;
+    this.handlePointerDown = (e) => this.onPointerDown(e);
+    this.handlePointerMove = (e) => this.dragHue(e);
+    this.handlePointerUp = () => this.stopHueDrag();
     
     this.drawHueWheel();
     this.updateIndicators();
     
     this.setupEventListeners();
+  },
+
+  destroyed() {
+    this.hueCanvas.removeEventListener('pointerdown', this.handlePointerDown);
+    window.removeEventListener('pointermove', this.handlePointerMove);
+    window.removeEventListener('pointerup', this.handlePointerUp);
+    window.removeEventListener('pointercancel', this.handlePointerUp);
   },
   
   updated() {
@@ -61,28 +71,30 @@ export const ColorWheel = {
   },
   
   setupEventListeners() {
-    // Hue wheel events
-    this.hueCanvas.addEventListener('mousedown', (e) => this.startHueDrag(e));
-    this.hueCanvas.addEventListener('mousemove', (e) => this.dragHue(e));
-    this.hueCanvas.addEventListener('mouseup', () => this.stopHueDrag());
-    this.hueCanvas.addEventListener('mouseleave', () => this.stopHueDrag());
-    
-    // Touch events for hue
-    this.hueCanvas.addEventListener('touchstart', (e) => {
-      e.preventDefault();
-      this.startHueDrag(e.touches[0]);
-    });
-    this.hueCanvas.addEventListener('touchmove', (e) => {
-      e.preventDefault();
-      this.dragHue(e.touches[0]);
-    });
-    this.hueCanvas.addEventListener('touchend', () => this.stopHueDrag());
+    this.hueCanvas.style.touchAction = 'none';
+    this.hueCanvas.addEventListener('pointerdown', this.handlePointerDown);
+    window.addEventListener('pointermove', this.handlePointerMove);
+    window.addEventListener('pointerup', this.handlePointerUp);
+    window.addEventListener('pointercancel', this.handlePointerUp);
+  },
+
+  onPointerDown(e) {
+    e.preventDefault();
+    this.startHueDrag(e);
+    if (this.hueCanvas.setPointerCapture) {
+      try {
+        this.hueCanvas.setPointerCapture(e.pointerId);
+      } catch (_err) {
+      }
+    }
   },
   
   drawHueWheel() {
     const centerX = this.hueRadius;
     const centerY = this.hueRadius;
     const radius = this.hueRadius - 10;
+
+    this.hueCtx.clearRect(0, 0, this.hueCanvas.width, this.hueCanvas.height);
     
     // Rotate the entire drawing by -90° so that hue 0° (red) is at the top
     this.hueCtx.save();
@@ -106,11 +118,14 @@ export const ColorWheel = {
     }
     
     this.hueCtx.restore();
-    
-    // Draw inner circle (transparent center)
+
+    const centerGlow = this.hueCtx.createRadialGradient(centerX, centerY, 0, centerX, centerY, radius * 0.95);
+    centerGlow.addColorStop(0, 'rgba(255,255,255,0.95)');
+    centerGlow.addColorStop(0.45, 'rgba(255,255,255,0.25)');
+    centerGlow.addColorStop(1, 'rgba(255,255,255,0)');
     this.hueCtx.beginPath();
-    this.hueCtx.arc(centerX, centerY, radius * 0.6, 0, 2 * Math.PI);
-    this.hueCtx.fillStyle = '#ffffff';
+    this.hueCtx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+    this.hueCtx.fillStyle = centerGlow;
     this.hueCtx.fill();
   },
   
@@ -152,30 +167,33 @@ export const ColorWheel = {
   },
   
   drawHueIndicator() {
-    // Redraw hue wheel to clear old indicator
     this.drawHueWheel();
-    
+
     const centerX = this.hueRadius;
     const centerY = this.hueRadius;
     const radius = this.hueRadius - 10;
-    const indicatorRadius = (radius + radius * 0.6) / 2; // Middle of the ring
-    // Convert hue to radians: hue 0 = red (right), but we want it at top, so subtract 90
-    // Also, atan2 uses y, x but we want 0° at top, so we need to adjust
+    const indicatorRadius = radius * 0.82;
     const angle = (this.hue - 90) * Math.PI / 180;
-    
+
     const x = centerX + Math.cos(angle) * indicatorRadius;
     const y = centerY + Math.sin(angle) * indicatorRadius;
-    
-    console.log("ColorWheel: Drawing indicator at", { hue: this.hue, angle: angle * 180 / Math.PI, x, y, indicatorRadius });
-    
-    // Draw indicator circle
+
+    const activeColor = this.hslToRgb(this.hue / 360, 1, 0.5);
     this.hueCtx.beginPath();
     this.hueCtx.arc(x, y, 8, 0, 2 * Math.PI);
     this.hueCtx.strokeStyle = '#ffffff';
     this.hueCtx.lineWidth = 3;
     this.hueCtx.stroke();
-    this.hueCtx.fillStyle = '#000000';
+    this.hueCtx.fillStyle = `rgb(${activeColor.r}, ${activeColor.g}, ${activeColor.b})`;
     this.hueCtx.fill();
+
+    this.hueCtx.beginPath();
+    this.hueCtx.arc(centerX, centerY, 8, 0, 2 * Math.PI);
+    this.hueCtx.fillStyle = '#d9d9d9';
+    this.hueCtx.fill();
+    this.hueCtx.strokeStyle = '#ffffff';
+    this.hueCtx.lineWidth = 2;
+    this.hueCtx.stroke();
   },
   
   startHueDrag(e) {
@@ -198,13 +216,10 @@ export const ColorWheel = {
     const x = e.clientX - rect.left - this.hueRadius;
     const y = e.clientY - rect.top - this.hueRadius;
     
-    // Calculate distance from center to check if click is within the wheel ring
     const distance = Math.sqrt(x * x + y * y);
-    const innerRadius = this.hueRadius * 0.6;
     const outerRadius = this.hueRadius - 10;
-    
-    // Only update if click is within the wheel ring (between inner and outer radius)
-    if (distance < innerRadius || distance > outerRadius) {
+
+    if (distance > outerRadius) {
       return;
     }
     
@@ -296,4 +311,3 @@ export const ColorWheel = {
     };
   }
 };
-

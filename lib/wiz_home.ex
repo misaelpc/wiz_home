@@ -199,7 +199,8 @@ defmodule WizHome do
   - `pipeline_pid`: PID del pipeline (retornado por start_voice_control)
   - `controller_pid`: PID del controller (retornado por start_voice_control)
   """
-  def stop_voice_control(pipeline_pid, controller_pid) when is_pid(pipeline_pid) and is_pid(controller_pid) do
+  def stop_voice_control(pipeline_pid, controller_pid)
+      when is_pid(pipeline_pid) and is_pid(controller_pid) do
     GenServer.stop(pipeline_pid)
     GenServer.stop(controller_pid)
     IO.puts("🛑 Control por voz detenido")
@@ -227,32 +228,41 @@ defmodule WizHome do
   # --- Internals ---
 
   defp send_cmd(ip, cmd) do
-    {:ok, socket} =
-      :gen_udp.open(0, [:binary, {:active, false}, {:reuseaddr, true}])
+    case :gen_udp.open(0, [:binary, {:active, false}, {:reuseaddr, true}]) do
+      {:ok, socket} ->
+        payload = Jason.encode!(cmd)
 
-    payload = Jason.encode!(cmd)
+        resp =
+          case :gen_udp.send(
+                 socket,
+                 String.to_charlist(ip),
+                 @port,
+                 payload
+               ) do
+            :ok ->
+              case :gen_udp.recv(socket, 0, 3_000) do
+                {:ok, {_resp_ip, _resp_port, data}} ->
+                  case Jason.decode(data) do
+                    {:ok, json} -> {:ok, json}
+                    _ -> {:ok, data}
+                  end
 
-    :ok =
-      :gen_udp.send(
-        socket,
-        String.to_charlist(ip),
-        @port,
-        payload
-      )
+                {:error, :timeout} ->
+                  {:error, :timeout}
 
-    resp =
-      case :gen_udp.recv(socket, 0, 3_000) do
-        {:ok, {_resp_ip, _resp_port, data}} ->
-          case Jason.decode(data) do
-            {:ok, json} -> {:ok, json}
-            _ -> {:ok, data}
+                {:error, reason} ->
+                  {:error, reason}
+              end
+
+            {:error, reason} ->
+              {:error, reason}
           end
 
-        {:error, :timeout} ->
-          {:error, :timeout}
-      end
+        :gen_udp.close(socket)
+        resp
 
-    :gen_udp.close(socket)
-    resp
+      {:error, reason} ->
+        {:error, reason}
+    end
   end
 end
