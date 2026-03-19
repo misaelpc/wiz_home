@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Input | Taildash - Tailwind CSS Admin Dashboard Template</title>
+  </head>
+  <body
+    x-data="{ page: 'input', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Header Start ===== -->
+      <include src="./partials/header.html" />
+      <!-- ===== Header End ===== -->
+
+      <!-- ===== Main Content Start ===== -->
+      <main class="lg:pl-72.5 pt-26 lg:pt-22.5">
+        <div class="p-4 md:p-6 2xl:p-11">
+          <h2
+            class="font-semibold text-title-md text-black dark:text-white mb-2"
+          >
+            Input
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit cras
+            ultrices lectus sem.
+          </p>
+
+          <!-- Input Item -->
+          <div
+            class="rounded-md shadow-2 bg-white dark:bg-boxdark mt-10"
+          >
+            <div
+              class="px-9 py-3.5 border-b border-stroke dark:border-strokedark"
+            >
+              <h3
+                class="font-medium text-lg text-black dark:text-white"
+              >
+                Default Input
+              </h3>
+            </div>
+
+            <div class="p-9">
+              <div class="-mx-4 flex flex-wrap">
+                <div class="w-full lg:w-1/2 px-4">
+                  <label
+                    class="mb-3 block font-medium text-black dark:text-white"
+                  >
+                    Default Input
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Default Input"
+                    class="border-stroke focus:border-primary active:border-primary w-full rounded-lg border-[1.5px] py-3 px-5 font-medium outline-none transition disabled:cursor-default disabled:bg-whiter"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="p-9 border-t border-stroke dark:border-strokedark"
+            >
+              <h2
+                class="font-semibold text-lg text-black dark:text-white mb-5"
+              >
+                HTML
+              </h2>
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <label class="mb-3 block font-medium text-black dark:text-white">
+        Default Input
+        </label>
+        <input
+          type="text"
+          placeholder="Default Input"
+          class="border-stroke focus:border-primary active:border-primary w-full rounded-lg border-[1.5px] py-3 px-5 font-medium outline-none transition disabled:cursor-default disabled:bg-whiter"
+          />
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+
+          <!-- Input Item -->
+          <div
+            class="rounded-md shadow-2 bg-white dark:bg-boxdark mt-10"
+          >
+            <div
+              class="px-9 py-3.5 border-b border-stroke dark:border-strokedark"
+            >
+              <h3
+                class="font-medium text-lg text-black dark:text-white"
+              >
+                Active Input
+              </h3>
+            </div>
+
+            <div class="p-9">
+              <div class="-mx-4 flex flex-wrap">
+                <div class="w-full lg:w-1/2 px-4">
+                  <label
+                    class="mb-3 block font-medium text-black dark:text-white"
+                  >
+                    Active Input
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Active Input"
+                    class="border-primary focus:border-primary active:border-primary w-full rounded-lg border-[1.5px] py-3 px-5 font-medium outline-none transition disabled:cursor-default disabled:bg-whiter"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="p-9 border-t border-stroke dark:border-strokedark"
+            >
+              <h2
+                class="font-semibold text-lg text-black dark:text-white mb-5"
+              >
+                HTML
+              </h2>
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <label class="mb-3 block font-medium text-black dark:text-white">
+        Active Input
+      </label>
+      <input
+        type="text"
+        placeholder="Active Input"
+        class="border-primary focus:border-primary active:border-primary w-full rounded-lg border-[1.5px] py-3 px-5 font-medium outline-none transition disabled:cursor-default disabled:bg-whiter"
+        />
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+
+          <!-- Input Item -->
+          <div
+            class="rounded-md shadow-2 bg-white dark:bg-boxdark mt-10"
+          >
+            <div
+              class="px-9 py-3.5 border-b border-stroke dark:border-strokedark"
+            >
+              <h3
+                class="font-medium text-lg text-black dark:text-white"
+              >
+                Disabled label
+              </h3>
+            </div>
+
+            <div class="p-9">
+              <div class="-mx-4 flex flex-wrap">
+                <div class="w-full lg:w-1/2 px-4">
+                  <label
+                    class="mb-3 block font-medium text-black dark:text-white"
+                  >
+                    Disabled label
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Disabled label"
+                    disabled=""
+                    class="border-stroke focus:border-primary active:border-primary w-full rounded-lg border-[1.5px] py-3 px-5 font-medium outline-none transition disabled:cursor-default disabled:bg-whiter"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="p-9 border-t border-stroke dark:border-strokedark"
+            >
+              <h2
+                class="font-semibold text-lg text-black dark:text-white mb-5"
+              >
+                HTML
+              </h2>
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <label class="mb-3 block font-medium text-black dark:text-white">
+        Disabled label
+      </label>
+      <input
+        type="text"
+        placeholder="Disabled label"
+        disabled=""
+        class="border-stroke focus:border-primary active:border-primary w-full rounded-lg border-[1.5px] py-3 px-5 font-medium outline-none transition disabled:cursor-default disabled:bg-whiter"
+        />
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+
+          <!-- Input Item -->
+          <div
+            class="rounded-md shadow-2 bg-white dark:bg-boxdark mt-10"
+          >
+            <div
+              class="px-9 py-3.5 border-b border-stroke dark:border-strokedark"
+            >
+              <h3
+                class="font-medium text-lg text-black dark:text-white"
+              >
+                Input With Icon
+              </h3>
+            </div>
+
+            <div class="p-9">
+              <div class="-mx-4 flex flex-wrap">
+                <div class="w-full lg:w-1/2 px-4">
+                  <label
+                    class="mb-3 block font-medium text-black dark:text-white"
+                  >
+                    Name
+                  </label>
+                  <div class="relative">
+                    <input
+                      type="text"
+                      placeholder="Devid Jhon"
+                      class="w-full rounded-md border border-stroke p-3 pl-12 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter"
+                    />
+                    <span
+                      class="absolute top-1/2 left-4 -translate-y-1/2"
+                    >
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g opacity="0.8">
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M3.72039 12.8864C4.50179 12.105 5.5616 11.666 6.66667 11.666H13.3333C14.4384 11.666 15.4982 12.105 16.2796 12.8864C17.061 13.6678 17.5 14.7276 17.5 15.8327V17.4993C17.5 17.9596 17.1269 18.3327 16.6667 18.3327C16.2064 18.3327 15.8333 17.9596 15.8333 17.4993V15.8327C15.8333 15.1696 15.5699 14.5338 15.1011 14.0649C14.6323 13.5961 13.9964 13.3327 13.3333 13.3327H6.66667C6.00363 13.3327 5.36774 13.5961 4.8989 14.0649C4.43006 14.5338 4.16667 15.1696 4.16667 15.8327V17.4993C4.16667 17.9596 3.79357 18.3327 3.33333 18.3327C2.8731 18.3327 2.5 17.9596 2.5 17.4993V15.8327C2.5 14.7276 2.93899 13.6678 3.72039 12.8864Z"
+                            fill="#637381"
+                          ></path>
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M10.0007 3.33268C8.61994 3.33268 7.50065 4.45197 7.50065 5.83268C7.50065 7.21339 8.61994 8.33268 10.0007 8.33268C11.3814 8.33268 12.5006 7.21339 12.5006 5.83268C12.5006 4.45197 11.3814 3.33268 10.0007 3.33268ZM5.83398 5.83268C5.83398 3.5315 7.69946 1.66602 10.0007 1.66602C12.3018 1.66602 14.1673 3.5315 14.1673 5.83268C14.1673 8.13387 12.3018 9.99935 10.0007 9.99935C7.69946 9.99935 5.83398 8.13387 5.83398 5.83268Z"
+                            fill="#637381"
+                          ></path>
+                        </g>
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="p-9 border-t border-stroke dark:border-strokedark"
+            >
+              <h2
+                class="font-semibold text-lg text-black dark:text-white mb-5"
+              >
+                HTML
+              </h2>
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <label class="mb-3 block font-medium text-black dark:text-white">
+        Disabled label
+      </label>
+      <input
+        type="text"
+        placeholder="Disabled label"
+        disabled=""
+        class="border-stroke focus:border-primary active:border-primary w-full rounded-lg border-[1.5px] py-3 px-5 font-medium outline-none transition disabled:cursor-default disabled:bg-whiter"
+        />
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+    <!-- ====== Back To Top Start ===== -->
+    <include src="./partials/scrolltop.html" />
+    <!-- ====== Back To Top End ===== -->
+  </body>
+</html>

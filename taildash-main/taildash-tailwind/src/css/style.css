@@ -1,0 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-inter font-normal text-base text-body bg-whiten relative z-1;
+  }
+}
+
+@layer components {
+  .dropdown {
+    @apply absolute flex flex-col gap-1 shadow-6 rounded-lg bg-white dark:bg-boxdark;
+  }
+
+  .loader-circle {
+    @apply block relative left-1/2 top-1/2 w-37.5 h-37.5 -mt-19 mr-0 mb-0 -ml-19 rounded-full border-[3px] border-transparent border-t-primary animate-spin-2 before:absolute before:top-1.5 before:left-1.5 before:bottom-1.5 before:right-1.5 before:rounded-full before:border-[3px] before:border-transparent before:border-t-primary before:animate-spin-3 after:absolute after:top-4 after:left-4 after:bottom-4 after:right-4 after:rounded-full after:border-[3px] after:border-transparent after:border-t-primary after:animate-spin-1.5;
+  }
+}
+
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .img-white {
+    filter: invert(0%) sepia(96%) saturate(15%) hue-rotate(249deg)
+      brightness(100%) contrast(105%);
+  }
+
+  .chat-height {
+    @apply h-[calc(100vh_-_8.125rem)] lg:h-[calc(100vh_-_5.625rem)];
+  }
+  .inbox-height {
+    @apply h-[calc(100vh_-_8.125rem)] lg:h-[calc(100vh_-_5.625rem)];
+  }
+}
+
+/* third-party libraries CSS */
+pre[class*="language-"] {
+  @apply p-0 rounded-md bg-gray-3 dark:bg-black-2 h-50;
+}
+code[class*="language-"],
+pre[class*="language-"] {
+  @apply dark:text-white;
+  text-shadow: none;
+}
+div.code-toolbar > .toolbar {
+  @apply !-top-15 !opacity-100;
+}
+div.code-toolbar > .toolbar > .toolbar-item > button.copy-to-clipboard-button {
+  @apply flex items-center gap-2 rounded-md font-medium text-sm shadow-none text-white bg-primary py-2 px-4
+  before:content-icon-copy hover:text-white hover:bg-[#274CC5] focus:text-white;
+}
+
+.tableCheckbox:checked ~ div span {
+  @apply opacity-100;
+}
+.tableCheckbox:checked ~ div {
+  @apply bg-primary border-primary;
+}
+
+.apexcharts-legend-text {
+  @apply !text-body dark:!text-bodydark;
+}
+.apexcharts-text {
+  @apply !fill-body dark:!fill-bodydark;
+}
+.apexcharts-xcrosshairs {
+  @apply !fill-stroke dark:!fill-strokedark;
+}
+
+[x-cloak] {
+  display: none !important;
+}

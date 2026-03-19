@@ -32,6 +32,10 @@ defmodule WizHome.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:tidewave, "~> 0.5", only: [:dev]},
+      {:igniter, "~> 0.6", only: [:dev, :test]},
+      # Pin rewrite to 1.2.0 - 1.3.0 has Enumerable protocol issue with igniter
+      {:rewrite, "1.2.0", override: true},
       {:phoenix, "~> 1.7.21"},
       {:phoenix_ecto, "~> 4.5"},
       {:ecto_sql, "~> 3.10"},
@@ -60,8 +64,10 @@ defmodule WizHome.MixProject do
       {:bandit, "~> 1.5"},
       {:membrane_core, "~> 1.2"},
       {:membrane_portaudio_plugin, "~> 0.19"},
-      {:membrane_wav_plugin, "~> 0.10"}, # for writing WAV, optional
-      {:membrane_file_plugin, "~> 0.17"} # for writing files
+      # for writing WAV, optional
+      {:membrane_wav_plugin, "~> 0.10"},
+      # for writing files
+      {:membrane_file_plugin, "~> 0.17"}
     ]
   end
 

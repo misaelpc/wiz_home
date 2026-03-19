@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Charts | Taildash - Tailwind CSS Admin Dashboard Template</title>
+  </head>
+  <body
+    x-data="{ page: 'charts', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Header Start ===== -->
+      <include src="./partials/header.html" />
+      <!-- ===== Header End ===== -->
+
+      <!-- ===== Main Content Start ===== -->
+      <main class="lg:pl-72.5 pt-26 lg:pt-22.5">
+        <div class="p-4 md:p-6 2xl:p-11">
+          <!-- Charts Start -->
+          <h2
+            class="font-semibold text-title-md text-black dark:text-white mb-2"
+          >
+            Charts 1
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit cras
+            ultrices lectus sem.
+          </p>
+
+          <div
+            class="rounded-md shadow-2 bg-white dark:bg-boxdark my-10"
+          >
+            <div class="p-9">
+              <!-- ====== Chart One Start -->
+              <include src="./partials/chart-01.html" />
+              <!-- ====== Chart One End -->
+            </div>
+
+            <div
+              class="p-9 border-t border-stroke dark:border-strokedark"
+            >
+              <h2
+                class="font-semibold text-lg text-black dark:text-white mb-5"
+              >
+                HTML
+              </h2>
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <!-- ====== Chart One Start -->
+      <include src="./partials/chart-01.html" />
+      <!-- ====== Chart One End -->
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+
+          <!-- Charts Start -->
+          <h2
+            class="font-semibold text-title-md text-black dark:text-white mb-2"
+          >
+            Charts 2
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit cras
+            ultrices lectus sem.
+          </p>
+
+          <div
+            class="rounded-md shadow-2 bg-white dark:bg-boxdark my-10"
+          >
+            <div class="p-9">
+              <!-- ====== Chart Two Start -->
+              <include src="./partials/chart-02.html" />
+              <!-- ====== Chart Two End -->
+            </div>
+
+            <div
+              class="p-9 border-t border-stroke dark:border-strokedark"
+            >
+              <h2
+                class="font-semibold text-lg text-black dark:text-white mb-5"
+              >
+                HTML
+              </h2>
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <!-- ====== Chart Two Start -->
+      <include src="./partials/chart-02.html" />
+      <!-- ====== Chart Two End -->
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+
+          <!-- Charts Start -->
+          <h2
+            class="font-semibold text-title-md text-black dark:text-white mb-2"
+          >
+            Charts 3
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit cras
+            ultrices lectus sem.
+          </p>
+
+          <div
+            class="rounded-md shadow-2 bg-white dark:bg-boxdark my-10"
+          >
+            <div class="p-9">
+              <!-- ====== Chart Three Start -->
+              <include src="./partials/chart-03.html" />
+              <!-- ====== Chart Three End -->
+            </div>
+
+            <div
+              class="p-9 border-t border-stroke dark:border-strokedark"
+            >
+              <h2
+                class="font-semibold text-lg text-black dark:text-white mb-5"
+              >
+                HTML
+              </h2>
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <!-- ====== Chart Three Start -->
+      <include src="./partials/chart-03.html" />
+      <!-- ====== Chart Three End -->
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+    <!-- ====== Back To Top Start ===== -->
+    <include src="./partials/scrolltop.html" />
+    <!-- ====== Back To Top End ===== -->
+  </body>
+</html>

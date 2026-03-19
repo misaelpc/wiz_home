@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Badge | Taildash - Tailwind CSS Admin Dashboard Template</title>
+  </head>
+  <body
+    x-data="{ page: 'badge', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Header Start ===== -->
+      <include src="./partials/header.html" />
+      <!-- ===== Header End ===== -->
+
+      <!-- ===== Main Content Start ===== -->
+      <main class="lg:pl-72.5 pt-26 lg:pt-22.5">
+        <div class="p-4 md:p-6 2xl:p-11">
+          <h2
+            class="font-semibold text-title-md text-black dark:text-white mb-2"
+          >
+            Badge
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit cras
+            ultrices lectus sem.
+          </p>
+
+          <!-- Badge Item -->
+          <div
+            class="rounded-md shadow-2 bg-white dark:bg-boxdark mt-10"
+          >
+            <div
+              class="px-9 py-3.5 border-b border-stroke dark:border-strokedark"
+            >
+              <h3
+                class="font-medium text-lg text-black dark:text-white"
+              >
+                Primary Bage
+              </h3>
+            </div>
+
+            <div class="p-9">
+              <span
+                class="bg-primary m-2 inline-block rounded py-1 px-2 text-sm font-semibold text-white"
+              >
+                Primary
+              </span>
+              <span
+                class="border-primary text-primary m-2 inline-block rounded border py-1 px-2 text-sm font-semibold"
+              >
+                Primary
+              </span>
+              <span
+                class="bg-primary m-2 inline-block rounded-full py-1 px-3 text-sm font-semibold text-white"
+              >
+                Primary
+              </span>
+              <span
+                class="border-primary text-primary m-2 inline-block rounded-full border py-1 px-3 text-sm font-semibold"
+              >
+                Primary
+              </span>
+
+              <span
+                class="border-primary bg-primary text-primary m-2 inline-block rounded-full border bg-opacity-5 py-1 px-3 text-sm font-semibold"
+              >
+                Primary
+              </span>
+
+              <span
+                class="border-primary bg-primary text-primary m-2 inline-block rounded border bg-opacity-5 py-1 px-2 text-sm font-semibold"
+              >
+                Primary
+              </span>
+            </div>
+
+            <div
+              class="p-9 border-t border-stroke dark:border-strokedark"
+            >
+              <h2
+                class="font-semibold text-lg text-black dark:text-white mb-5"
+              >
+                HTML
+              </h2>
+
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <span
+        class="bg-primary m-2 inline-block rounded py-1 px-2 text-sm font-semibold text-white"
+      >
+        Primary
+      </span>
+      <span
+        class="border-primary text-primary m-2 inline-block rounded border py-1 px-2 text-sm font-semibold"
+      >
+        Primary
+      </span>
+      <span
+        class="bg-primary m-2 inline-block rounded-full py-1 px-3 text-sm font-semibold text-white"
+      >
+        Primary
+      </span>
+      <span
+        class="border-primary text-primary m-2 inline-block rounded-full border py-1 px-3 text-sm font-semibold"
+      >
+        Primary
+      </span>
+
+      <span
+        class="border-primary bg-primary text-primary m-2 inline-block rounded-full border bg-opacity-5 py-1 px-3 text-sm font-semibold"
+      >
+        Primary
+      </span>
+
+      <span
+        class="border-primary bg-primary text-primary m-2 inline-block rounded border bg-opacity-5 py-1 px-2 text-sm font-semibold"
+      >
+        Primary
+      </span>
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+
+          <!-- Badge Item -->
+          <div
+            class="rounded-md shadow-2 bg-white dark:bg-boxdark mt-10"
+          >
+            <div
+              class="px-9 py-3.5 border-b border-stroke dark:border-strokedark"
+            >
+              <h3
+                class="font-medium text-lg text-black dark:text-white"
+              >
+                Danger Bage
+              </h3>
+            </div>
+
+            <div class="p-9">
+              <span
+                class="bg-danger m-2 inline-block rounded py-1 px-2 text-sm font-semibold text-white"
+              >
+                Danger
+              </span>
+              <span
+                class="border-danger text-danger m-2 inline-block rounded border py-1 px-2 text-sm font-semibold"
+              >
+                Danger
+              </span>
+              <span
+                class="bg-danger m-2 inline-block rounded-full py-1 px-3 text-sm font-semibold text-white"
+              >
+                Danger
+              </span>
+              <span
+                class="border-danger text-danger m-2 inline-block rounded-full border py-1 px-3 text-sm font-semibold"
+              >
+                Danger
+              </span>
+
+              <span
+                class="border-danger bg-danger text-danger m-2 inline-block rounded-full border bg-opacity-5 py-1 px-3 text-sm font-semibold"
+              >
+                Danger
+              </span>
+
+              <span
+                class="border-danger bg-danger text-danger m-2 inline-block rounded border bg-opacity-5 py-1 px-2 text-sm font-semibold"
+              >
+                Danger
+              </span>
+            </div>
+
+            <div
+              class="p-9 border-t border-stroke dark:border-strokedark"
+            >
+              <h2
+                class="font-semibold text-lg text-black dark:text-white mb-5"
+              >
+                HTML
+              </h2>
+
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <span
+        class="bg-danger m-2 inline-block rounded py-1 px-2 text-sm font-semibold text-white"
+      >
+        Danger
+      </span>
+      <span
+        class="border-danger text-danger m-2 inline-block rounded border py-1 px-2 text-sm font-semibold"
+      >
+        Danger
+      </span>
+      <span
+        class="bg-danger m-2 inline-block rounded-full py-1 px-3 text-sm font-semibold text-white"
+      >
+        Danger
+      </span>
+      <span
+        class="border-danger text-danger m-2 inline-block rounded-full border py-1 px-3 text-sm font-semibold"
+      >
+        Danger
+      </span>
+
+      <span
+        class="border-danger bg-danger text-danger m-2 inline-block rounded-full border bg-opacity-5 py-1 px-3 text-sm font-semibold"
+      >
+        Danger
+      </span>
+
+      <span
+        class="border-danger bg-danger text-danger m-2 inline-block rounded border bg-opacity-5 py-1 px-2 text-sm font-semibold"
+      >
+        Danger
+      </span>
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+
+          <!-- Badge Item -->
+          <div
+            class="rounded-md shadow-2 bg-white dark:bg-boxdark mt-10"
+          >
+            <div
+              class="px-9 py-3.5 border-b border-stroke dark:border-strokedark"
+            >
+              <h3
+                class="font-medium text-lg text-black dark:text-white"
+              >
+                Warning Bage
+              </h3>
+            </div>
+
+            <div class="p-9">
+              <span
+                class="bg-warning m-2 inline-block rounded py-1 px-2 text-sm font-semibold text-black"
+              >
+                Warning
+              </span>
+              <span
+                class="border-warning text-warning m-2 inline-block rounded border py-1 px-2 text-sm font-semibold"
+              >
+                Warning
+              </span>
+              <span
+                class="bg-warning m-2 inline-block rounded-full py-1 px-3 text-sm font-semibold text-black"
+              >
+                Warning
+              </span>
+              <span
+                class="border-warning text-warning m-2 inline-block rounded-full border py-1 px-3 text-sm font-semibold"
+              >
+                Warning
+              </span>
+
+              <span
+                class="border-warning bg-warning text-warning m-2 inline-block rounded-full border bg-opacity-5 py-1 px-3 text-sm font-semibold"
+              >
+                Warning
+              </span>
+
+              <span
+                class="border-warning bg-warning text-warning m-2 inline-block rounded border bg-opacity-5 py-1 px-2 text-sm font-semibold"
+              >
+                Warning
+              </span>
+            </div>
+
+            <div
+              class="p-9 border-t border-stroke dark:border-strokedark"
+            >
+              <h2
+                class="font-semibold text-lg text-black dark:text-white mb-5"
+              >
+                HTML
+              </h2>
+
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <span
+        class="bg-warning m-2 inline-block rounded py-1 px-2 text-sm font-semibold text-black"
+      >
+        Warning
+      </span>
+      <span
+        class="border-warning text-warning m-2 inline-block rounded border py-1 px-2 text-sm font-semibold"
+      >
+        Warning
+      </span>
+      <span
+        class="bg-warning m-2 inline-block rounded-full py-1 px-3 text-sm font-semibold text-black"
+      >
+        Warning
+      </span>
+      <span
+        class="border-warning text-warning m-2 inline-block rounded-full border py-1 px-3 text-sm font-semibold"
+      >
+        Warning
+      </span>
+
+      <span
+        class="border-warning bg-warning text-warning m-2 inline-block rounded-full border bg-opacity-5 py-1 px-3 text-sm font-semibold"
+      >
+        Warning
+      </span>
+
+      <span
+        class="border-warning bg-warning text-warning m-2 inline-block rounded border bg-opacity-5 py-1 px-2 text-sm font-semibold"
+      >
+        Warning
+      </span>
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+    <!-- ====== Back To Top Start ===== -->
+    <include src="./partials/scrolltop.html" />
+    <!-- ====== Back To Top End ===== -->
+  </body>
+</html>

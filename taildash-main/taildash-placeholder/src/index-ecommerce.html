@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      eCommerce Dashboard | Taildash - Tailwind CSS Admin Dashboard Template
+    </title>
+  </head>
+  <body
+    x-data="{ page: 'ecommerce', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'ud-dark ud-text-bodydark ud-bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="ud-overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Header Start ===== -->
+      <include src="./partials/header.html" />
+      <!-- ===== Header End ===== -->
+
+      <!-- ===== Main Content Start ===== -->
+      <main class="lg:ud-pl-72.5 ud-pt-26 lg:ud-pt-22.5">
+        <div class="ud-p-4 md:ud-p-6 2xl:ud-p-11">
+          <div
+            class="ud-flex ud-flex-col xl:ud-flex-row ud-gap-4 md:ud-gap-6 2xl:ud-gap-7.5"
+          >
+            <!-- ====== Chart Three Start -->
+            <include src="./partials/chart-03.html" />
+            <!-- ====== Chart Three End -->
+
+            <!-- ====== Chart Two Start -->
+            <include src="./partials/chart-02.html" />
+            <!-- ====== Chart Two End -->
+
+            <!-- ====== Data Stats Start -->
+            <div class="ud-flex ud-flex-col ud-gap-5.5">
+              <!-- Data Stats Item -->
+              <div
+                class="ud-relative ud-rounded-lg ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-white dark:ud-bg-boxdark ud-p-7.5"
+              >
+                <div class="ud-flex ud-items-center ud-gap-6">
+                  <div
+                    class="ud-flex ud-items-center ud-justify-center ud-w-15 ud-h-15 ud-rounded-full ud-bg-primary"
+                  >
+                    <svg
+                      width="30"
+                      height="30"
+                      viewBox="0 0 30 30"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M15 0C15.8332 0 16.5086 0.685278 16.5086 1.53061V28.4694C16.5086 29.3147 15.8332 30 15 30C14.1668 30 13.4914 29.3147 13.4914 28.4694V1.53061C13.4914 0.685278 14.1668 0 15 0Z"
+                        fill="white"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M7.92909 6.60152C9.00419 5.51075 10.4623 4.89796 11.9828 4.89796H21.0345C21.8677 4.89796 22.5431 5.58324 22.5431 6.42857C22.5431 7.27391 21.8677 7.95918 21.0345 7.95918H11.9828C11.2626 7.95918 10.5719 8.24945 10.0626 8.76613C9.55334 9.28282 9.26724 9.98359 9.26724 10.7143C9.26724 11.445 9.55334 12.1458 10.0626 12.6624C10.5719 13.1791 11.2626 13.4694 11.9828 13.4694H18.0172C19.5377 13.4694 20.9958 14.0822 22.0709 15.173C23.146 16.2637 23.75 17.7431 23.75 19.2857C23.75 20.8283 23.146 22.3077 22.0709 23.3985C20.9958 24.4893 19.5377 25.102 18.0172 25.102H7.75862C6.92543 25.102 6.25 24.4168 6.25 23.5714C6.25 22.7261 6.92543 22.0408 7.75862 22.0408H18.0172C18.7374 22.0408 19.4282 21.7505 19.9374 21.2339C20.4467 20.7172 20.7328 20.0164 20.7328 19.2857C20.7328 18.555 20.4467 17.8542 19.9374 17.3376C19.4281 16.8209 18.7374 16.5306 18.0172 16.5306H11.9828C10.4623 16.5306 9.00419 15.9178 7.92909 14.827C6.85399 13.7363 6.25 12.2569 6.25 10.7143C6.25 9.1717 6.85399 7.69229 7.92909 6.60152Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4
+                      class="ud-font-bold ud-text-title-md ud-text-black dark:ud-text-white ud-mb-1"
+                    >
+                      $4,350
+                    </h4>
+                    <p class="ud-text-sm">Earned this month</p>
+                  </div>
+                  <div class="ud-absolute ud-top-5 ud-right-5">
+                    <div x-data="{openDropDown: false}" class="ud-relative">
+                      <button @click="openDropDown = !openDropDown">
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 18 18"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M2.25 11.25C3.49264 11.25 4.5 10.2426 4.5 9C4.5 7.75736 3.49264 6.75 2.25 6.75C1.00736 6.75 0 7.75736 0 9C0 10.2426 1.00736 11.25 2.25 11.25Z"
+                            fill="#98A6AD"
+                          />
+                          <path
+                            d="M9 11.25C10.2426 11.25 11.25 10.2426 11.25 9C11.25 7.75736 10.2426 6.75 9 6.75C7.75736 6.75 6.75 7.75736 6.75 9C6.75 10.2426 7.75736 11.25 9 11.25Z"
+                            fill="#98A6AD"
+                          />
+                          <path
+                            d="M15.75 11.25C16.9926 11.25 18 10.2426 18 9C18 7.75736 16.9926 6.75 15.75 6.75C14.5074 6.75 13.5 7.75736 13.5 9C13.5 10.2426 14.5074 11.25 15.75 11.25Z"
+                            fill="#98A6AD"
+                          />
+                        </svg>
+                      </button>
+                      <div
+                        x-show="openDropDown"
+                        @click.outside="openDropDown = false"
+                        class="ud-absolute ud-right-0 ud-top-full ud-z-40 ud-w-37.5 ud-space-y-1 ud-rounded ud-shadow ud-bg-white dark:ud-bg-boxdark ud-border ud-border-stroke dark:ud-border-strokedark ud-p-2"
+                      >
+                        <button
+                          class="ud-w-full ud-rounded ud-py-1.5 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          class="ud-w-full ud-rounded ud-py-1.5 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Data Stats Item -->
+              <div
+                class="ud-relative ud-rounded-lg ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-white dark:ud-bg-boxdark ud-p-7.5"
+              >
+                <div class="ud-flex ud-items-center ud-gap-6">
+                  <div
+                    class="ud-flex ud-items-center ud-justify-center ud-w-15 ud-h-15 ud-rounded-full ud-bg-secondary"
+                  >
+                    <svg
+                      width="30"
+                      height="30"
+                      viewBox="0 0 30 30"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <g clip-path="url(#clip0_4199_1741)">
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M1.69453 19.1946C2.90269 17.9864 4.54132 17.3077 6.24993 17.3077H16.2499C17.9585 17.3077 19.5972 17.9864 20.8053 19.1946C22.0135 20.4028 22.6922 22.0414 22.6922 23.75V26.25C22.6922 27.0466 22.0465 27.6923 21.2499 27.6923C20.4534 27.6923 19.8076 27.0466 19.8076 26.25V23.75C19.8076 22.8064 19.4328 21.9015 18.7656 21.2343C18.0984 20.5671 17.1935 20.1923 16.2499 20.1923H6.24993C5.30637 20.1923 4.40145 20.5671 3.73426 21.2343C3.06706 21.9015 2.69223 22.8064 2.69223 23.75V26.25C2.69223 27.0466 2.04649 27.6923 1.24993 27.6923C0.45336 27.6923 -0.192383 27.0466 -0.192383 26.25V23.75C-0.192383 22.0414 0.486359 20.4028 1.69453 19.1946Z"
+                          fill="white"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M11.2499 5.19231C9.28507 5.19231 7.69223 6.78514 7.69223 8.75C7.69223 10.7149 9.28507 12.3077 11.2499 12.3077C13.2148 12.3077 14.8076 10.7149 14.8076 8.75C14.8076 6.78514 13.2148 5.19231 11.2499 5.19231ZM4.80762 8.75C4.80762 5.19201 7.69194 2.30769 11.2499 2.30769C14.8079 2.30769 17.6922 5.19201 17.6922 8.75C17.6922 12.308 14.8079 15.1923 11.2499 15.1923C7.69194 15.1923 4.80762 12.308 4.80762 8.75Z"
+                          fill="white"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M23.6033 18.5519C23.8024 17.7807 24.5891 17.3169 25.3604 17.516C26.7424 17.8728 27.9669 18.6786 28.8414 19.8067C29.7159 20.9349 30.191 22.3215 30.1921 23.7489V26.25C30.1921 27.0466 29.5464 27.6923 28.7498 27.6923C27.9532 27.6923 27.3075 27.0466 27.3075 26.25V23.7504C27.3067 22.9624 27.0444 22.1969 26.5616 21.5741C26.0786 20.9511 25.4024 20.5061 24.6392 20.309C23.8679 20.1099 23.4041 19.3232 23.6033 18.5519Z"
+                          fill="white"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M18.6025 3.55475C18.8001 2.78308 19.5859 2.31769 20.3575 2.51527C21.7433 2.87008 22.9716 3.67601 23.8487 4.80601C24.7258 5.936 25.2019 7.32579 25.2019 8.75625C25.2019 10.1867 24.7258 11.5765 23.8487 12.7065C22.9716 13.8365 21.7433 14.6424 20.3575 14.9972C19.5859 15.1948 18.8001 14.7294 18.6025 13.9578C18.405 13.1861 18.8704 12.4003 19.642 12.2028C20.4073 12.0068 21.0856 11.5618 21.57 10.9377C22.0544 10.3137 22.3173 9.54621 22.3173 8.75625C22.3173 7.9663 22.0544 7.1988 21.57 6.57478C21.0856 5.95075 20.4073 5.50568 19.642 5.30974C18.8704 5.11216 18.405 4.32643 18.6025 3.55475Z"
+                          fill="white"
+                        />
+                      </g>
+                      <defs>
+                        <clipPath id="clip0_4199_1741">
+                          <rect width="30" height="30" fill="white" />
+                        </clipPath>
+                      </defs>
+                    </svg>
+                  </div>
+                  <div>
+                    <h4
+                      class="ud-font-bold ud-text-title-md ud-text-black dark:ud-text-white ud-mb-1"
+                    >
+                      583
+                    </h4>
+                    <p class="ud-text-sm">New Clients</p>
+                  </div>
+                  <div class="ud-absolute ud-top-5 ud-right-5">
+                    <div x-data="{openDropDown: false}" class="ud-relative">
+                      <button @click="openDropDown = !openDropDown">
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 18 18"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M2.25 11.25C3.49264 11.25 4.5 10.2426 4.5 9C4.5 7.75736 3.49264 6.75 2.25 6.75C1.00736 6.75 0 7.75736 0 9C0 10.2426 1.00736 11.25 2.25 11.25Z"
+                            fill="#98A6AD"
+                          />
+                          <path
+                            d="M9 11.25C10.2426 11.25 11.25 10.2426 11.25 9C11.25 7.75736 10.2426 6.75 9 6.75C7.75736 6.75 6.75 7.75736 6.75 9C6.75 10.2426 7.75736 11.25 9 11.25Z"
+                            fill="#98A6AD"
+                          />
+                          <path
+                            d="M15.75 11.25C16.9926 11.25 18 10.2426 18 9C18 7.75736 16.9926 6.75 15.75 6.75C14.5074 6.75 13.5 7.75736 13.5 9C13.5 10.2426 14.5074 11.25 15.75 11.25Z"
+                            fill="#98A6AD"
+                          />
+                        </svg>
+                      </button>
+                      <div
+                        x-show="openDropDown"
+                        @click.outside="openDropDown = false"
+                        class="ud-absolute ud-right-0 ud-top-full ud-z-40 ud-w-37.5 ud-space-y-1 ud-rounded ud-shadow ud-bg-white dark:ud-bg-boxdark ud-border ud-border-stroke dark:ud-border-strokedark ud-p-2"
+                      >
+                        <button
+                          class="ud-w-full ud-rounded ud-py-1.5 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          class="ud-w-full ud-rounded ud-py-1.5 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Data Stats Item -->
+              <div
+                class="ud-relative ud-rounded-lg ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-white dark:ud-bg-boxdark ud-p-7.5"
+              >
+                <div class="ud-flex ud-items-center ud-gap-6">
+                  <div
+                    class="ud-flex ud-items-center ud-justify-center ud-w-15 ud-h-15 ud-rounded-full ud-bg-meta-6"
+                  >
+                    <svg
+                      width="30"
+                      height="30"
+                      viewBox="0 0 30 30"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M11.6324 26.5803C11.7874 26.5803 11.9131 26.4547 11.9131 26.2997C11.9131 26.1447 11.7874 26.0191 11.6324 26.0191C11.4775 26.0191 11.3518 26.1447 11.3518 26.2997C11.3518 26.4547 11.4775 26.5803 11.6324 26.5803ZM9.10693 26.2997C9.10693 24.9049 10.2376 23.7742 11.6324 23.7742C13.0272 23.7742 14.158 24.9049 14.158 26.2997C14.158 27.6945 13.0272 28.8252 11.6324 28.8252C10.2376 28.8252 9.10693 27.6945 9.10693 26.2997Z"
+                        fill="white"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M23.9796 26.5803C24.1346 26.5803 24.2602 26.4547 24.2602 26.2997C24.2602 26.1447 24.1346 26.0191 23.9796 26.0191C23.8246 26.0191 23.699 26.1447 23.699 26.2997C23.699 26.4547 23.8246 26.5803 23.9796 26.5803ZM21.4541 26.2997C21.4541 24.9049 22.5848 23.7742 23.9796 23.7742C25.3744 23.7742 26.5051 24.9049 26.5051 26.2997C26.5051 27.6945 25.3744 28.8252 23.9796 28.8252C22.5848 28.8252 21.4541 27.6945 21.4541 26.2997Z"
+                        fill="white"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M1.25 3.85179C1.25 3.0769 1.87817 2.44873 2.65306 2.44873H7.14285C7.81159 2.44873 8.38738 2.9207 8.51863 3.57643L9.41621 8.06097H27.3469C27.7651 8.06097 28.1614 8.24748 28.428 8.56966C28.6945 8.89184 28.8035 9.31612 28.7251 9.72687L26.9272 19.1547C26.7604 19.9945 26.3036 20.7488 25.6366 21.2857C24.9736 21.8194 24.145 22.1044 23.2942 22.0916H12.4078C11.557 22.1044 10.7284 21.8194 10.0654 21.2857C9.39888 20.7491 8.94219 19.9954 8.77515 19.1563C8.77504 19.1557 8.77494 19.1552 8.77484 19.1547L6.90146 9.79482C6.89286 9.75924 6.88561 9.72312 6.87979 9.68653L5.99279 5.25485H2.65306C1.87817 5.25485 1.25 4.62668 1.25 3.85179ZM9.97785 10.8671L11.5272 18.608C11.5657 18.8018 11.6711 18.9759 11.825 19.0998C11.9789 19.2237 12.1715 19.2895 12.369 19.2857L12.3959 19.2855H23.3061L23.333 19.2857C23.5305 19.2895 23.7231 19.2237 23.877 19.0998C24.0298 18.9768 24.1349 18.8043 24.174 18.6121L25.651 10.8671H9.97785Z"
+                        fill="white"
+                      />
+                    </svg>
+                  </div>
+                  <div>
+                    <h4
+                      class="ud-font-bold ud-text-title-md ud-text-black dark:ud-text-white ud-mb-1"
+                    >
+                      3259
+                    </h4>
+                    <p class="ud-text-sm">New Sales</p>
+                  </div>
+                  <div class="ud-absolute ud-top-5 ud-right-5">
+                    <div x-data="{openDropDown: false}" class="ud-relative">
+                      <button @click="openDropDown = !openDropDown">
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 18 18"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M2.25 11.25C3.49264 11.25 4.5 10.2426 4.5 9C4.5 7.75736 3.49264 6.75 2.25 6.75C1.00736 6.75 0 7.75736 0 9C0 10.2426 1.00736 11.25 2.25 11.25Z"
+                            fill="#98A6AD"
+                          />
+                          <path
+                            d="M9 11.25C10.2426 11.25 11.25 10.2426 11.25 9C11.25 7.75736 10.2426 6.75 9 6.75C7.75736 6.75 6.75 7.75736 6.75 9C6.75 10.2426 7.75736 11.25 9 11.25Z"
+                            fill="#98A6AD"
+                          />
+                          <path
+                            d="M15.75 11.25C16.9926 11.25 18 10.2426 18 9C18 7.75736 16.9926 6.75 15.75 6.75C14.5074 6.75 13.5 7.75736 13.5 9C13.5 10.2426 14.5074 11.25 15.75 11.25Z"
+                            fill="#98A6AD"
+                          />
+                        </svg>
+                      </button>
+                      <div
+                        x-show="openDropDown"
+                        @click.outside="openDropDown = false"
+                        class="ud-absolute ud-right-0 ud-top-full ud-z-40 ud-w-37.5 ud-space-y-1 ud-rounded ud-shadow ud-bg-white dark:ud-bg-boxdark ud-border ud-border-stroke dark:ud-border-strokedark ud-p-2"
+                      >
+                        <button
+                          class="ud-w-full ud-rounded ud-py-1.5 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          class="ud-w-full ud-rounded ud-py-1.5 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- ====== Data Stats End -->
+          </div>
+
+          <!-- Product Statistics Start -->
+          <div class="ud-mt-6 2xl:ud-mt-10">
+            <h4
+              class="ud-font-semibold ud-text-title-md ud-text-black dark:ud-text-white ud-mb-1.5"
+            >
+              Top Products
+            </h4>
+            <p class="ud-text-sm ud-mb-4 lg:ud-mb-6">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
+              ultrices lectus sem.
+            </p>
+
+            <div
+              class="ud-rounded-lg ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-white dark:ud-bg-boxdark"
+            >
+              <!-- ====== Table Section Start -->
+              <div class="ud-max-w-full ud-overflow-x-auto">
+                <table class="ud-w-full ud-table-auto">
+                  <thead>
+                    <tr
+                      class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+                    >
+                      <th class="ud-min-w-75 ud-py-5 ud-pl-8 ud-pr-4">
+                        <p
+                          class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                        >
+                          Product Name
+                        </p>
+                      </th>
+                      <th class="ud-min-w-22.5 ud-py-5 ud-px-4">
+                        <p
+                          class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                        >
+                          Category
+                        </p>
+                      </th>
+                      <th class="ud-min-w-22.5 ud-py-5 ud-px-4">
+                        <p
+                          class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                        >
+                          Price
+                        </p>
+                      </th>
+                      <th class="ud-min-w-22.5 ud-py-5 ud-px-4">
+                        <p
+                          class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                        >
+                          Sold
+                        </p>
+                      </th>
+                      <th class="ud-min-w-22.5 ud-py-5 ud-pl-4 ud-pr-8">
+                        <p
+                          class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                        >
+                          Profit
+                        </p>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+                    >
+                      <td class="ud-py-4.5 ud-pl-6 ud-pr-3">
+                        <div class="ud-flex ud-items-center">
+                          <label
+                            for="checkbox-1"
+                            class="ud-cursor-pointer ud-select-none ud-flex"
+                          >
+                            <div class="ud-relative">
+                              <input
+                                type="checkbox"
+                                id="checkbox-1"
+                                class="ud-tableCheckbox ud-sr-only"
+                              />
+                              <div
+                                class="ud-box ud-mr-4 ud-h-5 ud-w-5 ud-flex ud-items-center ud-justify-center ud-rounded-[3px] ud-border-[.5px] ud-border-stroke dark:ud-border-strokedark ud-bg-gray-2 dark:ud-bg-boxdark-2 ud-text-white"
+                              >
+                                <span class="ud-opacity-0">
+                                  <svg
+                                    width="14"
+                                    height="14"
+                                    viewBox="0 0 10 10"
+                                    class="ud-stroke-white"
+                                  >
+                                    <path
+                                      fill-rule="evenodd"
+                                      clip-rule="evenodd"
+                                      d="M8.62796 2.20602C8.79068 2.36874 8.79068 2.63256 8.62796 2.79528L4.04463 7.37861C3.88191 7.54133 3.61809 7.54133 3.45537 7.37861L1.37204 5.29528C1.20932 5.13256 1.20932 4.86874 1.37204 4.70602C1.53476 4.5433 1.79858 4.5433 1.96129 4.70602L3.75 6.49473L8.03871 2.20602C8.20142 2.0433 8.46524 2.0433 8.62796 2.20602Z"
+                                      fill=""
+                                    />
+                                  </svg>
+                                </span>
+                              </div>
+                            </div>
+                          </label>
+                          <div class="ud-flex ud-items-center">
+                            <img
+                              src="https://cdn.tailgrids.com/2.0/image/application/images/tables/table-12/image-01.jpg"
+                              alt="product"
+                              class="ud-mr-4 ud-h-12.5 ud-w-15 ud-rounded ud-object-cover ud-object-center"
+                            />
+                            <p class="ud-text-sm">Apple Watch Series 7</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="ud-py-4.5 ud-px-4">
+                        <p class="ud-text-sm">Electronics</p>
+                      </td>
+                      <td class="ud-py-4.5 ud-px-4">
+                        <p class="ud-text-sm">$269</p>
+                      </td>
+                      <td class="ud-py-4.5 ud-px-4">
+                        <p class="ud-text-sm">22</p>
+                      </td>
+                      <td class="ud-py-4.5 ud-px-4">
+                        <p class="ud-text-sm">$45</p>
+                      </td>
+                      <td class="ud-py-4.5 ud-pl-4 ud-pr-6">
+                        <div
+                          x-data="{openDropDown: false}"
+                          class="ud-relative ud-text-right"
+                        >
+                          <button @click="openDropDown = !openDropDown">
+                            <svg
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+                                stroke="#637381"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                              <path
+                                d="M6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12Z"
+                                stroke="#637381"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                              <path
+                                d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z"
+                                stroke="#637381"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                          </button>
+                          <div
+                            x-show="openDropDown"
+                            @click.outside="openDropDown = false"
+                            class="ud-absolute ud-right-0 ud-top-full ud-z-40 ud-w-40 ud-space-y-1 ud-rounded ud-shadow ud-bg-white dark:ud-bg-boxdark ud-border ud-border-stroke dark:ud-border-strokedark ud-p-2"
+                          >
+                            <button
+                              class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr
+                      class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+                    >
+                      <td class="ud-py-4.5 ud-pl-6 ud-pr-3">
+                        <div class="ud-flex ud-items-center">
+                          <label
+                            for="checkbox-2"
+                            class="ud-cursor-pointer ud-select-none ud-flex"
+                          >
+                            <div class="ud-relative">
+                              <input
+                                type="checkbox"
+                                id="checkbox-2"
+                                class="ud-tableCheckbox ud-sr-only"
+                              />
+                              <div
+                                class="ud-box ud-mr-4 ud-h-5 ud-w-5 ud-flex ud-items-center ud-justify-center ud-rounded-[3px] ud-border-[.5px] ud-border-stroke dark:ud-border-strokedark ud-bg-gray-2 dark:ud-bg-boxdark-2 ud-text-white"
+                              >
+                                <span class="ud-opacity-0">
+                                  <svg
+                                    width="14"
+                                    height="14"
+                                    viewBox="0 0 10 10"
+                                    class="ud-stroke-white"
+                                  >
+                                    <path
+                                      fill-rule="evenodd"
+                                      clip-rule="evenodd"
+                                      d="M8.62796 2.20602C8.79068 2.36874 8.79068 2.63256 8.62796 2.79528L4.04463 7.37861C3.88191 7.54133 3.61809 7.54133 3.45537 7.37861L1.37204 5.29528C1.20932 5.13256 1.20932 4.86874 1.37204 4.70602C1.53476 4.5433 1.79858 4.5433 1.96129 4.70602L3.75 6.49473L8.03871 2.20602C8.20142 2.0433 8.46524 2.0433 8.62796 2.20602Z"
+                                      fill=""
+                                    />
+                                  </svg>
+                                </span>
+                              </div>
+                            </div>
+                          </label>
+                          <div class="ud-flex ud-items-center">
+                            <img
+                              src="https://cdn.tailgrids.com/2.0/image/application/images/tables/table-12/image-02.jpg"
+                              alt="product"
+                              class="ud-mr-4 ud-h-12.5 ud-w-15 ud-rounded ud-object-cover ud-object-center"
+                            />
+                            <p class="ud-text-sm">Macbook Pro M1</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="ud-py-4.5 ud-px-4">
+                        <p class="ud-text-sm">Electronics</p>
+                      </td>
+                      <td class="ud-py-4.5 ud-px-4">
+                        <p class="ud-text-sm">$546</p>
+                      </td>
+                      <td class="ud-py-4.5 ud-px-4">
+                        <p class="ud-text-sm">34</p>
+                      </td>
+                      <td class="ud-py-4.5 ud-px-4">
+                        <p class="ud-text-sm">$125</p>
+                      </td>
+                      <td class="ud-py-4.5 ud-pl-4 ud-pr-6">
+                        <div
+                          x-data="{openDropDown: false}"
+                          class="ud-relative ud-text-right"
+                        >
+                          <button @click="openDropDown = !openDropDown">
+                            <svg
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+                                stroke="#637381"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                              <path
+                                d="M6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12Z"
+                                stroke="#637381"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                              <path
+                                d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z"
+                                stroke="#637381"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                          </button>
+                          <div
+                            x-show="openDropDown"
+                            @click.outside="openDropDown = false"
+                            class="ud-absolute ud-right-0 ud-top-full ud-z-40 ud-w-40 ud-space-y-1 ud-rounded ud-shadow ud-bg-white dark:ud-bg-boxdark ud-border ud-border-stroke dark:ud-border-strokedark ud-p-2"
+                          >
+                            <button
+                              class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr
+                      class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+                    >
+                      <td class="ud-py-4.5 ud-pl-6 ud-pr-3">
+                        <div class="ud-flex ud-items-center">
+                          <label
+                            for="checkbox-3"
+                            class="ud-cursor-pointer ud-select-none ud-flex"
+                          >
+                            <div class="ud-relative">
+                              <input
+                                type="checkbox"
+                                id="checkbox-3"
+                                class="ud-tableCheckbox ud-sr-only"
+                              />
+                              <div
+                                class="ud-box ud-mr-4 ud-h-5 ud-w-5 ud-flex ud-items-center ud-justify-center ud-rounded-[3px] ud-border-[.5px] ud-border-stroke dark:ud-border-strokedark ud-bg-gray-2 dark:ud-bg-boxdark-2 ud-text-white"
+                              >
+                                <span class="ud-opacity-0">
+                                  <svg
+                                    width="14"
+                                    height="14"
+                                    viewBox="0 0 10 10"
+                                    class="ud-stroke-white"
+                                  >
+                                    <path
+                                      fill-rule="evenodd"
+                                      clip-rule="evenodd"
+                                      d="M8.62796 2.20602C8.79068 2.36874 8.79068 2.63256 8.62796 2.79528L4.04463 7.37861C3.88191 7.54133 3.61809 7.54133 3.45537 7.37861L1.37204 5.29528C1.20932 5.13256 1.20932 4.86874 1.37204 4.70602C1.53476 4.5433 1.79858 4.5433 1.96129 4.70602L3.75 6.49473L8.03871 2.20602C8.20142 2.0433 8.46524 2.0433 8.62796 2.20602Z"
+                                      fill=""
+                                    />
+                                  </svg>
+                                </span>
+                              </div>
+                            </div>
+                          </label>
+                          <div class="ud-flex ud-items-center">
+                            <img
+                              src="https://cdn.tailgrids.com/2.0/image/application/images/tables/table-12/image-03.jpg"
+                              alt="product"
+                              class="ud-mr-4 ud-h-12.5 ud-w-15 ud-rounded ud-object-cover ud-object-center"
+                            />
+                            <p class="ud-text-sm">Dell Inspiron 15</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="ud-py-4.5 ud-px-4">
+                        <p class="ud-text-sm">Electronics</p>
+                      </td>
+                      <td class="ud-py-4.5 ud-px-4">
+                        <p class="ud-text-sm">$444</p>
+                      </td>
+                      <td class="ud-py-4.5 ud-px-4">
+                        <p class="ud-text-sm">64</p>
+                      </td>
+                      <td class="ud-py-4.5 ud-px-4">
+                        <p class="ud-text-sm">$247</p>
+                      </td>
+                      <td class="ud-py-4.5 ud-pl-4 ud-pr-6">
+                        <div
+                          x-data="{openDropDown: false}"
+                          class="ud-relative ud-text-right"
+                        >
+                          <button @click="openDropDown = !openDropDown">
+                            <svg
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+                                stroke="#637381"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                              <path
+                                d="M6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12Z"
+                                stroke="#637381"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                              <path
+                                d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z"
+                                stroke="#637381"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                          </button>
+                          <div
+                            x-show="openDropDown"
+                            @click.outside="openDropDown = false"
+                            class="ud-absolute ud-right-0 ud-top-full ud-z-40 ud-w-40 ud-space-y-1 ud-rounded ud-shadow ud-bg-white dark:ud-bg-boxdark ud-border ud-border-stroke dark:ud-border-strokedark ud-p-2"
+                          >
+                            <button
+                              class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr
+                      class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+                    >
+                      <td class="ud-py-4.5 ud-pl-6 ud-pr-3">
+                        <div class="ud-flex ud-items-center">
+                          <label
+                            for="checkbox-4"
+                            class="ud-cursor-pointer ud-select-none ud-flex"
+                          >
+                            <div class="ud-relative">
+                              <input
+                                type="checkbox"
+                                id="checkbox-4"
+                                class="ud-tableCheckbox ud-sr-only"
+                              />
+                              <div
+                                class="ud-box ud-mr-4 ud-h-5 ud-w-5 ud-flex ud-items-center ud-justify-center ud-rounded-[3px] ud-border-[.5px] ud-border-stroke dark:ud-border-strokedark ud-bg-gray-2 dark:ud-bg-boxdark-2 ud-text-white"
+                              >
+                                <span class="ud-opacity-0">
+                                  <svg
+                                    width="14"
+                                    height="14"
+                                    viewBox="0 0 10 10"
+                                    class="ud-stroke-white"
+                                  >
+                                    <path
+                                      fill-rule="evenodd"
+                                      clip-rule="evenodd"
+                                      d="M8.62796 2.20602C8.79068 2.36874 8.79068 2.63256 8.62796 2.79528L4.04463 7.37861C3.88191 7.54133 3.61809 7.54133 3.45537 7.37861L1.37204 5.29528C1.20932 5.13256 1.20932 4.86874 1.37204 4.70602C1.53476 4.5433 1.79858 4.5433 1.96129 4.70602L3.75 6.49473L8.03871 2.20602C8.20142 2.0433 8.46524 2.0433 8.62796 2.20602Z"
+                                      fill=""
+                                    />
+                                  </svg>
+                                </span>
+                              </div>
+                            </div>
+                          </label>
+                          <div class="ud-flex ud-items-center">
+                            <img
+                              src="https://cdn.tailgrids.com/2.0/image/application/images/tables/table-12/image-04.jpg"
+                              alt="product"
+                              class="ud-mr-4 ud-h-12.5 ud-w-15 ud-rounded ud-object-cover ud-object-center"
+                            />
+                            <p class="ud-text-sm">HP Probook 450</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td class="ud-py-4.5 ud-px-4">
+                        <p class="ud-text-sm">Electronics</p>
+                      </td>
+                      <td class="ud-py-4.5 ud-px-4">
+                        <p class="ud-text-sm">$499</p>
+                      </td>
+                      <td class="ud-py-4.5 ud-px-4">
+                        <p class="ud-text-sm">72</p>
+                      </td>
+                      <td class="ud-py-4.5 ud-px-4">
+                        <p class="ud-text-sm">$103</p>
+                      </td>
+                      <td class="ud-py-4.5 ud-pl-4 ud-pr-6">
+                        <div
+                          x-data="{openDropDown: false}"
+                          class="ud-relative ud-text-right"
+                        >
+                          <button @click="openDropDown = !openDropDown">
+                            <svg
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+                                stroke="#637381"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                              <path
+                                d="M6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12Z"
+                                stroke="#637381"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                              <path
+                                d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z"
+                                stroke="#637381"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                              />
+                            </svg>
+                          </button>
+                          <div
+                            x-show="openDropDown"
+                            @click.outside="openDropDown = false"
+                            class="ud-absolute ud-right-0 ud-bottom-full ud-z-40 ud-w-40 ud-space-y-1 ud-rounded ud-shadow ud-bg-white dark:ud-bg-boxdark ud-border ud-border-stroke dark:ud-border-strokedark ud-p-2"
+                          >
+                            <button
+                              class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                            >
+                              Edit
+                            </button>
+                            <button
+                              class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- ====== Table Section End -->
+            </div>
+          </div>
+          <!-- Product Statistics End -->
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+    <!-- ====== Back To Top Start ===== -->
+    <include src="./partials/scrolltop.html" />
+    <!-- ====== Back To Top End ===== -->
+  </body>
+</html>

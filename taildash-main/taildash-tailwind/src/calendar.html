@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar | Taildash - Tailwind CSS Admin Dashboard Template</title>
+  </head>
+  <body
+    x-data="{ page: 'calendar', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Header Start ===== -->
+      <include src="./partials/header.html" />
+      <!-- ===== Header End ===== -->
+
+      <!-- ===== Main Content Start ===== -->
+      <main class="lg:pl-72.5 pt-26 lg:pt-22.5">
+        <div class="p-4 md:p-6 2xl:p-11">
+          <!-- ====== Calendar Section Start -->
+          <div class="mx-auto max-w-280">
+            <div
+              class="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-between gap-6 rounded-lg border border-stroke dark:border-strokedark bg-white dark:bg-boxdark mb-7.5 p-4 pl-5"
+            >
+              <div class="flex items-center gap-5">
+                <p
+                  class="font-semibold text-black dark:text-white sm:text-xl"
+                >
+                  December 2025
+                </p>
+
+                <div class="flex items-center gap-2">
+                  <button>
+                    <svg
+                      width="8"
+                      height="14"
+                      viewBox="0 0 8 14"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M7.70711 0.292893C8.09763 0.683418 8.09763 1.31658 7.70711 1.70711L2.41421 7L7.70711 12.2929C8.09763 12.6834 8.09763 13.3166 7.70711 13.7071C7.31658 14.0976 6.68342 14.0976 6.29289 13.7071L0.292893 7.70711C-0.0976323 7.31658 -0.0976323 6.68342 0.292893 6.29289L6.29289 0.292893C6.68342 -0.0976311 7.31658 -0.0976311 7.70711 0.292893Z"
+                        fill="#637381"
+                      />
+                    </svg>
+                  </button>
+                  <button>
+                    <svg
+                      width="8"
+                      height="14"
+                      viewBox="0 0 8 14"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M0.292893 13.7071C-0.0976311 13.3166 -0.0976311 12.6834 0.292893 12.2929L5.58579 7L0.292893 1.7071C-0.097631 1.31658 -0.097631 0.683415 0.292893 0.292892C0.683418 -0.0976334 1.31658 -0.0976333 1.70711 0.292892L7.70711 6.29289C8.09763 6.68342 8.09763 7.31658 7.70711 7.70711L1.70711 13.7071C1.31658 14.0976 0.683418 14.0976 0.292893 13.7071Z"
+                        fill="#637381"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-4">
+                <div
+                  class="relative z-20 inline-flex rounded bg-white dark:bg-boxdark"
+                >
+                  <select
+                    name=""
+                    id=""
+                    class="relative z-20 h-11 appearance-none rounded border border-stroke dark:border-strokedark bg-transparent pr-9 pl-5 outline-none"
+                  >
+                    <option value="">Week</option>
+                    <option value="">Month</option>
+                    <option value="">Year</option>
+                  </select>
+                  <span
+                    class="absolute right-4 top-1/2 z-10 -translate-y-1/2"
+                  >
+                    <svg
+                      width="11"
+                      height="6"
+                      viewBox="0 0 11 6"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.49652 5.57195C5.29784 5.57195 5.09917 5.50239 4.93361 5.34588L0.496609 0.963677C0.380718 0.841949 0.380718 0.650662 0.480054 0.528935C0.595945 0.407207 0.778061 0.407207 0.893953 0.511545L5.33096 4.89375C5.41374 4.9807 5.56274 4.9807 5.66208 4.89375L10.0991 0.511545C10.215 0.389817 10.3971 0.407207 10.513 0.528935C10.6289 0.650662 10.6123 0.841949 10.4964 0.963677L6.05942 5.32849C5.89386 5.485 5.69519 5.57195 5.49652 5.57195Z"
+                        fill="#212B36"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M4.65444 5.65773L0.212873 1.27101L0.208441 1.26636C-0.0635564 0.980663 -0.0621445 0.535609 0.170632 0.250361L0.180818 0.237879L0.191885 0.226255C0.463883 -0.0594399 0.887599 -0.0579557 1.15917 0.186543L1.16629 0.192953L5.49652 4.4697L9.81622 0.203348C10.1204 -0.109866 10.5585 -0.0286158 10.8011 0.226255C11.1055 0.545928 11.0287 1.01 10.7846 1.26636L10.7799 1.27131L6.3321 5.64672C6.10301 5.86329 5.8101 6 5.49652 6C5.20451 6 4.90666 5.89629 4.66099 5.66405L4.65444 5.65773ZM10.0991 0.511545L5.66208 4.89375C5.56274 4.9807 5.41374 4.9807 5.33096 4.89375L0.893953 0.511545C0.778061 0.407207 0.595945 0.407207 0.480054 0.528935C0.380718 0.650662 0.380718 0.841949 0.496609 0.963677L4.93361 5.34588C5.09917 5.50239 5.29784 5.57195 5.49652 5.57195C5.69519 5.57195 5.89386 5.485 6.05942 5.32849L10.4964 0.963677C10.6123 0.841949 10.6289 0.650662 10.513 0.528935C10.3971 0.407207 10.215 0.389817 10.0991 0.511545Z"
+                        fill="#212B36"
+                      />
+                    </svg>
+                  </span>
+                </div>
+
+                <div>
+                  <button
+                    class="flex items-center gap-2.5 rounded-md font-medium text-white bg-primary hover:shadow-1 py-3 px-4"
+                  >
+                    <svg
+                      class="fill-current"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M18.75 9.3125H10.7187V1.25C10.7187 0.875 10.4062 0.53125 10 0.53125C9.625 0.53125 9.28125 0.84375 9.28125 1.25V9.3125H1.25C0.875 9.3125 0.53125 9.625 0.53125 10.0312C0.53125 10.4062 0.84375 10.75 1.25 10.75H9.3125V18.75C9.3125 19.125 9.625 19.4687 10.0312 19.4687C10.4062 19.4687 10.75 19.1562 10.75 18.75V10.7187H18.75C19.125 10.7187 19.4687 10.4062 19.4687 10C19.4687 9.625 19.125 9.3125 18.75 9.3125Z"
+                        fill="white"
+                      />
+                    </svg>
+
+                    Add Event
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="w-full max-w-full bg-white dark:bg-boxdark">
+              <table class="w-full">
+                <thead>
+                  <tr class="grid grid-cols-7 rounded-t bg-primary text-white">
+                    <th
+                      class="flex items-center justify-center h-10 text-xs xl:text-sm p-1 xl:p-5 rounded-tl"
+                    >
+                      <span class="hidden lg:block"> Sunday </span>
+                      <span class="block lg:hidden"> Sun </span>
+                    </th>
+                    <th
+                      class="flex items-center justify-center h-10 text-xs xl:text-sm p-1 xl:p-5"
+                    >
+                      <span class="hidden lg:block"> Monday </span>
+                      <span class="block lg:hidden"> Mon </span>
+                    </th>
+                    <th
+                      class="flex items-center justify-center h-10 text-xs xl:text-sm p-1 xl:p-5"
+                    >
+                      <span class="hidden lg:block"> Tuesday </span>
+                      <span class="block lg:hidden"> Tue </span>
+                    </th>
+                    <th
+                      class="flex items-center justify-center h-10 text-xs xl:text-sm p-1 xl:p-5"
+                    >
+                      <span class="hidden lg:block"> Wednesday </span>
+                      <span class="block lg:hidden"> Wed </span>
+                    </th>
+                    <th
+                      class="flex items-center justify-center h-10 text-xs xl:text-sm p-1 xl:p-5"
+                    >
+                      <span class="hidden lg:block"> Thursday </span>
+                      <span class="block lg:hidden"> Thur </span>
+                    </th>
+                    <th
+                      class="flex items-center justify-center h-10 text-xs xl:text-sm p-1 xl:p-5"
+                    >
+                      <span class="hidden lg:block"> Friday </span>
+                      <span class="block lg:hidden"> Fri </span>
+                    </th>
+                    <th
+                      class="flex items-center justify-center h-10 text-xs xl:text-sm p-1 xl:p-5 rounded-tr"
+                    >
+                      <span class="hidden lg:block"> Saturday </span>
+                      <span class="block lg:hidden"> Sat </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Line 1 -->
+                  <tr class="grid grid-cols-7">
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >1</span
+                      >
+                      <div
+                        class="group md:h-30 h-16 w-full flex-grow cursor-pointer py-1"
+                      >
+                        <span class="group-hover:text-primary md:hidden">
+                          More
+                        </span>
+                        <div
+                          class="event invisible flex flex-col absolute left-2 z-99 mb-1 w-[200%] rounded border-l-[3px] border-primary bg-gray dark:bg-boxdark-2 px-3 py-1 text-left opacity-0 group-hover:visible group-hover:opacity-100 md:visible md:w-[190%] md:opacity-100"
+                        >
+                          <span
+                            class="event-name text-sm font-semibold text-black dark:text-white"
+                          >
+                            Redesign Website
+                          </span>
+                          <span
+                            class="time text-sm font-medium text-black dark:text-white"
+                          >
+                            1 Dec - 2 Dec
+                          </span>
+                        </div>
+                      </div>
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >2</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >3</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >4</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >5</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >6</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >7</span
+                      >
+                    </td>
+                  </tr>
+                  <!-- Line 1 -->
+                  <!-- Line 2 -->
+                  <tr class="grid grid-cols-7">
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >8</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >9</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >10</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >11</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >12</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >13</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-1 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >14</span
+                      >
+                    </td>
+                  </tr>
+                  <!-- Line 2 -->
+                  <!-- Line 3 -->
+                  <tr class="grid grid-cols-7">
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >15</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >16</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >17</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >18</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >19</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >20</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-1 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >21</span
+                      >
+                    </td>
+                  </tr>
+                  <!-- Line 3 -->
+                  <!-- Line 4 -->
+                  <tr class="grid grid-cols-7">
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >22</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >23</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >24</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >25</span
+                      >
+                      <div
+                        class="group md:h-30 h-16 w-full flex-grow cursor-pointer py-1"
+                      >
+                        <span class="group-hover:text-primary md:hidden">
+                          More
+                        </span>
+                        <div
+                          class="event invisible flex flex-col absolute left-2 z-99 mb-1 w-[300%] rounded border-l-[3px] border-primary bg-gray dark:bg-boxdark-2 px-3 py-1 text-left opacity-0 group-hover:visible group-hover:opacity-100 md:visible md:w-[290%] md:opacity-100"
+                        >
+                          <span
+                            class="event-name text-sm font-semibold text-black dark:text-white"
+                          >
+                            App Design
+                          </span>
+                          <span
+                            class="time text-sm font-medium text-black dark:text-white"
+                          >
+                            25 Dec - 27 Dec
+                          </span>
+                        </div>
+                      </div>
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >26</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >27</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-1 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >28</span
+                      >
+                    </td>
+                  </tr>
+                  <!-- Line 4 -->
+                  <!-- Line 5 -->
+                  <tr class="grid grid-cols-7">
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >29</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >30</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >31</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >1</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >2</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-2 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >3</span
+                      >
+                    </td>
+                    <td
+                      class="relative cursor-pointer h-20 md:h-25 xl:h-40 border border-stroke dark:border-strokedark transition ease duration-500 hover:bg-gray dark:hover:bg-boxdark-2 p-1 md:p-5"
+                    >
+                      <span
+                        class="font-semibold text-black dark:text-white"
+                        >4</span
+                      >
+                    </td>
+                  </tr>
+                  <!-- Line 5 -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- ====== Calendar Section End -->
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+    <!-- ====== Back To Top Start ===== -->
+    <include src="./partials/scrolltop.html" />
+    <!-- ====== Back To Top End ===== -->
+  </body>
+</html>

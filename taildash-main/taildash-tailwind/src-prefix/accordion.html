@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Accordion | Taildash - Tailwind CSS Admin Dashboard Template</title>
+  </head>
+  <body
+    x-data="{ page: 'accordion', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'ud-dark ud-text-bodydark ud-bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="ud-overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Header Start ===== -->
+      <include src="./partials/header.html" />
+      <!-- ===== Header End ===== -->
+
+      <!-- ===== Main Content Start ===== -->
+      <main class="lg:ud-pl-72.5 ud-pt-26 lg:ud-pt-22.5">
+        <div class="ud-p-4 md:ud-p-6 2xl:ud-p-11">
+          <h2
+            class="ud-font-semibold ud-text-title-md ud-text-black dark:ud-text-white ud-mb-2"
+          >
+            Accordion
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit cras
+            ultrices lectus sem.
+          </p>
+
+          <div
+            class="ud-rounded-md ud-shadow-2 ud-bg-white dark:ud-bg-boxdark ud-mt-10"
+          >
+            <div class="ud-p-9">
+              <!-- ====== FAQ Section Start -->
+              <div class="ud-flex ud-flex-col ud-gap-6">
+                <div
+                  x-data="{openFaq: false,}"
+                  class="single-faq ud-w-full ud-rounded-md ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-white dark:ud-bg-boxdark-2 ud-p-4 sm:ud-p-8 lg:px-ud-6 xl:px-ud-8"
+                >
+                  <button
+                    class="faq-btn ud-flex ud-w-full ud-text-left"
+                    @click="openFaq = !openFaq"
+                  >
+                    <div
+                      class="ud-mr-5 ud-h-10 ud-w-10 ud-flex ud-items-center ud-justify-center ud-rounded-lg ud-bg-primary ud-bg-opacity-5 ud-text-primary"
+                    >
+                      <svg
+                        width="17"
+                        height="10"
+                        viewBox="0 0 17 10"
+                        class="icon ud-fill-current"
+                      >
+                        <path
+                          d="M7.28687 8.43257L7.28679 8.43265L7.29496 8.43985C7.62576 8.73124 8.02464 8.86001 8.41472 8.86001C8.83092 8.86001 9.22376 8.69083 9.53447 8.41713L9.53454 8.41721L9.54184 8.41052L15.7631 2.70784L15.7691 2.70231L15.7749 2.69659C16.0981 2.38028 16.1985 1.80579 15.7981 1.41393C15.4803 1.1028 14.9167 1.00854 14.5249 1.38489L8.41472 7.00806L2.29995 1.38063L2.29151 1.37286L2.28271 1.36548C1.93092 1.07036 1.38469 1.06804 1.03129 1.41393L1.01755 1.42738L1.00488 1.44184C0.69687 1.79355 0.695778 2.34549 1.0545 2.69659L1.05999 2.70196L1.06565 2.70717L7.28687 8.43257Z"
+                          fill="#3056D3"
+                          stroke="#3056D3"
+                        />
+                      </svg>
+                    </div>
+                    <div class="ud-w-full">
+                      <h4
+                        class="ud-text-lg ud-font-semibold ud-text-black dark:ud-text-white"
+                      >
+                        How long we deliver your first blog post?
+                      </h4>
+                    </div>
+                  </button>
+                  <div x-show="openFaq" class="faq-content ud-pl-15.5">
+                    <p class="ud-py-3 ud-leading-relaxed">
+                      It takes 2-3 weeks to get your first blog post ready. That
+                      includes the in-depth research & creation of your monthly
+                      content marketing strategy that we do before writing your
+                      first blog post, Ipsum available .
+                    </p>
+                  </div>
+                </div>
+
+                <div
+                  x-data="{openFaq: false,}"
+                  class="single-faq ud-w-full ud-rounded-md ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-white dark:ud-bg-boxdark-2 ud-p-4 sm:ud-p-8 lg:px-ud-6 xl:px-ud-8"
+                >
+                  <button
+                    class="faq-btn ud-flex ud-w-full ud-text-left"
+                    @click="openFaq = !openFaq"
+                  >
+                    <div
+                      class="ud-mr-5 ud-h-10 ud-w-10 ud-flex ud-items-center ud-justify-center ud-rounded-lg ud-bg-primary ud-bg-opacity-5 ud-text-primary"
+                    >
+                      <svg
+                        width="17"
+                        height="10"
+                        viewBox="0 0 17 10"
+                        class="icon ud-fill-current"
+                      >
+                        <path
+                          d="M7.28687 8.43257L7.28679 8.43265L7.29496 8.43985C7.62576 8.73124 8.02464 8.86001 8.41472 8.86001C8.83092 8.86001 9.22376 8.69083 9.53447 8.41713L9.53454 8.41721L9.54184 8.41052L15.7631 2.70784L15.7691 2.70231L15.7749 2.69659C16.0981 2.38028 16.1985 1.80579 15.7981 1.41393C15.4803 1.1028 14.9167 1.00854 14.5249 1.38489L8.41472 7.00806L2.29995 1.38063L2.29151 1.37286L2.28271 1.36548C1.93092 1.07036 1.38469 1.06804 1.03129 1.41393L1.01755 1.42738L1.00488 1.44184C0.69687 1.79355 0.695778 2.34549 1.0545 2.69659L1.05999 2.70196L1.06565 2.70717L7.28687 8.43257Z"
+                          fill="#3056D3"
+                          stroke="#3056D3"
+                        />
+                      </svg>
+                    </div>
+                    <div class="ud-w-full">
+                      <h4
+                        class="ud-text-lg ud-font-semibold ud-text-black dark:ud-text-white"
+                      >
+                        How long we deliver your first blog post?
+                      </h4>
+                    </div>
+                  </button>
+                  <div x-show="openFaq" class="faq-content ud-pl-15.5">
+                    <p class="ud-py-3 ud-leading-relaxed">
+                      It takes 2-3 weeks to get your first blog post ready. That
+                      includes the in-depth research & creation of your monthly
+                      content marketing strategy that we do before writing your
+                      first blog post, Ipsum available .
+                    </p>
+                  </div>
+                </div>
+
+                <div
+                  x-data="{openFaq: false,}"
+                  class="single-faq ud-w-full ud-rounded-md ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-white dark:ud-bg-boxdark-2 ud-p-4 sm:ud-p-8 lg:px-ud-6 xl:px-ud-8"
+                >
+                  <button
+                    class="faq-btn ud-flex ud-w-full ud-text-left"
+                    @click="openFaq = !openFaq"
+                  >
+                    <div
+                      class="ud-mr-5 ud-h-10 ud-w-10 ud-flex ud-items-center ud-justify-center ud-rounded-lg ud-bg-primary ud-bg-opacity-5 ud-text-primary"
+                    >
+                      <svg
+                        width="17"
+                        height="10"
+                        viewBox="0 0 17 10"
+                        class="icon ud-fill-current"
+                      >
+                        <path
+                          d="M7.28687 8.43257L7.28679 8.43265L7.29496 8.43985C7.62576 8.73124 8.02464 8.86001 8.41472 8.86001C8.83092 8.86001 9.22376 8.69083 9.53447 8.41713L9.53454 8.41721L9.54184 8.41052L15.7631 2.70784L15.7691 2.70231L15.7749 2.69659C16.0981 2.38028 16.1985 1.80579 15.7981 1.41393C15.4803 1.1028 14.9167 1.00854 14.5249 1.38489L8.41472 7.00806L2.29995 1.38063L2.29151 1.37286L2.28271 1.36548C1.93092 1.07036 1.38469 1.06804 1.03129 1.41393L1.01755 1.42738L1.00488 1.44184C0.69687 1.79355 0.695778 2.34549 1.0545 2.69659L1.05999 2.70196L1.06565 2.70717L7.28687 8.43257Z"
+                          fill="#3056D3"
+                          stroke="#3056D3"
+                        />
+                      </svg>
+                    </div>
+                    <div class="ud-w-full">
+                      <h4
+                        class="ud-text-lg ud-font-semibold ud-text-black dark:ud-text-white"
+                      >
+                        How long we deliver your first blog post?
+                      </h4>
+                    </div>
+                  </button>
+                  <div x-show="openFaq" class="faq-content ud-pl-15.5">
+                    <p class="ud-py-3 ud-leading-relaxed">
+                      It takes 2-3 weeks to get your first blog post ready. That
+                      includes the in-depth research & creation of your monthly
+                      content marketing strategy that we do before writing your
+                      first blog post, Ipsum available .
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <!-- ====== FAQ Section End -->
+            </div>
+
+            <div
+              class="ud-p-9 ud-border-t ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h2
+                class="ud-font-semibold ud-text-lg ud-text-black dark:ud-text-white ud-mb-5"
+              >
+                HTML
+              </h2>
+
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <!-- ====== FAQ Section Start -->
+      <div class="ud-flex ud-flex-col ud-gap-6">
+        <div x-data="{openFaq: false,}" class="single-faq ud-w-full ud-rounded-md ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-white dark:ud-bg-boxdark-2 ud-p-4 sm:ud-p-8 lg:px-ud-6 xl:px-ud-8">
+          <button
+            class="faq-btn ud-flex ud-w-full ud-text-left"
+            @click="openFaq = !openFaq"
+          >
+            <div class="ud-mr-5 ud-h-10 ud-w-10 ud-flex ud-items-center ud-justify-center ud-rounded-lg ud-bg-primary ud-bg-opacity-5 ud-text-primary">
+              <svg
+                width="17"
+                height="10"
+                viewBox="0 0 17 10"
+                class="icon ud-fill-current"
+              >
+                <path
+                  d="M7.28687 8.43257L7.28679 8.43265L7.29496 8.43985C7.62576 8.73124 8.02464 8.86001 8.41472 8.86001C8.83092 8.86001 9.22376 8.69083 9.53447 8.41713L9.53454 8.41721L9.54184 8.41052L15.7631 2.70784L15.7691 2.70231L15.7749 2.69659C16.0981 2.38028 16.1985 1.80579 15.7981 1.41393C15.4803 1.1028 14.9167 1.00854 14.5249 1.38489L8.41472 7.00806L2.29995 1.38063L2.29151 1.37286L2.28271 1.36548C1.93092 1.07036 1.38469 1.06804 1.03129 1.41393L1.01755 1.42738L1.00488 1.44184C0.69687 1.79355 0.695778 2.34549 1.0545 2.69659L1.05999 2.70196L1.06565 2.70717L7.28687 8.43257Z"
+                  fill="#3056D3"
+                  stroke="#3056D3"
+                />
+              </svg>
+            </div>
+            <div class="ud-w-full">
+              <h4 class="ud-text-lg ud-font-semibold ud-text-black dark:ud-text-white">
+                How long we deliver your first blog post?
+              </h4>
+            </div>
+          </button>
+          <div x-show="openFaq" class="faq-content ud-pl-15.5">
+            <p class="ud-py-3 ud-leading-relaxed">
+              It takes 2-3 weeks to get your first blog post ready. That
+              includes the in-depth research & creation of your monthly content
+              marketing strategy that we do before writing your first blog post,
+              Ipsum available .
+            </p>
+          </div>
+        </div>
+
+        <div x-data="{openFaq: false,}" class="single-faq ud-w-full ud-rounded-md ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-white dark:ud-bg-boxdark-2 ud-p-4 sm:ud-p-8 lg:px-ud-6 xl:px-ud-8">
+          <button
+            class="faq-btn ud-flex ud-w-full ud-text-left"
+            @click="openFaq = !openFaq"
+          >
+            <div class="ud-mr-5 ud-h-10 ud-w-10 ud-flex ud-items-center ud-justify-center ud-rounded-lg ud-bg-primary ud-bg-opacity-5 ud-text-primary">
+              <svg
+                width="17"
+                height="10"
+                viewBox="0 0 17 10"
+                class="icon ud-fill-current"
+              >
+                <path
+                  d="M7.28687 8.43257L7.28679 8.43265L7.29496 8.43985C7.62576 8.73124 8.02464 8.86001 8.41472 8.86001C8.83092 8.86001 9.22376 8.69083 9.53447 8.41713L9.53454 8.41721L9.54184 8.41052L15.7631 2.70784L15.7691 2.70231L15.7749 2.69659C16.0981 2.38028 16.1985 1.80579 15.7981 1.41393C15.4803 1.1028 14.9167 1.00854 14.5249 1.38489L8.41472 7.00806L2.29995 1.38063L2.29151 1.37286L2.28271 1.36548C1.93092 1.07036 1.38469 1.06804 1.03129 1.41393L1.01755 1.42738L1.00488 1.44184C0.69687 1.79355 0.695778 2.34549 1.0545 2.69659L1.05999 2.70196L1.06565 2.70717L7.28687 8.43257Z"
+                  fill="#3056D3"
+                  stroke="#3056D3"
+                />
+              </svg>
+            </div>
+            <div class="ud-w-full">
+              <h4 class="ud-text-lg ud-font-semibold ud-text-black dark:ud-text-white">
+                How long we deliver your first blog post?
+              </h4>
+            </div>
+          </button>
+          <div x-show="openFaq" class="faq-content ud-pl-15.5">
+            <p class="ud-py-3 ud-leading-relaxed">
+              It takes 2-3 weeks to get your first blog post ready. That
+              includes the in-depth research & creation of your monthly content
+              marketing strategy that we do before writing your first blog post,
+              Ipsum available .
+            </p>
+          </div>
+        </div>
+
+        <div x-data="{openFaq: false,}" class="single-faq ud-w-full ud-rounded-md ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-white dark:ud-bg-boxdark-2 ud-p-4 sm:ud-p-8 lg:px-ud-6 xl:px-ud-8">
+          <button
+            class="faq-btn ud-flex ud-w-full ud-text-left"
+            @click="openFaq = !openFaq"
+          >
+            <div class="ud-mr-5 ud-h-10 ud-w-10 ud-flex ud-items-center ud-justify-center ud-rounded-lg ud-bg-primary ud-bg-opacity-5 ud-text-primary">
+              <svg
+                width="17"
+                height="10"
+                viewBox="0 0 17 10"
+                class="icon ud-fill-current"
+              >
+                <path
+                  d="M7.28687 8.43257L7.28679 8.43265L7.29496 8.43985C7.62576 8.73124 8.02464 8.86001 8.41472 8.86001C8.83092 8.86001 9.22376 8.69083 9.53447 8.41713L9.53454 8.41721L9.54184 8.41052L15.7631 2.70784L15.7691 2.70231L15.7749 2.69659C16.0981 2.38028 16.1985 1.80579 15.7981 1.41393C15.4803 1.1028 14.9167 1.00854 14.5249 1.38489L8.41472 7.00806L2.29995 1.38063L2.29151 1.37286L2.28271 1.36548C1.93092 1.07036 1.38469 1.06804 1.03129 1.41393L1.01755 1.42738L1.00488 1.44184C0.69687 1.79355 0.695778 2.34549 1.0545 2.69659L1.05999 2.70196L1.06565 2.70717L7.28687 8.43257Z"
+                  fill="#3056D3"
+                  stroke="#3056D3"
+                />
+              </svg>
+            </div>
+            <div class="ud-w-full">
+              <h4 class="ud-text-lg ud-font-semibold ud-text-black dark:ud-text-white">
+                How long we deliver your first blog post?
+              </h4>
+            </div>
+          </button>
+          <div x-show="openFaq" class="faq-content ud-pl-15.5">
+            <p class="ud-py-3 ud-leading-relaxed">
+              It takes 2-3 weeks to get your first blog post ready. That
+              includes the in-depth research & creation of your monthly content
+              marketing strategy that we do before writing your first blog post,
+              Ipsum available .
+            </p>
+          </div>
+        </div>
+      </div>
+      <!-- ====== FAQ Section End -->
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+    <!-- ====== Back To Top Start ===== -->
+    <include src="./partials/scrolltop.html" />
+    <!-- ====== Back To Top End ===== -->
+  </body>
+</html>

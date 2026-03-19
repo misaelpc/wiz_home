@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply ud-custom-scrollbar-2;
+  }
+
+  body {
+    @apply ud-font-inter ud-font-normal ud-text-base ud-text-body ud-bg-whiten ud-relative ud-z-1 ud-custom-scrollbar;
+  }
+}
+
+@layer components {
+  .ud-dropdown {
+    @apply ud-absolute ud-flex ud-flex-col ud-gap-1 ud-shadow-6 ud-rounded-lg ud-bg-white dark:ud-bg-boxdark;
+  }
+
+  .ud-loader-circle {
+    @apply ud-block ud-relative ud-left-1/2 ud-top-1/2 ud-w-37.5 ud-h-37.5 -ud-mt-19 ud-mr-0 ud-mb-0 -ud-ml-19 ud-rounded-full ud-border-[3px] ud-border-transparent ud-border-t-primary ud-animate-spin-2 before:ud-absolute before:ud-top-1.5 before:ud-left-1.5 before:ud-bottom-1.5 before:ud-right-1.5 before:ud-rounded-full before:ud-border-[3px] before:ud-border-transparent before:ud-border-t-primary before:ud-animate-spin-3 after:ud-absolute after:ud-top-4 after:ud-left-4 after:ud-bottom-4 after:ud-right-4 after:ud-rounded-full after:ud-border-[3px] after:ud-border-transparent after:ud-border-t-primary after:ud-animate-spin-1.5;
+  }
+
+}
+
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .ud-no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .ud-no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .ud-img-white {
+    filter: invert(0%) sepia(96%) saturate(15%) hue-rotate(249deg)
+      brightness(100%) contrast(105%);
+  }
+
+  /* Scrollbar Styling */
+  ::-webkit-scrollbar {
+    @apply ud-w-2 ud-h-2;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply ud-rounded-lg;
+      -webkit-border-radius: 8px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply ud-rounded-lg;
+      -webkit-border-radius: 8px;
+  }
+  
+  .ud-custom-scrollbar::-webkit-scrollbar-track {
+    @apply ud-bg-stroke dark:ud-bg-strokedark;
+  }
+  
+  .ud-custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply ud-bg-primary;
+  }
+  
+  .ud-custom-scrollbar-2::-webkit-scrollbar-track {
+    @apply ud-bg-[#f1f1f1] dark:ud-bg-strokedark;
+  }
+  
+  .ud-custom-scrollbar-2::-webkit-scrollbar-thumb {
+    @apply ud-bg-[#c1c1c1];
+  }
+}
+
+/* third-party libraries CSS */
+pre[class*=language-] {
+  @apply ud-p-0 ud-rounded-md ud-bg-gray-3 dark:ud-bg-black-2 ud-h-50;
+}
+code[class*=language-], pre[class*=language-] {
+  @apply dark:ud-text-white;
+  text-shadow: none;
+}
+div.code-toolbar > .toolbar {
+  @apply !-ud-top-15 !ud-opacity-100;
+}
+div.code-toolbar > .toolbar > .toolbar-item > button.copy-to-clipboard-button {
+  @apply ud-flex ud-items-center ud-gap-2 ud-rounded-md ud-font-medium ud-text-sm ud-shadow-none ud-text-white ud-bg-primary ud-py-2 ud-px-4
+  before:ud-content-icon-copy hover:ud-text-white hover:ud-bg-[#274CC5] focus:ud-text-white;
+}
+
+.ud-tableCheckbox:checked ~ div span {
+  @apply ud-opacity-100;
+}
+.ud-tableCheckbox:checked ~ div {
+  @apply ud-bg-primary ud-border-primary;
+}
+
+.apexcharts-legend-text {
+  @apply !ud-text-body dark:!ud-text-bodydark;
+}
+.apexcharts-text {
+  @apply !ud-fill-body dark:!ud-fill-bodydark;
+}
+.apexcharts-xcrosshairs {
+  @apply !ud-fill-stroke dark:!ud-fill-strokedark;
+}
+
+[x-cloak] { display: none !important; }

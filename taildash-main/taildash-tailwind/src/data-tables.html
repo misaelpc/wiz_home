@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Data Tables | Taildash - Tailwind CSS Admin Dashboard Template
+    </title>
+  </head>
+  <body
+    x-data="{ page: 'dataTables', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Header Start ===== -->
+      <include src="./partials/header.html" />
+      <!-- ===== Header End ===== -->
+
+      <!-- ===== Main Content Start ===== -->
+      <main class="lg:pl-72.5 pt-26 lg:pt-22.5">
+        <div class="p-4 md:p-6 2xl:p-11">
+          <!-- Data Tables Start -->
+          <h2
+            class="font-semibold text-title-md text-black dark:text-white mb-2"
+          >
+            Data Tables Style 1
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit cras
+            ultrices lectus sem.
+          </p>
+
+          <div
+            class="rounded-md shadow-2 bg-white dark:bg-boxdark my-10"
+          >
+            <div class="p-9">
+              <div
+                class="rounded-lg border border-stroke dark:border-strokedark bg-white dark:bg-boxdark"
+              >
+                <div class="max-w-full overflow-x-auto">
+                  <table class="w-full table-auto rounded-lg">
+                    <thead>
+                      <tr
+                        class="border-b border-stroke dark:border-strokedark"
+                      >
+                        <th class="min-w-[260px] py-5 pr-4 pl-9">
+                          <p
+                            class="text-left font-medium text-black dark:text-white"
+                          >
+                            Customer
+                          </p>
+                        </th>
+                        <th class="min-w-[260px] py-5 px-4">
+                          <p
+                            class="text-left font-medium text-black dark:text-white"
+                          >
+                            Product
+                          </p>
+                        </th>
+                        <th class="min-w-[160px] py-5 px-4">
+                          <p
+                            class="text-left font-medium text-black dark:text-white"
+                          >
+                            Order Number
+                          </p>
+                        </th>
+                        <th class="min-w-[170px] py-5 px-4">
+                          <p
+                            class="text-left font-medium text-black dark:text-white"
+                          >
+                            Date
+                          </p>
+                        </th>
+                        <th class="min-w-[150px] py-5 px-4">
+                          <p
+                            class="text-left font-medium text-black dark:text-white"
+                          >
+                            Status
+                          </p>
+                        </th>
+                        <th class="min-w-[200px] py-5 pl-4 pr-9">
+                          <p
+                            class="text-right font-medium text-black dark:text-white"
+                          >
+                            Confirmation
+                          </p>
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr
+                        class="border-b border-stroke dark:border-strokedark"
+                      >
+                        <td class="py-6 pr-4 pl-9">
+                          <h5 class="font-medium">Musharof Chowdhury</h5>
+                          <p class="text-sm">musharof@gmail.com</p>
+                        </td>
+
+                        <td class="py-6 px-4">
+                          <h5 class="font-medium">Apple Macbook Pro M1</h5>
+                          <p class="text-sm">8/256 GB</p>
+                        </td>
+
+                        <td class="py-6 px-4">
+                          <p>#WE234343</p>
+                        </td>
+                        <td class="py-6 px-4">
+                          <p>25 Dec 2024</p>
+                        </td>
+                        <td class="py-6 px-4">
+                          <p
+                            class="inline-flex items-center justify-center rounded-full bg-warning/10 py-1 px-3.5 text-sm font-medium text-warning"
+                          >
+                            <span
+                              class="mr-2 block h-2 w-2 rounded-full bg-warning"
+                            ></span>
+                            Pending
+                          </p>
+                        </td>
+                        <td class="py-6 pl-4 pr-9 text-right">
+                          <button
+                            class="inline-flex items-center justify-center rounded border border-primary py-2 px-4 font-medium text-primary hover:bg-primary hover:text-white ease-in-out duration-300"
+                          >
+                            Confirm Order
+                          </button>
+                        </td>
+                      </tr>
+
+                      <tr
+                        class="border-b border-stroke dark:border-strokedark"
+                      >
+                        <td class="py-6 pr-4 pl-9">
+                          <h5 class="font-medium">Shafiq Hammad</h5>
+                          <p class="text-sm">shafiq@gmail.com</p>
+                        </td>
+
+                        <td class="py-6 px-4">
+                          <h5 class="font-medium">iPhone 13 Pro Max</h5>
+                          <p class="text-sm">4/256 GB</p>
+                        </td>
+
+                        <td class="py-6 px-4">
+                          <p>#WE234343</p>
+                        </td>
+                        <td class="py-6 px-4">
+                          <p>25 Dec 2024</p>
+                        </td>
+                        <td class="py-6 px-4">
+                          <p
+                            class="inline-flex items-center justify-center rounded-full bg-warning/10 py-1 px-3.5 text-sm font-medium text-warning"
+                          >
+                            <span
+                              class="mr-2 block h-2 w-2 rounded-full bg-warning"
+                            ></span>
+                            Pending
+                          </p>
+                        </td>
+                        <td class="py-6 pl-4 pr-9 text-right">
+                          <button
+                            class="inline-flex items-center justify-center rounded border border-primary py-2 px-4 font-medium text-primary hover:bg-primary hover:text-white ease-in-out duration-300"
+                          >
+                            Confirm Order
+                          </button>
+                        </td>
+                      </tr>
+
+                      <tr
+                        class="border-b border-stroke dark:border-strokedark"
+                      >
+                        <td class="py-6 pr-4 pl-9">
+                          <h5 class="font-medium">Naimur Rahman</h5>
+                          <p class="text-sm">naim@gmail.com</p>
+                        </td>
+
+                        <td class="py-6 px-4">
+                          <h5 class="font-medium">Apple watch series 7</h5>
+                        </td>
+
+                        <td class="py-6 px-4">
+                          <p>#WE234343</p>
+                        </td>
+                        <td class="py-6 px-4">
+                          <p>25 Dec 2024</p>
+                        </td>
+                        <td class="py-6 px-4">
+                          <p
+                            class="inline-flex items-center justify-center rounded-full bg-danger/10 py-1 px-3.5 text-sm font-medium text-danger"
+                          >
+                            <span
+                              class="mr-2 block h-2 w-2 rounded-full bg-danger"
+                            ></span>
+                            Cancelled
+                          </p>
+                        </td>
+                        <td class="py-6 pl-4 pr-9 text-right"></td>
+                      </tr>
+
+                      <tr class="border-b border-transparent">
+                        <td class="py-6 pr-4 pl-9">
+                          <h5 class="font-medium">Jhon Smith</h5>
+                          <p class="text-sm">smith@gmail.com</p>
+                        </td>
+
+                        <td class="py-6 px-4">
+                          <h5 class="font-medium">Apple Macbook air M1</h5>
+                          <p class="text-sm">8/256 GB</p>
+                        </td>
+
+                        <td class="py-6 px-4">
+                          <p>#WE234343</p>
+                        </td>
+                        <td class="py-6 px-4">
+                          <p>25 Dec 2024</p>
+                        </td>
+                        <td class="py-6 px-4">
+                          <p
+                            class="inline-flex items-center justify-center rounded-full bg-success/10 py-1 px-3.5 text-sm font-medium text-success"
+                          >
+                            <span
+                              class="mr-2 block h-2 w-2 rounded-full bg-success"
+                            ></span>
+                            Shipped
+                          </p>
+                        </td>
+                        <td class="py-6 pl-4 pr-9 text-right"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="p-9 border-t border-stroke dark:border-strokedark"
+            >
+              <h2
+                class="font-semibold text-lg text-black dark:text-white mb-5"
+              >
+                HTML
+              </h2>
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <div class="rounded-lg border border-stroke dark:border-strokedark bg-white dark:bg-boxdark">
+        <div class="max-w-full overflow-x-auto">
+          <table class="w-full table-auto rounded-lg">
+            <thead>
+              <tr
+                class="border-b border-stroke dark:border-strokedark"
+              >
+                <th class="min-w-[260px] py-5 pr-4 pl-9">
+                  <p
+                    class="text-left font-medium text-black dark:text-white"
+                  >
+                    Customer
+                  </p>
+                </th>
+                <th class="min-w-[260px] py-5 px-4">
+                  <p
+                    class="text-left font-medium text-black dark:text-white"
+                  >
+                    Product
+                  </p>
+                </th>
+                <th class="min-w-[160px] py-5 px-4">
+                  <p
+                    class="text-left font-medium text-black dark:text-white"
+                  >
+                    Order Number
+                  </p>
+                </th>
+                <th class="min-w-[170px] py-5 px-4">
+                  <p
+                    class="text-left font-medium text-black dark:text-white"
+                  >
+                    Date
+                  </p>
+                </th>
+                <th class="min-w-[150px] py-5 px-4">
+                  <p
+                    class="text-left font-medium text-black dark:text-white"
+                  >
+                    Status
+                  </p>
+                </th>
+                <th class="min-w-[200px] py-5 pl-4 pr-9">
+                  <p
+                    class="text-right font-medium text-black dark:text-white"
+                  >
+                    Confirmation
+                  </p>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr
+                class="border-b border-stroke dark:border-strokedark"
+              >
+                <td class="py-6 pr-4 pl-9">
+                  <h5 class="font-medium">Musharof Chowdhury</h5>
+                  <p class="text-sm">musharof@gmail.com</p>
+                </td>
+
+                <td class="py-6 px-4">
+                  <h5 class="font-medium">Apple Macbook Pro M1</h5>
+                  <p class="text-sm">8/256 GB</p>
+                </td>
+
+                <td class="py-6 px-4">
+                  <p>#WE234343</p>
+                </td>
+                <td class="py-6 px-4">
+                  <p>25 Dec 2024</p>
+                </td>
+                <td class="py-6 px-4">
+                  <p
+                    class="inline-flex items-center justify-center rounded-full bg-warning/10 py-1 px-3.5 text-sm font-medium text-warning"
+                  >
+                    <span
+                      class="mr-2 block h-2 w-2 rounded-full bg-warning"
+                    ></span>
+                    Pending
+                  </p>
+                </td>
+                <td class="py-6 pl-4 pr-9 text-right">
+                  <button
+                    class="inline-flex items-center justify-center rounded border border-primary py-2 px-4 font-medium text-primary hover:bg-primary hover:text-white ease-in-out duration-300"
+                  >
+                    Confirm Order
+                  </button>
+                </td>
+              </tr>
+
+              <tr
+                class="border-b border-stroke dark:border-strokedark"
+              >
+                <td class="py-6 pr-4 pl-9">
+                  <h5 class="font-medium">Shafiq Hammad</h5>
+                  <p class="text-sm">shafiq@gmail.com</p>
+                </td>
+
+                <td class="py-6 px-4">
+                  <h5 class="font-medium">iPhone 13 Pro Max</h5>
+                  <p class="text-sm">4/256 GB</p>
+                </td>
+
+                <td class="py-6 px-4">
+                  <p>#WE234343</p>
+                </td>
+                <td class="py-6 px-4">
+                  <p>25 Dec 2024</p>
+                </td>
+                <td class="py-6 px-4">
+                  <p
+                    class="inline-flex items-center justify-center rounded-full bg-warning/10 py-1 px-3.5 text-sm font-medium text-warning"
+                  >
+                    <span
+                      class="mr-2 block h-2 w-2 rounded-full bg-warning"
+                    ></span>
+                    Pending
+                  </p>
+                </td>
+                <td class="py-6 pl-4 pr-9 text-right">
+                  <button
+                    class="inline-flex items-center justify-center rounded border border-primary py-2 px-4 font-medium text-primary hover:bg-primary hover:text-white ease-in-out duration-300"
+                  >
+                    Confirm Order
+                  </button>
+                </td>
+              </tr>
+
+              <tr
+                class="border-b border-stroke dark:border-strokedark"
+              >
+                <td class="py-6 pr-4 pl-9">
+                  <h5 class="font-medium">Naimur Rahman</h5>
+                  <p class="text-sm">naim@gmail.com</p>
+                </td>
+
+                <td class="py-6 px-4">
+                  <h5 class="font-medium">Apple watch series 7</h5>
+                </td>
+
+                <td class="py-6 px-4">
+                  <p>#WE234343</p>
+                </td>
+                <td class="py-6 px-4">
+                  <p>25 Dec 2024</p>
+                </td>
+                <td class="py-6 px-4">
+                  <p
+                    class="inline-flex items-center justify-center rounded-full bg-danger/10 py-1 px-3.5 text-sm font-medium text-danger"
+                  >
+                    <span
+                      class="mr-2 block h-2 w-2 rounded-full bg-danger"
+                    ></span>
+                    Cancelled
+                  </p>
+                </td>
+                <td class="py-6 pl-4 pr-9 text-right"></td>
+              </tr>
+
+              <tr class="border-b border-transparent">
+                <td class="py-6 pr-4 pl-9">
+                  <h5 class="font-medium">Jhon Smith</h5>
+                  <p class="text-sm">smith@gmail.com</p>
+                </td>
+
+                <td class="py-6 px-4">
+                  <h5 class="font-medium">Apple Macbook air M1</h5>
+                  <p class="text-sm">8/256 GB</p>
+                </td>
+
+                <td class="py-6 px-4">
+                  <p>#WE234343</p>
+                </td>
+                <td class="py-6 px-4">
+                  <p>25 Dec 2024</p>
+                </td>
+                <td class="py-6 px-4">
+                  <p
+                    class="inline-flex items-center justify-center rounded-full bg-success/10 py-1 px-3.5 text-sm font-medium text-success"
+                  >
+                    <span
+                      class="mr-2 block h-2 w-2 rounded-full bg-success"
+                    ></span>
+                    Shipped
+                  </p>
+                </td>
+                <td class="py-6 pl-4 pr-9 text-right"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+
+          <!-- Data Tables Start -->
+          <h2
+            class="font-semibold text-title-md text-black dark:text-white mb-2"
+          >
+            Data Tables Style 2
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit cras
+            ultrices lectus sem.
+          </p>
+
+          <div
+            class="rounded-md shadow-2 bg-white dark:bg-boxdark mt-10"
+          >
+            <div class="p-9">
+              <div
+                class="rounded-lg border border-stroke dark:border-strokedark bg-white dark:bg-boxdark"
+              >
+                <div class="max-w-full overflow-x-auto">
+                  <table class="w-full table-auto">
+                    <thead>
+                      <tr
+                        class="border-b border-stroke dark:border-strokedark"
+                      >
+                        <th class="min-w-75 py-5 pl-8 pr-4">
+                          <p
+                            class="text-left font-medium text-black dark:text-white"
+                          >
+                            Product Name
+                          </p>
+                        </th>
+                        <th class="min-w-22.5 py-5 px-4">
+                          <p
+                            class="text-left font-medium text-black dark:text-white"
+                          >
+                            Category
+                          </p>
+                        </th>
+                        <th class="min-w-22.5 py-5 px-4">
+                          <p
+                            class="text-left font-medium text-black dark:text-white"
+                          >
+                            Price
+                          </p>
+                        </th>
+                        <th class="min-w-22.5 py-5 px-4">
+                          <p
+                            class="text-left font-medium text-black dark:text-white"
+                          >
+                            Sold
+                          </p>
+                        </th>
+                        <th class="min-w-22.5 py-5 pl-4 pr-8">
+                          <p
+                            class="text-left font-medium text-black dark:text-white"
+                          >
+                            Profit
+                          </p>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        class="border-b border-stroke dark:border-strokedark"
+                      >
+                        <td class="py-4.5 pl-6 pr-3">
+                          <div class="flex items-center">
+                            <label
+                              for="checkbox-1"
+                              class="cursor-pointer select-none flex"
+                            >
+                              <div class="relative">
+                                <input
+                                  type="checkbox"
+                                  id="checkbox-1"
+                                  class="tableCheckbox sr-only"
+                                />
+                                <div
+                                  class="box mr-4 h-5 w-5 flex items-center justify-center rounded-[3px] border-[.5px] border-stroke dark:border-strokedark bg-gray-2 dark:bg-boxdark-2 text-white"
+                                >
+                                  <span class="opacity-0">
+                                    <svg
+                                      width="14"
+                                      height="14"
+                                      viewBox="0 0 10 10"
+                                      class="stroke-white"
+                                    >
+                                      <path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M8.62796 2.20602C8.79068 2.36874 8.79068 2.63256 8.62796 2.79528L4.04463 7.37861C3.88191 7.54133 3.61809 7.54133 3.45537 7.37861L1.37204 5.29528C1.20932 5.13256 1.20932 4.86874 1.37204 4.70602C1.53476 4.5433 1.79858 4.5433 1.96129 4.70602L3.75 6.49473L8.03871 2.20602C8.20142 2.0433 8.46524 2.0433 8.62796 2.20602Z"
+                                        fill=""
+                                      />
+                                    </svg>
+                                  </span>
+                                </div>
+                              </div>
+                            </label>
+                            <div class="flex items-center">
+                              <img
+                                src="https://cdn.tailgrids.com/2.0/image/application/images/tables/table-12/image-01.jpg"
+                                alt="product"
+                                class="mr-4 h-12.5 w-15 rounded object-cover object-center"
+                              />
+                              <p class="text-sm">Apple Watch Series 7</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="py-4.5 px-4">
+                          <p class="text-sm">Electronics</p>
+                        </td>
+                        <td class="py-4.5 px-4">
+                          <p class="text-sm">$269</p>
+                        </td>
+                        <td class="py-4.5 px-4">
+                          <p class="text-sm">22</p>
+                        </td>
+                        <td class="py-4.5 px-4">
+                          <p class="text-sm">$45</p>
+                        </td>
+                        <td class="py-4.5 pl-4 pr-6">
+                          <div
+                            x-data="{openDropDown: false}"
+                            class="relative text-right"
+                          >
+                            <button @click="openDropDown = !openDropDown">
+                              <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <path
+                                  d="M6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <path
+                                  d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                              </svg>
+                            </button>
+                            <div
+                              x-show="openDropDown"
+                              @click.outside="openDropDown = false"
+                              class="absolute right-0 top-full z-40 w-40 space-y-1 rounded shadow bg-white dark:bg-boxdark border border-stroke dark:border-strokedark p-2"
+                            >
+                              <button
+                                class="w-full rounded py-2 px-3 text-left text-sm hover:bg-gray-2 dark:hover:bg-graydark"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                class="w-full rounded py-2 px-3 text-left text-sm hover:bg-gray-2 dark:hover:bg-graydark"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        class="border-b border-stroke dark:border-strokedark"
+                      >
+                        <td class="py-4.5 pl-6 pr-3">
+                          <div class="flex items-center">
+                            <label
+                              for="checkbox-2"
+                              class="cursor-pointer select-none flex"
+                            >
+                              <div class="relative">
+                                <input
+                                  type="checkbox"
+                                  id="checkbox-2"
+                                  class="tableCheckbox sr-only"
+                                />
+                                <div
+                                  class="box mr-4 h-5 w-5 flex items-center justify-center rounded-[3px] border-[.5px] border-stroke dark:border-strokedark bg-gray-2 dark:bg-boxdark-2 text-white"
+                                >
+                                  <span class="opacity-0">
+                                    <svg
+                                      width="14"
+                                      height="14"
+                                      viewBox="0 0 10 10"
+                                      class="stroke-white"
+                                    >
+                                      <path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M8.62796 2.20602C8.79068 2.36874 8.79068 2.63256 8.62796 2.79528L4.04463 7.37861C3.88191 7.54133 3.61809 7.54133 3.45537 7.37861L1.37204 5.29528C1.20932 5.13256 1.20932 4.86874 1.37204 4.70602C1.53476 4.5433 1.79858 4.5433 1.96129 4.70602L3.75 6.49473L8.03871 2.20602C8.20142 2.0433 8.46524 2.0433 8.62796 2.20602Z"
+                                        fill=""
+                                      />
+                                    </svg>
+                                  </span>
+                                </div>
+                              </div>
+                            </label>
+                            <div class="flex items-center">
+                              <img
+                                src="https://cdn.tailgrids.com/2.0/image/application/images/tables/table-12/image-02.jpg"
+                                alt="product"
+                                class="mr-4 h-12.5 w-15 rounded object-cover object-center"
+                              />
+                              <p class="text-sm">Macbook Pro M1</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="py-4.5 px-4">
+                          <p class="text-sm">Electronics</p>
+                        </td>
+                        <td class="py-4.5 px-4">
+                          <p class="text-sm">$546</p>
+                        </td>
+                        <td class="py-4.5 px-4">
+                          <p class="text-sm">34</p>
+                        </td>
+                        <td class="py-4.5 px-4">
+                          <p class="text-sm">$125</p>
+                        </td>
+                        <td class="py-4.5 pl-4 pr-6">
+                          <div
+                            x-data="{openDropDown: false}"
+                            class="relative text-right"
+                          >
+                            <button @click="openDropDown = !openDropDown">
+                              <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <path
+                                  d="M6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <path
+                                  d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                              </svg>
+                            </button>
+                            <div
+                              x-show="openDropDown"
+                              @click.outside="openDropDown = false"
+                              class="absolute right-0 top-full z-40 w-40 space-y-1 rounded shadow bg-white dark:bg-boxdark border border-stroke dark:border-strokedark p-2"
+                            >
+                              <button
+                                class="w-full rounded py-2 px-3 text-left text-sm hover:bg-gray-2 dark:hover:bg-graydark"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                class="w-full rounded py-2 px-3 text-left text-sm hover:bg-gray-2 dark:hover:bg-graydark"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        class="border-b border-stroke dark:border-strokedark"
+                      >
+                        <td class="py-4.5 pl-6 pr-3">
+                          <div class="flex items-center">
+                            <label
+                              for="checkbox-3"
+                              class="cursor-pointer select-none flex"
+                            >
+                              <div class="relative">
+                                <input
+                                  type="checkbox"
+                                  id="checkbox-3"
+                                  class="tableCheckbox sr-only"
+                                />
+                                <div
+                                  class="box mr-4 h-5 w-5 flex items-center justify-center rounded-[3px] border-[.5px] border-stroke dark:border-strokedark bg-gray-2 dark:bg-boxdark-2 text-white"
+                                >
+                                  <span class="opacity-0">
+                                    <svg
+                                      width="14"
+                                      height="14"
+                                      viewBox="0 0 10 10"
+                                      class="stroke-white"
+                                    >
+                                      <path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M8.62796 2.20602C8.79068 2.36874 8.79068 2.63256 8.62796 2.79528L4.04463 7.37861C3.88191 7.54133 3.61809 7.54133 3.45537 7.37861L1.37204 5.29528C1.20932 5.13256 1.20932 4.86874 1.37204 4.70602C1.53476 4.5433 1.79858 4.5433 1.96129 4.70602L3.75 6.49473L8.03871 2.20602C8.20142 2.0433 8.46524 2.0433 8.62796 2.20602Z"
+                                        fill=""
+                                      />
+                                    </svg>
+                                  </span>
+                                </div>
+                              </div>
+                            </label>
+                            <div class="flex items-center">
+                              <img
+                                src="https://cdn.tailgrids.com/2.0/image/application/images/tables/table-12/image-03.jpg"
+                                alt="product"
+                                class="mr-4 h-12.5 w-15 rounded object-cover object-center"
+                              />
+                              <p class="text-sm">Dell Inspiron 15</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="py-4.5 px-4">
+                          <p class="text-sm">Electronics</p>
+                        </td>
+                        <td class="py-4.5 px-4">
+                          <p class="text-sm">$444</p>
+                        </td>
+                        <td class="py-4.5 px-4">
+                          <p class="text-sm">64</p>
+                        </td>
+                        <td class="py-4.5 px-4">
+                          <p class="text-sm">$247</p>
+                        </td>
+                        <td class="py-4.5 pl-4 pr-6">
+                          <div
+                            x-data="{openDropDown: false}"
+                            class="relative text-right"
+                          >
+                            <button @click="openDropDown = !openDropDown">
+                              <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <path
+                                  d="M6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <path
+                                  d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                              </svg>
+                            </button>
+                            <div
+                              x-show="openDropDown"
+                              @click.outside="openDropDown = false"
+                              class="absolute right-0 top-full z-40 w-40 space-y-1 rounded shadow bg-white dark:bg-boxdark border border-stroke dark:border-strokedark p-2"
+                            >
+                              <button
+                                class="w-full rounded py-2 px-3 text-left text-sm hover:bg-gray-2 dark:hover:bg-graydark"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                class="w-full rounded py-2 px-3 text-left text-sm hover:bg-gray-2 dark:hover:bg-graydark"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        class="border-b border-stroke dark:border-strokedark"
+                      >
+                        <td class="py-4.5 pl-6 pr-3">
+                          <div class="flex items-center">
+                            <label
+                              for="checkbox-4"
+                              class="cursor-pointer select-none flex"
+                            >
+                              <div class="relative">
+                                <input
+                                  type="checkbox"
+                                  id="checkbox-4"
+                                  class="tableCheckbox sr-only"
+                                />
+                                <div
+                                  class="box mr-4 h-5 w-5 flex items-center justify-center rounded-[3px] border-[.5px] border-stroke dark:border-strokedark bg-gray-2 dark:bg-boxdark-2 text-white"
+                                >
+                                  <span class="opacity-0">
+                                    <svg
+                                      width="14"
+                                      height="14"
+                                      viewBox="0 0 10 10"
+                                      class="stroke-white"
+                                    >
+                                      <path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M8.62796 2.20602C8.79068 2.36874 8.79068 2.63256 8.62796 2.79528L4.04463 7.37861C3.88191 7.54133 3.61809 7.54133 3.45537 7.37861L1.37204 5.29528C1.20932 5.13256 1.20932 4.86874 1.37204 4.70602C1.53476 4.5433 1.79858 4.5433 1.96129 4.70602L3.75 6.49473L8.03871 2.20602C8.20142 2.0433 8.46524 2.0433 8.62796 2.20602Z"
+                                        fill=""
+                                      />
+                                    </svg>
+                                  </span>
+                                </div>
+                              </div>
+                            </label>
+                            <div class="flex items-center">
+                              <img
+                                src="https://cdn.tailgrids.com/2.0/image/application/images/tables/table-12/image-04.jpg"
+                                alt="product"
+                                class="mr-4 h-12.5 w-15 rounded object-cover object-center"
+                              />
+                              <p class="text-sm">HP Probook 450</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="py-4.5 px-4">
+                          <p class="text-sm">Electronics</p>
+                        </td>
+                        <td class="py-4.5 px-4">
+                          <p class="text-sm">$499</p>
+                        </td>
+                        <td class="py-4.5 px-4">
+                          <p class="text-sm">72</p>
+                        </td>
+                        <td class="py-4.5 px-4">
+                          <p class="text-sm">$103</p>
+                        </td>
+                        <td class="py-4.5 pl-4 pr-6">
+                          <div
+                            x-data="{openDropDown: false}"
+                            class="relative text-right"
+                          >
+                            <button @click="openDropDown = !openDropDown">
+                              <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <path
+                                  d="M6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <path
+                                  d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                              </svg>
+                            </button>
+                            <div
+                              x-show="openDropDown"
+                              @click.outside="openDropDown = false"
+                              class="absolute right-0 bottom-full z-40 w-40 space-y-1 rounded shadow bg-white dark:bg-boxdark border border-stroke dark:border-strokedark p-2"
+                            >
+                              <button
+                                class="w-full rounded py-2 px-3 text-left text-sm hover:bg-gray-2 dark:hover:bg-graydark"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                class="w-full rounded py-2 px-3 text-left text-sm hover:bg-gray-2 dark:hover:bg-graydark"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="p-9 border-t border-stroke dark:border-strokedark"
+            >
+              <h2
+                class="font-semibold text-lg text-black dark:text-white mb-5"
+              >
+                HTML
+              </h2>
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <div class="rounded-lg border border-stroke dark:border-strokedark bg-white dark:bg-boxdark">
+        <div class="max-w-full overflow-x-auto">
+          <table class="w-full table-auto">
+            <thead>
+              <tr
+                class="border-b border-stroke dark:border-strokedark"
+              >
+                <th class="min-w-75 py-5 pl-8 pr-4">
+                  <p
+                    class="text-left font-medium text-black dark:text-white"
+                  >
+                    Product Name
+                  </p>
+                </th>
+                <th class="min-w-22.5 py-5 px-4">
+                  <p
+                    class="text-left font-medium text-black dark:text-white"
+                  >
+                    Category
+                  </p>
+                </th>
+                <th class="min-w-22.5 py-5 px-4">
+                  <p
+                    class="text-left font-medium text-black dark:text-white"
+                  >
+                    Price
+                  </p>
+                </th>
+                <th class="min-w-22.5 py-5 px-4">
+                  <p
+                    class="text-left font-medium text-black dark:text-white"
+                  >
+                    Sold
+                  </p>
+                </th>
+                <th class="min-w-22.5 py-5 pl-4 pr-8">
+                  <p
+                    class="text-left font-medium text-black dark:text-white"
+                  >
+                    Profit
+                  </p>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="border-b border-stroke dark:border-strokedark"
+              >
+                <td class="py-4.5 pl-6 pr-3">
+                  <div class="flex items-center">
+                    <label
+                      for="checkbox-1"
+                      class="cursor-pointer select-none flex"
+                    >
+                      <div class="relative">
+                        <input
+                          type="checkbox"
+                          id="checkbox-1"
+                          class="tableCheckbox sr-only"
+                        />
+                        <div
+                          class="box mr-4 h-5 w-5 flex items-center justify-center rounded-[3px] border-[.5px] border-stroke dark:border-strokedark bg-gray-2 dark:bg-boxdark-2 text-white"
+                        >
+                          <span class="opacity-0">
+                            <svg
+                              width="14"
+                              height="14"
+                              viewBox="0 0 10 10"
+                              class="stroke-white"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M8.62796 2.20602C8.79068 2.36874 8.79068 2.63256 8.62796 2.79528L4.04463 7.37861C3.88191 7.54133 3.61809 7.54133 3.45537 7.37861L1.37204 5.29528C1.20932 5.13256 1.20932 4.86874 1.37204 4.70602C1.53476 4.5433 1.79858 4.5433 1.96129 4.70602L3.75 6.49473L8.03871 2.20602C8.20142 2.0433 8.46524 2.0433 8.62796 2.20602Z"
+                                fill=""
+                              />
+                            </svg>
+                          </span>
+                        </div>
+                      </div>
+                    </label>
+                    <div class="flex items-center">
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/application/images/tables/table-12/image-01.jpg"
+                        alt="product"
+                        class="mr-4 h-12.5 w-15 rounded object-cover object-center"
+                      />
+                      <p class="text-sm">Apple Watch Series 7</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-4.5 px-4">
+                  <p class="text-sm">Electronics</p>
+                </td>
+                <td class="py-4.5 px-4">
+                  <p class="text-sm">$269</p>
+                </td>
+                <td class="py-4.5 px-4">
+                  <p class="text-sm">22</p>
+                </td>
+                <td class="py-4.5 px-4">
+                  <p class="text-sm">$45</p>
+                </td>
+                <td class="py-4.5 pl-4 pr-6">
+                  <div
+                    x-data="{openDropDown: false}"
+                    class="relative text-right"
+                  >
+                    <button @click="openDropDown = !openDropDown">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+                    <div
+                      x-show="openDropDown"
+                      @click.outside="openDropDown = false"
+                      class="absolute right-0 top-full z-40 w-40 space-y-1 rounded shadow bg-white dark:bg-boxdark border border-stroke dark:border-strokedark p-2"
+                    >
+                      <button
+                        class="w-full rounded py-2 px-3 text-left text-sm hover:bg-gray-2 dark:hover:bg-graydark"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        class="w-full rounded py-2 px-3 text-left text-sm hover:bg-gray-2 dark:hover:bg-graydark"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="border-b border-stroke dark:border-strokedark"
+              >
+                <td class="py-4.5 pl-6 pr-3">
+                  <div class="flex items-center">
+                    <label
+                      for="checkbox-2"
+                      class="cursor-pointer select-none flex"
+                    >
+                      <div class="relative">
+                        <input
+                          type="checkbox"
+                          id="checkbox-2"
+                          class="tableCheckbox sr-only"
+                        />
+                        <div
+                          class="box mr-4 h-5 w-5 flex items-center justify-center rounded-[3px] border-[.5px] border-stroke dark:border-strokedark bg-gray-2 dark:bg-boxdark-2 text-white"
+                        >
+                          <span class="opacity-0">
+                            <svg
+                              width="14"
+                              height="14"
+                              viewBox="0 0 10 10"
+                              class="stroke-white"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M8.62796 2.20602C8.79068 2.36874 8.79068 2.63256 8.62796 2.79528L4.04463 7.37861C3.88191 7.54133 3.61809 7.54133 3.45537 7.37861L1.37204 5.29528C1.20932 5.13256 1.20932 4.86874 1.37204 4.70602C1.53476 4.5433 1.79858 4.5433 1.96129 4.70602L3.75 6.49473L8.03871 2.20602C8.20142 2.0433 8.46524 2.0433 8.62796 2.20602Z"
+                                fill=""
+                              />
+                            </svg>
+                          </span>
+                        </div>
+                      </div>
+                    </label>
+                    <div class="flex items-center">
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/application/images/tables/table-12/image-02.jpg"
+                        alt="product"
+                        class="mr-4 h-12.5 w-15 rounded object-cover object-center"
+                      />
+                      <p class="text-sm">Macbook Pro M1</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-4.5 px-4">
+                  <p class="text-sm">Electronics</p>
+                </td>
+                <td class="py-4.5 px-4">
+                  <p class="text-sm">$546</p>
+                </td>
+                <td class="py-4.5 px-4">
+                  <p class="text-sm">34</p>
+                </td>
+                <td class="py-4.5 px-4">
+                  <p class="text-sm">$125</p>
+                </td>
+                <td class="py-4.5 pl-4 pr-6">
+                  <div
+                    x-data="{openDropDown: false}"
+                    class="relative text-right"
+                  >
+                    <button @click="openDropDown = !openDropDown">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+                    <div
+                      x-show="openDropDown"
+                      @click.outside="openDropDown = false"
+                      class="absolute right-0 top-full z-40 w-40 space-y-1 rounded shadow bg-white dark:bg-boxdark border border-stroke dark:border-strokedark p-2"
+                    >
+                      <button
+                        class="w-full rounded py-2 px-3 text-left text-sm hover:bg-gray-2 dark:hover:bg-graydark"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        class="w-full rounded py-2 px-3 text-left text-sm hover:bg-gray-2 dark:hover:bg-graydark"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="border-b border-stroke dark:border-strokedark"
+              >
+                <td class="py-4.5 pl-6 pr-3">
+                  <div class="flex items-center">
+                    <label
+                      for="checkbox-3"
+                      class="cursor-pointer select-none flex"
+                    >
+                      <div class="relative">
+                        <input
+                          type="checkbox"
+                          id="checkbox-3"
+                          class="tableCheckbox sr-only"
+                        />
+                        <div
+                          class="box mr-4 h-5 w-5 flex items-center justify-center rounded-[3px] border-[.5px] border-stroke dark:border-strokedark bg-gray-2 dark:bg-boxdark-2 text-white"
+                        >
+                          <span class="opacity-0">
+                            <svg
+                              width="14"
+                              height="14"
+                              viewBox="0 0 10 10"
+                              class="stroke-white"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M8.62796 2.20602C8.79068 2.36874 8.79068 2.63256 8.62796 2.79528L4.04463 7.37861C3.88191 7.54133 3.61809 7.54133 3.45537 7.37861L1.37204 5.29528C1.20932 5.13256 1.20932 4.86874 1.37204 4.70602C1.53476 4.5433 1.79858 4.5433 1.96129 4.70602L3.75 6.49473L8.03871 2.20602C8.20142 2.0433 8.46524 2.0433 8.62796 2.20602Z"
+                                fill=""
+                              />
+                            </svg>
+                          </span>
+                        </div>
+                      </div>
+                    </label>
+                    <div class="flex items-center">
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/application/images/tables/table-12/image-03.jpg"
+                        alt="product"
+                        class="mr-4 h-12.5 w-15 rounded object-cover object-center"
+                      />
+                      <p class="text-sm">Dell Inspiron 15</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-4.5 px-4">
+                  <p class="text-sm">Electronics</p>
+                </td>
+                <td class="py-4.5 px-4">
+                  <p class="text-sm">$444</p>
+                </td>
+                <td class="py-4.5 px-4">
+                  <p class="text-sm">64</p>
+                </td>
+                <td class="py-4.5 px-4">
+                  <p class="text-sm">$247</p>
+                </td>
+                <td class="py-4.5 pl-4 pr-6">
+                  <div
+                    x-data="{openDropDown: false}"
+                    class="relative text-right"
+                  >
+                    <button @click="openDropDown = !openDropDown">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+                    <div
+                      x-show="openDropDown"
+                      @click.outside="openDropDown = false"
+                      class="absolute right-0 top-full z-40 w-40 space-y-1 rounded shadow bg-white dark:bg-boxdark border border-stroke dark:border-strokedark p-2"
+                    >
+                      <button
+                        class="w-full rounded py-2 px-3 text-left text-sm hover:bg-gray-2 dark:hover:bg-graydark"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        class="w-full rounded py-2 px-3 text-left text-sm hover:bg-gray-2 dark:hover:bg-graydark"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="border-b border-stroke dark:border-strokedark"
+              >
+                <td class="py-4.5 pl-6 pr-3">
+                  <div class="flex items-center">
+                    <label
+                      for="checkbox-4"
+                      class="cursor-pointer select-none flex"
+                    >
+                      <div class="relative">
+                        <input
+                          type="checkbox"
+                          id="checkbox-4"
+                          class="tableCheckbox sr-only"
+                        />
+                        <div
+                          class="box mr-4 h-5 w-5 flex items-center justify-center rounded-[3px] border-[.5px] border-stroke dark:border-strokedark bg-gray-2 dark:bg-boxdark-2 text-white"
+                        >
+                          <span class="opacity-0">
+                            <svg
+                              width="14"
+                              height="14"
+                              viewBox="0 0 10 10"
+                              class="stroke-white"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M8.62796 2.20602C8.79068 2.36874 8.79068 2.63256 8.62796 2.79528L4.04463 7.37861C3.88191 7.54133 3.61809 7.54133 3.45537 7.37861L1.37204 5.29528C1.20932 5.13256 1.20932 4.86874 1.37204 4.70602C1.53476 4.5433 1.79858 4.5433 1.96129 4.70602L3.75 6.49473L8.03871 2.20602C8.20142 2.0433 8.46524 2.0433 8.62796 2.20602Z"
+                                fill=""
+                              />
+                            </svg>
+                          </span>
+                        </div>
+                      </div>
+                    </label>
+                    <div class="flex items-center">
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/application/images/tables/table-12/image-04.jpg"
+                        alt="product"
+                        class="mr-4 h-12.5 w-15 rounded object-cover object-center"
+                      />
+                      <p class="text-sm">HP Probook 450</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-4.5 px-4">
+                  <p class="text-sm">Electronics</p>
+                </td>
+                <td class="py-4.5 px-4">
+                  <p class="text-sm">$499</p>
+                </td>
+                <td class="py-4.5 px-4">
+                  <p class="text-sm">72</p>
+                </td>
+                <td class="py-4.5 px-4">
+                  <p class="text-sm">$103</p>
+                </td>
+                <td class="py-4.5 pl-4 pr-6">
+                  <div
+                    x-data="{openDropDown: false}"
+                    class="relative text-right"
+                  >
+                    <button @click="openDropDown = !openDropDown">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+                    <div
+                      x-show="openDropDown"
+                      @click.outside="openDropDown = false"
+                      class="absolute right-0 bottom-full z-40 w-40 space-y-1 rounded shadow bg-white dark:bg-boxdark border border-stroke dark:border-strokedark p-2"
+                    >
+                      <button
+                        class="w-full rounded py-2 px-3 text-left text-sm hover:bg-gray-2 dark:hover:bg-graydark"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        class="w-full rounded py-2 px-3 text-left text-sm hover:bg-gray-2 dark:hover:bg-graydark"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+    <!-- ====== Back To Top Start ===== -->
+    <include src="./partials/scrolltop.html" />
+    <!-- ====== Back To Top End ===== -->
+  </body>
+</html>

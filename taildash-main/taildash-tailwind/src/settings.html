@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Settings | Taildash - Tailwind CSS Admin Dashboard Template</title>
+  </head>
+  <body
+    x-data="{ page: 'settings', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'dark text-bodydark bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Header Start ===== -->
+      <include src="./partials/header.html" />
+      <!-- ===== Header End ===== -->
+
+      <!-- ===== Main Content Start ===== -->
+      <main class="lg:pl-72.5 pt-26 lg:pt-22.5">
+        <div class="p-4 md:p-6 2xl:p-11">
+          <h2
+            class="font-semibold text-title-md text-black dark:text-white mb-2"
+          >
+            Account Information
+          </h2>
+          <p>Edit your profile quickly</p>
+
+          <div
+            class="flex items-start flex-col md:flex-row gap-10 mt-9"
+          >
+            <!-- Setting Card One -->
+            <div
+              class="w-full md:w-125 rounded-md border border-stroke dark:border-strokedark bg-white dark:bg-boxdark p-10"
+            >
+              <h3
+                class="font-semibold text-title-md text-black dark:text-white mb-2"
+              >
+                Account Information
+              </h3>
+              <p>Edit your profile quickly</p>
+
+              <div
+                class="relative z-30 h-22.5 w-full max-w-22.5 rounded-full mt-6 mb-8"
+              >
+                <img src="./images/user/user-06.png" alt="profile" />
+                <label
+                  for="profile"
+                  class="absolute -bottom-3 left-1/2 -translate-x-1/2 flex h-6 w-6 cursor-pointer items-center justify-center rounded-full border border-stroke dark:border-strokedark bg-white text-body hover:bg-opacity-90"
+                >
+                  <svg
+                    class="fill-current"
+                    width="10"
+                    height="9"
+                    viewBox="0 0 10 9"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M1 1H2.5L3.20711 0.292893C3.39464 0.105356 3.649 0 3.91421 0H6.08579C6.351 0 6.60536 0.105357 6.79289 0.292893L7.5 1H9C9.26522 1 9.51957 1.10536 9.70711 1.29289C9.89464 1.48043 10 1.73478 10 2V8C10 8.26522 9.89464 8.51957 9.70711 8.70711C9.51957 8.89464 9.26522 9 9 9H1C0.734784 9 0.48043 8.89464 0.292893 8.70711C0.105357 8.51957 0 8.26522 0 8V2C0 1.73478 0.105357 1.48043 0.292893 1.29289C0.48043 1.10536 0.734784 1 1 1ZM5 2.5C4.33696 2.5 3.70107 2.76339 3.23223 3.23223C2.76339 3.70107 2.5 4.33696 2.5 5C2.5 5.66304 2.76339 6.29893 3.23223 6.76777C3.70107 7.23661 4.33696 7.5 5 7.5C5.66304 7.5 6.29893 7.23661 6.76777 6.76777C7.23661 6.29893 7.5 5.66304 7.5 5C7.5 4.33696 7.23661 3.70107 6.76777 3.23223C6.29893 2.76339 5.66304 2.5 5 2.5ZM5 3.5C5.39782 3.5 5.77936 3.65804 6.06066 3.93934C6.34196 4.22064 6.5 4.60218 6.5 5C6.5 5.39782 6.34196 5.77936 6.06066 6.06066C5.77936 6.34196 5.39782 6.5 5 6.5C4.60218 6.5 4.22064 6.34196 3.93934 6.06066C3.65804 5.77936 3.5 5.39782 3.5 5C3.5 4.60218 3.65804 4.22064 3.93934 3.93934C4.22064 3.65804 4.60218 3.5 5 3.5Z"
+                      fill=""
+                    />
+                  </svg>
+
+                  <input
+                    type="file"
+                    name="profile"
+                    id="profile"
+                    class="sr-only"
+                  />
+                </label>
+              </div>
+
+              <form action="#">
+                <div class="mb-5">
+                  <label
+                    class="block font-medium text-black dark:text-white mb-3"
+                    for="firstName"
+                    >First Name</label
+                  >
+                  <input
+                    class="w-full bg-white rounded-md border border-stroke focus-visible:outline-none focus:border-primary dark:focus:border-primary text-black dark:text-white py-3.5 px-5.5 dark:bg-black dark:border-strokedark"
+                    type="text"
+                    name="firstName"
+                    id="firstName"
+                    placeholder="Musharof"
+                    value="Musharof"
+                  />
+                </div>
+
+                <div class="mb-5">
+                  <label
+                    class="block font-medium text-black dark:text-white mb-3"
+                    for="lastName"
+                    >Last Name</label
+                  >
+                  <input
+                    class="w-full bg-white rounded-md border border-stroke focus-visible:outline-none focus:border-primary dark:focus:border-primary text-black dark:text-white py-3.5 px-5.5 dark:bg-black dark:border-strokedark"
+                    type="text"
+                    name="lastName"
+                    id="lastName"
+                    placeholder="Chy"
+                    value="Chy"
+                  />
+                </div>
+
+                <div class="mb-5">
+                  <label
+                    class="block font-medium text-black dark:text-white mb-3"
+                    for="email"
+                    >Email Address</label
+                  >
+                  <input
+                    class="w-full bg-white rounded-md border border-stroke focus-visible:outline-none focus:border-primary dark:focus:border-primary text-black dark:text-white py-3.5 px-5.5 dark:bg-black dark:border-strokedark"
+                    type="email"
+                    name="email"
+                    id="email"
+                    placeholder="existingemail@gmail.com"
+                    value="existingemail@gmail.com"
+                  />
+                </div>
+
+                <div class="mb-5">
+                  <label
+                    class="block font-medium text-black dark:text-white mb-3"
+                    for="website"
+                    >Website</label
+                  >
+                  <input
+                    class="w-full bg-white rounded-md border border-stroke focus-visible:outline-none focus:border-primary dark:focus:border-primary text-black dark:text-white py-3.5 px-5.5 dark:bg-black dark:border-strokedark"
+                    type="text"
+                    name="website"
+                    id="website"
+                    placeholder="exampla@domain.com"
+                    value="exampla@domain.com"
+                  />
+                </div>
+
+                <div class="mb-5">
+                  <label
+                    class="block font-medium text-black dark:text-white mb-3"
+                    for="bio"
+                    >Bio</label
+                  >
+                  <textarea
+                    class="w-full bg-white rounded-md border border-stroke focus-visible:outline-none focus:border-primary dark:focus:border-primary text-black dark:text-white py-3.5 px-5.5 dark:bg-black dark:border-strokedark"
+                    name="bio"
+                    id="bio"
+                    rows="6"
+                    placeholder="Write your bio here"
+                  >
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere fermentum urna, eu condimentum mauris tempus ut. Donec fermentum blandit aliquet.
+                  </textarea>
+                </div>
+
+                <button
+                  class="w-full flex justify-center rounded-md font-medium text-white bg-primary hover:shadow-1 p-2.5"
+                  type="submit"
+                >
+                  Update Now
+                </button>
+              </form>
+            </div>
+            <!-- Setting Card One -->
+
+            <!-- Setting Card Two -->
+            <div
+              class="w-full md:w-132.5 rounded-md border border-stroke dark:border-strokedark bg-white dark:bg-boxdark p-10"
+            >
+              <h3
+                class="font-semibold text-title-md text-black dark:text-white mb-8"
+              >
+                Password
+              </h3>
+
+              <form action="#">
+                <div class="mb-5">
+                  <label
+                    class="block font-medium text-black dark:text-white mb-3"
+                    for="currentPassword"
+                    >Current Password</label
+                  >
+                  <input
+                    class="w-full bg-white rounded-md border border-stroke focus-visible:outline-none focus:border-primary dark:focus:border-primary py-3.5 px-5.5 dark:bg-black dark:border-strokedark"
+                    type="password"
+                    name="currentPassword"
+                    id="currentPassword"
+                    placeholder="Enter your current password"
+                  />
+                </div>
+
+                <div class="mb-5">
+                  <label
+                    class="block font-medium text-black dark:text-white mb-3"
+                    for="newPassword"
+                    >New Password</label
+                  >
+                  <input
+                    class="w-full bg-white rounded-md border border-stroke focus-visible:outline-none focus:border-primary dark:focus:border-primary py-3.5 px-5.5 dark:bg-black dark:border-strokedark"
+                    type="password"
+                    name="newPassword"
+                    id="newPassword"
+                    placeholder="Enter your new password"
+                  />
+                </div>
+
+                <div class="mb-5">
+                  <label
+                    class="block font-medium text-black dark:text-white mb-3"
+                    for="reNewPassword"
+                    >Re-type New Password</label
+                  >
+                  <input
+                    class="w-full bg-white rounded-md border border-stroke focus-visible:outline-none focus:border-primary dark:focus:border-primary py-3.5 px-5.5 dark:bg-black dark:border-strokedark"
+                    type="password"
+                    name="reNewPassword"
+                    id="reNewPassword"
+                    placeholder="Re-type your new password"
+                  />
+                </div>
+
+                <button
+                  class="w-full flex justify-center rounded-md font-medium text-white bg-primary hover:shadow-1 p-2.5"
+                  type="submit"
+                >
+                  Save
+                </button>
+              </form>
+            </div>
+            <!-- Setting Card Two -->
+          </div>
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+    <!-- ====== Back To Top Start ===== -->
+    <include src="./partials/scrolltop.html" />
+    <!-- ====== Back To Top End ===== -->
+  </body>
+</html>

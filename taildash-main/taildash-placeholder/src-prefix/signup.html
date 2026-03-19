@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taildash - Tailwind CSS Admin Dashboard Template</title>
+  </head>
+  <body
+    x-data="{ page: 'register', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'ud-dark ud-text-bodydark ud-bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="ud-overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html" />
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Header Start ===== -->
+      <include src="./partials/header.html" />
+      <!-- ===== Header End ===== -->
+
+      <!-- ===== Main Content Start ===== -->
+      <main class="lg:ud-pl-72.5 ud-pt-19.5">
+        <div class="ud-p-4 md:ud-p-6 2xl:ud-p-11">
+          <!-- ====== Forms Section Start -->
+          <div class="ud-mx-auto ud-shadow-1 ud-bg-white dark:ud-bg-boxdark">
+            <div class="ud-flex ud-flex-wrap ud-items-stretch">
+              <div class="ud-w-full lg:ud-w-1/2">
+                <div
+                  class="ud-w-full ud-py-14 ud-px-6 sm:ud-p-17.5 sm:ud-px-12 xl:ud-px-22.5"
+                >
+                  <h2
+                    class="ud-mb-10 ud-font-bold ud-text-title-xl ud-text-black dark:ud-text-white"
+                  >
+                    Register
+                  </h2>
+                  <form>
+                    <div class="ud-mb-6.5">
+                      <label class="ud-mb-3 ud-block">Full Name</label>
+                      <input
+                        type="text"
+                        class="ud-w-full ud-rounded-md ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-transparent ud-py-3 ud-px-3.5 ud-outline-none focus:ud-border-primary dark:focus:ud-border-primary focus-visible:ud-shadow-none"
+                      />
+                    </div>
+                    <div class="ud-mb-6.5">
+                      <label class="ud-mb-3 ud-block">Email Address</label>
+                      <input
+                        type="email"
+                        class="ud-w-full ud-rounded-md ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-transparent ud-py-3 ud-px-3.5 ud-outline-none focus:ud-border-primary dark:focus:ud-border-primary focus-visible:ud-shadow-none"
+                      />
+                    </div>
+                    <div class="ud-mb-6.5">
+                      <label class="ud-mb-3 ud-block">Your Password</label>
+                      <input
+                        type="password"
+                        class="ud-w-full ud-rounded-md ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-transparent ud-py-3 ud-px-3.5 ud-outline-none focus:ud-border-primary dark:focus:ud-border-primary focus-visible:ud-shadow-none"
+                      />
+                    </div>
+                    <div class="ud-mb-6.5">
+                      <input
+                        type="submit"
+                        value="Register"
+                        class="ud-w-full ud-cursor-pointer ud-rounded-md ud-border ud-border-primary ud-bg-primary ud-py-3 ud-px-3.5 ud-text-white ud-transition hover:ud-bg-opacity-90"
+                      />
+                    </div>
+                  </form>
+                  <div class="ud-flex ud-flex-wrap ud-justify-between">
+                    <a
+                      href="#"
+                      class="ud-mb-2 ud-mr-2 ud-inline-block hover:ud-text-primary hover:ud-underline"
+                    >
+                      Forget Password?
+                    </a>
+                    <p class="ud-mb-2">
+                      Already have an account?
+                      <a
+                        href="signin.html"
+                        class="ud-text-primary hover:ud-underline"
+                      >
+                        Log In
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div class="ud-w-full lg:ud-w-1/2">
+                <div
+                  class="ud-relative ud-h-full ud-w-full ud-overflow-hidden ud-bg-primary"
+                >
+                  <div class="ud-flex ud-h-full ud-items-end ud-p-8 sm:ud-p-14">
+                    <h3 class="ud-text-2xl ud-font-bold ud-text-white">
+                      Hey <br />
+                      Welcome <br />
+                      Back
+                    </h3>
+                    <div>
+                      <span class="ud-absolute ud-left-0 ud-top-0">
+                        <svg
+                          width="415"
+                          height="355"
+                          viewBox="0 0 415 355"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M415 107.5C415 244.19 304.19 355 167.5 355C30.8095 355 -80 244.19 -80 107.5C-80 -29.1905 30.8095 -140 167.5 -140C304.19 -140 415 -29.1905 415 107.5Z"
+                            fill="url(#paint0_linear_1179_8)"
+                          />
+                          <defs>
+                            <linearGradient
+                              id="paint0_linear_1179_8"
+                              x1="167.5"
+                              y1="-140"
+                              x2="167.5"
+                              y2="355"
+                              gradientUnits="userSpaceOnUse"
+                            >
+                              <stop
+                                offset="0.177083"
+                                stop-color="white"
+                                stop-opacity="0.16"
+                              />
+                              <stop
+                                offset="1"
+                                stop-color="white"
+                                stop-opacity="0"
+                              />
+                            </linearGradient>
+                          </defs>
+                        </svg>
+                      </span>
+                      <span class="ud-absolute ud-top-0 ud-left-0">
+                        <svg
+                          width="177"
+                          height="354"
+                          viewBox="0 0 177 354"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M177 177C177 274.754 97.7544 354 0 354C-97.7544 354 -177 274.754 -177 177C-177 79.2456 -97.7544 0 0 0C97.7544 0 177 79.2456 177 177Z"
+                            fill="url(#paint0_linear_1179_7)"
+                          />
+                          <defs>
+                            <linearGradient
+                              id="paint0_linear_1179_7"
+                              x1="0"
+                              y1="0"
+                              x2="0"
+                              y2="354"
+                              gradientUnits="userSpaceOnUse"
+                            >
+                              <stop
+                                offset="0.177083"
+                                stop-color="white"
+                                stop-opacity="0.2"
+                              />
+                              <stop
+                                offset="1"
+                                stop-color="white"
+                                stop-opacity="0"
+                              />
+                            </linearGradient>
+                          </defs>
+                        </svg>
+                      </span>
+                      <span class="ud-absolute ud-bottom-16 ud-right-20">
+                        <svg
+                          width="85"
+                          height="85"
+                          viewBox="0 0 85 85"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M42.5 -1.85773e-06C65.9721 -2.88373e-06 85 19.0279 85 42.5C85 65.9721 65.9721 85 42.5 85C19.0279 85 -8.31736e-07 65.9721 -1.85773e-06 42.5C-2.88373e-06 19.0279 19.0279 -8.31736e-07 42.5 -1.85773e-06Z"
+                            fill="url(#paint0_linear_1179_6)"
+                          />
+                          <defs>
+                            <linearGradient
+                              id="paint0_linear_1179_6"
+                              x1="-1.85774e-06"
+                              y1="42.5"
+                              x2="85"
+                              y2="42.5"
+                              gradientUnits="userSpaceOnUse"
+                            >
+                              <stop
+                                offset="0.177083"
+                                stop-color="white"
+                                stop-opacity="0.16"
+                              />
+                              <stop
+                                offset="1"
+                                stop-color="white"
+                                stop-opacity="0"
+                              />
+                            </linearGradient>
+                          </defs>
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- ====== Forms Section End -->
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+    <!-- ====== Back To Top Start ===== -->
+    <include src="./partials/scrolltop.html" />
+    <!-- ====== Back To Top End ===== -->
+  </body>
+</html>

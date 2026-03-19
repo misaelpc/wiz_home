@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taildash - Tailwind CSS Admin Dashboard Template</title>
+  </head>
+  <body
+    x-data="{ page: 'card', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'ud-dark ud-text-bodydark ud-bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="ud-overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Header Start ===== -->
+      <include src="./partials/header.html" />
+      <!-- ===== Header End ===== -->
+
+      <!-- ===== Main Content Start ===== -->
+      <main class="lg:ud-pl-72.5 ud-pt-19.5">
+        <div class="ud-p-4 md:ud-p-6 2xl:ud-p-11">
+          <h2
+            class="ud-font-semibold ud-text-title-md ud-text-black dark:ud-text-white ud-mb-2"
+          >
+            Card Style 1
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit cras
+            ultrices lectus sem.
+          </p>
+
+          <div
+            class="ud-rounded-md ud-shadow-2 ud-bg-whiter dark:ud-bg-boxdark-2 ud-mt-10"
+          >
+            <div class="ud-p-9">
+              <!-- ====== Cards Section Start -->
+              <div class="-ud-mx-4 ud-flex ud-flex-wrap">
+                <div class="ud-w-full md:ud-w-1/2 xl:ud-w-1/3 ud-px-4">
+                  <div
+                    class="ud-mb-10 ud-overflow-hidden ud-rounded-lg ud-bg-white dark:ud-bg-boxdark"
+                  >
+                    <img
+                      src="https://cdn.tailgrids.com/2.0/image/application/images/cards/card-01/image-01.jpg"
+                      alt="image"
+                      class="ud-w-full"
+                    />
+                    <div
+                      class="ud-p-8 ud-text-center sm:ud-p-9 md:ud-p-7 xl:ud-p-9"
+                    >
+                      <h3>
+                        <a
+                          href="#"
+                          class="ud-text-black dark:ud-text-white hover:ud-text-primary ud-mb-4 ud-block ud-text-xl ud-font-semibold sm:ud-text-[22px] md:ud-text-xl lg:ud-text-[22px] xl:ud-text-xl 2xl:ud-text-[22px]"
+                        >
+                          50+ Best creative website themes & templates
+                        </a>
+                      </h3>
+                      <p class="ud-mb-7 ud-leading-relaxed">
+                        Lorem ipsum dolor sit amet pretium consectetur
+                        adipiscing elit. Lorem consectetur adipiscing elit.
+                      </p>
+                      <a
+                        href="#"
+                        class="hover:ud-border-primary hover:ud-bg-primary ud-inline-block ud-rounded-full ud-border ud-border-stoke dark:ud-border-strokedark ud-py-2 ud-px-7 ud-font-medium ud-transition hover:ud-text-white"
+                      >
+                        View Details
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="ud-w-full md:ud-w-1/2 xl:ud-w-1/3 ud-px-4">
+                  <div
+                    class="ud-mb-10 ud-overflow-hidden ud-rounded-lg ud-bg-white dark:ud-bg-boxdark"
+                  >
+                    <img
+                      src="https://cdn.tailgrids.com/2.0/image/application/images/cards/card-01/image-02.jpg"
+                      alt="image"
+                      class="ud-w-full"
+                    />
+                    <div
+                      class="ud-p-8 ud-text-center sm:ud-p-9 md:ud-p-7 xl:ud-p-9"
+                    >
+                      <h3>
+                        <a
+                          href="#"
+                          class="ud-text-black dark:ud-text-white hover:ud-text-primary ud-mb-4 ud-block ud-text-xl ud-font-semibold sm:ud-text-[22px] md:ud-text-xl lg:ud-text-[22px] xl:ud-text-xl 2xl:ud-text-[22px]"
+                        >
+                          The ultimate UX and UI guide to card design
+                        </a>
+                      </h3>
+                      <p class="ud-mb-7 ud-leading-relaxed">
+                        Lorem ipsum dolor sit amet pretium consectetur
+                        adipiscing elit. Lorem consectetur adipiscing elit.
+                      </p>
+                      <a
+                        href="#"
+                        class="hover:ud-border-primary hover:ud-bg-primary ud-inline-block ud-rounded-full ud-border ud-border-stoke dark:ud-border-strokedark ud-py-2 ud-px-7 ud-font-medium ud-transition hover:ud-text-white"
+                      >
+                        View Details
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div class="ud-w-full md:ud-w-1/2 xl:ud-w-1/3 ud-px-4">
+                  <div
+                    class="ud-mb-10 ud-overflow-hidden ud-rounded-lg ud-bg-white dark:ud-bg-boxdark"
+                  >
+                    <img
+                      src="https://cdn.tailgrids.com/2.0/image/application/images/cards/card-01/image-03.jpg"
+                      alt="image"
+                      class="ud-w-full"
+                    />
+                    <div
+                      class="ud-p-8 ud-text-center sm:ud-p-9 md:ud-p-7 xl:ud-p-9"
+                    >
+                      <h3>
+                        <a
+                          href="#"
+                          class="ud-text-black dark:ud-text-white hover:ud-text-primary ud-mb-4 ud-block ud-text-xl ud-font-semibold sm:ud-text-[22px] md:ud-text-xl lg:ud-text-[22px] xl:ud-text-xl 2xl:ud-text-[22px]"
+                        >
+                          Creative Card Component designs graphic elements
+                        </a>
+                      </h3>
+                      <p class="ud-mb-7 ud-leading-relaxed">
+                        Lorem ipsum dolor sit amet pretium consectetur
+                        adipiscing elit. Lorem consectetur adipiscing elit.
+                      </p>
+                      <a
+                        href="#"
+                        class="hover:ud-border-primary hover:ud-bg-primary ud-inline-block ud-rounded-full ud-border ud-border-stoke dark:ud-border-strokedark ud-py-2 ud-px-7 ud-font-medium ud-transition hover:ud-text-white"
+                      >
+                        View Details
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- ====== Cards Section End -->
+            </div>
+
+            <div
+              class="ud-p-9 ud-border-t ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h2
+                class="ud-font-semibold ud-text-lg ud-text-black dark:ud-text-white ud-mb-5"
+              >
+                HTML
+              </h2>
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <!-- ====== Cards Section Start -->
+      <div class="-ud-mx-4 ud-flex ud-flex-wrap">
+        <div class="ud-w-full md:ud-w-1/2 xl:ud-w-1/3 ud-px-4">
+          <div class="ud-mb-10 ud-overflow-hidden ud-rounded-lg ud-bg-white dark:ud-bg-boxdark">
+            <img
+              src="https://cdn.tailgrids.com/2.0/image/application/images/cards/card-01/image-01.jpg"
+              alt="image"
+              class="ud-w-full"
+            />
+            <div class="ud-p-8 ud-text-center sm:ud-p-9 md:ud-p-7 xl:ud-p-9">
+              <h3>
+                <a
+                  href="#"
+                  class="ud-text-black dark:ud-text-white hover:ud-text-primary ud-mb-4 ud-block ud-text-xl ud-font-semibold sm:ud-text-[22px] md:ud-text-xl lg:ud-text-[22px] xl:ud-text-xl 2xl:ud-text-[22px]"
+                >
+                  50+ Best creative website themes & templates
+                </a>
+              </h3>
+              <p class="ud-mb-7 ud-leading-relaxed">
+                Lorem ipsum dolor sit amet pretium consectetur adipiscing elit.
+                Lorem consectetur adipiscing elit.
+              </p>
+              <a
+                href="#"
+                class="hover:ud-border-primary hover:ud-bg-primary ud-inline-block ud-rounded-full ud-border ud-border-stoke dark:ud-border-strokedark ud-py-2 ud-px-7 ud-font-medium ud-transition hover:ud-text-white"
+              >
+                View Details
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="ud-w-full md:ud-w-1/2 xl:ud-w-1/3 ud-px-4">
+          <div class="ud-mb-10 ud-overflow-hidden ud-rounded-lg ud-bg-white dark:ud-bg-boxdark">
+            <img
+              src="https://cdn.tailgrids.com/2.0/image/application/images/cards/card-01/image-02.jpg"
+              alt="image"
+              class="ud-w-full"
+            />
+            <div class="ud-p-8 ud-text-center sm:ud-p-9 md:ud-p-7 xl:ud-p-9">
+              <h3>
+                <a
+                  href="#"
+                  class="ud-text-black dark:ud-text-white hover:ud-text-primary ud-mb-4 ud-block ud-text-xl ud-font-semibold sm:ud-text-[22px] md:ud-text-xl lg:ud-text-[22px] xl:ud-text-xl 2xl:ud-text-[22px]"
+                >
+                  The ultimate UX and UI guide to card design
+                </a>
+              </h3>
+              <p class="ud-mb-7 ud-leading-relaxed">
+                Lorem ipsum dolor sit amet pretium consectetur adipiscing elit.
+                Lorem consectetur adipiscing elit.
+              </p>
+              <a
+                href="#"
+                class="hover:ud-border-primary hover:ud-bg-primary ud-inline-block ud-rounded-full ud-border ud-border-stoke dark:ud-border-strokedark ud-py-2 ud-px-7 ud-font-medium ud-transition hover:ud-text-white"
+              >
+                View Details
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="ud-w-full md:ud-w-1/2 xl:ud-w-1/3 ud-px-4">
+          <div class="ud-mb-10 ud-overflow-hidden ud-rounded-lg ud-bg-white dark:ud-bg-boxdark">
+            <img
+              src="https://cdn.tailgrids.com/2.0/image/application/images/cards/card-01/image-03.jpg"
+              alt="image"
+              class="ud-w-full"
+            />
+            <div class="ud-p-8 ud-text-center sm:ud-p-9 md:ud-p-7 xl:ud-p-9">
+              <h3>
+                <a
+                  href="#"
+                  class="ud-text-black dark:ud-text-white hover:ud-text-primary ud-mb-4 ud-block ud-text-xl ud-font-semibold sm:ud-text-[22px] md:ud-text-xl lg:ud-text-[22px] xl:ud-text-xl 2xl:ud-text-[22px]"
+                >
+                  Creative Card Component designs graphic elements
+                </a>
+              </h3>
+              <p class="ud-mb-7 ud-leading-relaxed">
+                Lorem ipsum dolor sit amet pretium consectetur adipiscing elit.
+                Lorem consectetur adipiscing elit.
+              </p>
+              <a
+                href="#"
+                class="hover:ud-border-primary hover:ud-bg-primary ud-inline-block ud-rounded-full ud-border ud-border-stoke dark:ud-border-strokedark ud-py-2 ud-px-7 ud-font-medium ud-transition hover:ud-text-white"
+              >
+                View Details
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ====== Cards Section End -->
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+    <!-- ====== Back To Top Start ===== -->
+    <include src="./partials/scrolltop.html" />
+    <!-- ====== Back To Top End ===== -->
+  </body>
+</html>

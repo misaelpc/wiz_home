@@ -1,0 +1,525 @@
+<header
+  class="ud-fixed ud-left-0 ud-top-0 ud-flex ud-w-full ud-bg-white dark:ud-bg-boxdark ud-ease-linear ud-duration-300 ud-z-999"
+  :class="{ 'ud-shadow-x' : stickyMenu }"
+  @scroll.window="stickyMenu = (window.pageYOffset > 20) ? true : false"
+>
+  <!-- Site Logo Start -->
+  <div
+    class="ud-flex ud-items-center ud-shadow-2 lg:ud-shadow-none lg:ud-w-72.5 ud-py-4 ud-px-4 lg:ud-px-5"
+  >
+    <a class="ud-flex ud-items-center ud-gap-3" href="index.html">
+      <img
+        class="dark:ud-hidden"
+        src="./images/logo/logo-light.svg"
+        alt="Logo"
+      />
+      <img
+        class="ud-hidden dark:ud-block"
+        src="./images/logo/logo-dark.svg"
+        alt="Logo"
+      />
+
+      <span class="ud-hidden lg:ud-block ud-text-[#0C1C2E] dark:ud-text-white ud-mt-2.5">
+        <svg class="ud-fill-current" width="118" height="25" viewBox="0 0 118 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M0.320007 4.77941H7.08207V24.1492H11.1267V4.77941H17.8887V1.05079H0.320007V4.77941Z" fill=""/>
+          <path d="M22.4029 24.56C24.8359 24.56 26.953 23.4541 27.6166 21.8425L27.901 24.1492H31.282V14.6697C31.282 10.3407 28.6909 8.06564 24.4883 8.06564C20.2542 8.06564 17.4735 10.2775 17.4735 13.6586H20.7597C20.7597 12.0154 22.0237 11.0675 24.2988 11.0675C26.2579 11.0675 27.5218 11.9206 27.5218 14.0377V14.3853L22.8452 14.7329C19.1482 15.0173 17.0627 16.8184 17.0627 19.6939C17.0627 22.6325 19.085 24.56 22.4029 24.56ZM23.6668 21.653C21.9289 21.653 20.9809 20.9578 20.9809 19.5359C20.9809 18.2719 21.8973 17.482 24.2988 17.2608L27.5534 17.008V17.8296C27.5534 20.231 26.0367 21.653 23.6668 21.653Z" fill=""/>
+          <path d="M36.9966 5.41137C38.2606 5.41137 39.3033 4.36863 39.3033 3.07309C39.3033 1.77756 38.2606 0.766409 36.9966 0.766409C35.6695 0.766409 34.6267 1.77756 34.6267 3.07309C34.6267 4.36863 35.6695 5.41137 36.9966 5.41137ZM35.0691 24.1492H38.9241V8.53962H35.0691V24.1492Z" fill=""/>
+          <path d="M46.7936 24.1492V0.640015H42.9702V24.1492H46.7936Z" fill=""/>
+          <path d="M57.2519 24.56C59.6218 24.56 61.6441 23.5173 62.5921 21.7162L62.8449 24.1492H66.3839V0.640015H62.5605V10.5303C61.5809 8.982 59.6534 8.06564 57.4731 8.06564C52.765 8.06564 49.9211 11.5415 49.9211 16.4076C49.9211 21.2422 52.7334 24.56 57.2519 24.56ZM58.1051 21.021C55.4192 21.021 53.7761 19.0619 53.7761 16.2812C53.7761 13.5006 55.4192 11.5099 58.1051 11.5099C60.791 11.5099 62.5289 13.469 62.5289 16.2812C62.5289 19.0935 60.791 21.021 58.1051 21.021Z" fill=""/>
+          <path d="M75.0463 24.56C77.4794 24.56 79.5965 23.4541 80.26 21.8425L80.5444 24.1492H83.9254V14.6697C83.9254 10.3407 81.3344 8.06564 77.1318 8.06564C72.8976 8.06564 70.1169 10.2775 70.1169 13.6586H73.4032C73.4032 12.0154 74.6671 11.0675 76.9422 11.0675C78.9013 11.0675 80.1652 11.9206 80.1652 14.0377V14.3853L75.4887 14.7329C71.7917 15.0173 69.7062 16.8184 69.7062 19.6939C69.7062 22.6325 71.7285 24.56 75.0463 24.56ZM76.3102 21.653C74.5723 21.653 73.6244 20.9578 73.6244 19.5359C73.6244 18.2719 74.5407 17.482 76.9422 17.2608L80.1968 17.008V17.8296C80.1968 20.231 78.6801 21.653 76.3102 21.653Z" fill=""/>
+          <path d="M86.5118 19.4095C86.5118 22.4745 88.9765 24.56 92.8631 24.56C96.7181 24.56 99.404 22.6009 99.404 19.4411C99.404 17.0396 98.0769 15.8389 95.4542 15.2385L92.6419 14.5749C91.3148 14.2589 90.6196 13.6902 90.6196 12.8054C90.6196 11.6363 91.5044 10.9411 93.0211 10.9411C94.5062 10.9411 95.391 11.7943 95.4226 13.1214H99.088C99.0564 10.0879 96.6865 8.06564 93.1791 8.06564C89.5769 8.06564 86.9858 9.89835 86.9858 12.9634C86.9858 15.4597 88.3445 16.7868 91.1568 17.4188L93.9691 18.0823C95.3594 18.3983 95.7702 18.9671 95.7702 19.7571C95.7702 20.8946 94.7906 21.6214 92.9895 21.6214C91.22 21.6214 90.2088 20.7682 90.1772 19.4095H86.5118Z" fill=""/>
+          <path d="M106.194 24.1492V15.6177C106.194 13.2794 107.616 11.5731 110.049 11.5731C112.008 11.5731 113.304 12.837 113.304 15.4597V24.1492H117.159V14.5433C117.159 10.4987 115.137 8.06564 111.282 8.06564C109.038 8.06564 107.205 9.04519 106.226 10.5619V0.640015H102.339V24.1492H106.194Z" fill=""/>
+        </svg>
+      </span>
+    </a>
+  </div>
+  <!-- Site Logo End -->
+
+  <div
+    class="ud-flex ud-flex-grow ud-items-center ud-justify-end sm:ud-justify-between ud-shadow-2 ud-py-4 ud-px-4 md:ud-px-6 2xl:ud-px-11"
+  >
+    <div class="ud-hidden sm:ud-block">
+      <form action="https://formbold.com/s/unique_form_id" method="POST">
+        <div class="ud-relative">
+          <button class="ud-absolute -ud-translate-y-1/2 ud-top-1/2 ud-left-0">
+            <svg
+              class="ud-fill-body dark:ud-fill-bodydark hover:ud-fill-primary dark:hover:ud-fill-primary"
+              width="20"
+              height="20"
+              viewBox="0 0 20 20"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M9.16666 3.33332C5.945 3.33332 3.33332 5.945 3.33332 9.16666C3.33332 12.3883 5.945 15 9.16666 15C12.3883 15 15 12.3883 15 9.16666C15 5.945 12.3883 3.33332 9.16666 3.33332ZM1.66666 9.16666C1.66666 5.02452 5.02452 1.66666 9.16666 1.66666C13.3088 1.66666 16.6667 5.02452 16.6667 9.16666C16.6667 13.3088 13.3088 16.6667 9.16666 16.6667C5.02452 16.6667 1.66666 13.3088 1.66666 9.16666Z"
+                fill=""
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M13.2857 13.2857C13.6112 12.9603 14.1388 12.9603 14.4642 13.2857L18.0892 16.9107C18.4147 17.2362 18.4147 17.7638 18.0892 18.0892C17.7638 18.4147 17.2362 18.4147 16.9107 18.0892L13.2857 14.4642C12.9603 14.1388 12.9603 13.6112 13.2857 13.2857Z"
+                fill=""
+              />
+            </svg>
+          </button>
+
+          <input
+            type="text"
+            placeholder="Type to search..."
+            class="ud-w-full ud-bg-transparent focus:ud-outline-none ud-pr-4 ud-pl-9"
+          />
+        </div>
+      </form>
+    </div>
+
+    <div class="ud-flex ud-items-center ud-gap-7">
+      <ul class="ud-flex ud-items-center ud-gap-4">
+        <li>
+          <!-- Dark Mode Toggler -->
+          <label class="ud-block ud-m-0 ud-relative">
+            <input
+              type="checkbox"
+              :value="darkMode"
+              @change="darkMode = !darkMode"
+              class="ud-cursor-pointer ud-w-full ud-h-full ud-opacity-0 ud-absolute ud-top-0 ud-z-50 ud-m-0"
+            />
+            <img
+              class="dark:ud-hidden"
+              src="./images/icon/icon-sun.svg"
+              alt="Sun"
+            />
+            <img
+              class="ud-hidden dark:ud-block"
+              src="./images/icon/icon-moon.svg"
+              alt="Moon"
+            />
+          </label>
+          <!-- Dark Mode Toggler -->
+        </li>
+
+        <li>
+          <a class="ud-relative" href="#">
+            <svg
+              class="ud-fill-body hover:ud-fill-primary ud-ease-in-out ud-duration-300"
+              width="22"
+              height="22"
+              viewBox="0 0 22 22"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M4.58398 4.58333C4.07772 4.58333 3.66732 4.99374 3.66732 5.5V18.3333C3.66732 18.8396 4.07772 19.25 4.58398 19.25H17.4173C17.9236 19.25 18.334 18.8396 18.334 18.3333V5.5C18.334 4.99374 17.9236 4.58333 17.4173 4.58333H4.58398ZM1.83398 5.5C1.83398 3.98122 3.0652 2.75 4.58398 2.75H17.4173C18.9361 2.75 20.1673 3.98122 20.1673 5.5V18.3333C20.1673 19.8521 18.9361 21.0833 17.4173 21.0833H4.58398C3.0652 21.0833 1.83398 19.8521 1.83398 18.3333V5.5Z"
+                fill=""
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M14.6667 0.916504C15.1729 0.916504 15.5833 1.32691 15.5833 1.83317V5.49984C15.5833 6.0061 15.1729 6.4165 14.6667 6.4165C14.1604 6.4165 13.75 6.0061 13.75 5.49984V1.83317C13.75 1.32691 14.1604 0.916504 14.6667 0.916504Z"
+                fill=""
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M7.33268 0.916504C7.83894 0.916504 8.24935 1.32691 8.24935 1.83317V5.49984C8.24935 6.0061 7.83894 6.4165 7.33268 6.4165C6.82642 6.4165 6.41602 6.0061 6.41602 5.49984V1.83317C6.41602 1.32691 6.82642 0.916504 7.33268 0.916504Z"
+                fill=""
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M1.83398 9.16667C1.83398 8.66041 2.24439 8.25 2.75065 8.25H19.2506C19.7569 8.25 20.1673 8.66041 20.1673 9.16667C20.1673 9.67293 19.7569 10.0833 19.2506 10.0833H2.75065C2.24439 10.0833 1.83398 9.67293 1.83398 9.16667Z"
+                fill=""
+              />
+            </svg>
+          </a>
+        </li>
+
+        <!-- Notification Menu Area -->
+        <li class="ud-relative" x-data="{ dropdownOpen: false }">
+          <a
+            class="ud-relative"
+            href="#"
+            @click.prevent="dropdownOpen = ! dropdownOpen"
+            @click.outside="dropdownOpen = false"
+            @keydown.escape.window="dropdownOpen = false"
+          >
+            <span
+              class="ud-absolute -ud-top-0.5 ud-right-0 ud-w-2 ud-h-2 ud-rounded-full ud-bg-meta-1 ud-z-1"
+            >
+              <span
+                class="ud-animate-ping ud-absolute ud-inline-flex ud-h-full ud-w-full ud-rounded-full ud-bg-meta-1 ud-opacity-75 -ud-z-1"
+              ></span>
+            </span>
+
+            <svg
+              class="ud-fill-body hover:ud-fill-primary ud-ease-in-out ud-duration-300"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M7.05033 3.05025C8.36309 1.7375 10.1436 1 12.0001 1C13.8566 1 15.6371 1.7375 16.9498 3.05025C18.2626 4.36301 19.0001 6.14349 19.0001 8C19.0001 11.3527 19.7171 13.4346 20.378 14.6461C20.7098 15.2544 21.0329 15.6535 21.2573 15.8904C21.3698 16.0091 21.4581 16.0878 21.5114 16.1322C21.538 16.1544 21.5558 16.168 21.5635 16.1737C21.5647 16.1746 21.5657 16.1753 21.5664 16.1758C21.9249 16.4221 22.0835 16.8725 21.9572 17.2898C21.8295 17.7115 21.4407 18 21.0001 18H3.00008C2.55941 18 2.17068 17.7115 2.04299 17.2898C1.91664 16.8725 2.07528 16.4221 2.43377 16.1758C2.43447 16.1753 2.43542 16.1746 2.43663 16.1737C2.44432 16.168 2.46218 16.1544 2.4888 16.1322C2.54202 16.0878 2.6304 16.0091 2.74288 15.8904C2.9673 15.6535 3.29039 15.2544 3.62218 14.6461C4.28301 13.4346 5.00008 11.3527 5.00008 8C5.00008 6.14348 5.73758 4.36301 7.05033 3.05025ZM2.44388 16.169C2.44395 16.1689 2.44403 16.1688 2.44411 16.1688C2.44411 16.1688 2.4441 16.1688 2.4441 16.1688L2.44388 16.169ZM5.1494 16H18.8508C18.7747 15.8753 18.6983 15.7434 18.6222 15.6039C17.783 14.0654 17.0001 11.6473 17.0001 8C17.0001 6.67392 16.4733 5.40215 15.5356 4.46447C14.5979 3.52678 13.3262 3 12.0001 3C10.674 3 9.40223 3.52678 8.46454 4.46447C7.52686 5.40215 7.00008 6.67392 7.00008 8C7.00008 11.6473 6.21715 14.0654 5.37797 15.6039C5.30188 15.7434 5.22549 15.8753 5.1494 16Z"
+                fill=""
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M9.76792 20.1352C10.2457 19.858 10.8576 20.0207 11.1347 20.4984C11.2226 20.6499 11.3488 20.7757 11.5006 20.8632C11.6524 20.9506 11.8245 20.9966 11.9997 20.9966C12.1749 20.9966 12.347 20.9506 12.4988 20.8632C12.6506 20.7757 12.7768 20.6499 12.8647 20.4984C13.1418 20.0207 13.7537 19.858 14.2315 20.1352C14.7092 20.4123 14.8718 21.0242 14.5947 21.5019C14.331 21.9566 13.9525 22.3339 13.497 22.5962C13.0416 22.8586 12.5253 22.9966 11.9997 22.9966C11.4741 22.9966 10.9578 22.8586 10.5024 22.5962C10.0469 22.3339 9.66841 21.9566 9.4047 21.5019C9.12758 21.0242 9.2902 20.4123 9.76792 20.1352Z"
+                fill="#"
+              />
+            </svg>
+          </a>
+
+          <!-- Dropdown Start -->
+          <div
+            x-show="dropdownOpen"
+            class="ud-dropdown ud-mt-7 -ud-right-8.5 before:ud-right-10 ud-max-w-90 ud-w-90 ud-h-80"
+          >
+            <div
+              class="ud-flex ud-items-center ud-justify-between ud-border-b ud-border-stroke dark:ud-border-strokedark ud-pb-3"
+            >
+              <h5
+                class="ud-font-semibold ud-text-sm ud-text-black dark:ud-text-white"
+              >
+                Notification
+              </h5>
+              <a
+                class="ud-text-xs hover:ud-text-primary ud-ease-in-out ud-duration-300"
+                href="#"
+                >View All</a
+              >
+            </div>
+
+            <ul class="ud-flex ud-flex-col ud-overflow-y-auto ud-no-scrollbar">
+              <li
+                class="ud-border-b last:ud-border-none ud-border-stroke dark:ud-border-strokedark ud-py-4 ud-px-3 hover:ud-rounded-md hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+              >
+                <a class="ud-flex ud-gap-4" href="#">
+                  <div class="ud-flex-shrink-0">
+                    <img src="./images/user/user-02.png" alt="User" />
+                  </div>
+
+                  <div>
+                    <h6>
+                      <span
+                        class="ud-font-medium ud-text-sm ud-text-black dark:ud-text-white"
+                        >John Doe
+                      </span>
+                      <span class="ud-text-xs">Component on product</span>
+                    </h6>
+                    <p class="ud-text-sm ud-mt-0.5 ud-mb-1">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Aliquam, repellendus.
+                    </p>
+                    <span class="ud-text-xs">10 mins ago</span>
+                  </div>
+                </a>
+              </li>
+              <li
+                class="ud-border-b last:ud-border-none ud-border-stroke dark:ud-border-strokedark ud-py-4 ud-px-3 hover:ud-rounded-md hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+              >
+                <a class="ud-flex ud-gap-4" href="#">
+                  <div class="ud-flex-shrink-0">
+                    <img src="./images/user/user-03.png" alt="User" />
+                  </div>
+
+                  <div>
+                    <h6>
+                      <span
+                        class="ud-font-medium ud-text-sm ud-text-black dark:ud-text-white"
+                        >John Doe
+                      </span>
+                      <span class="ud-text-xs">Component on product</span>
+                    </h6>
+                    <p class="ud-text-sm ud-mt-0.5 ud-mb-1">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Aliquam, repellendus.
+                    </p>
+                    <span class="ud-text-xs">10 mins ago</span>
+                  </div>
+                </a>
+              </li>
+              <li
+                class="ud-border-b last:ud-border-none ud-border-stroke dark:ud-border-strokedark ud-py-4 ud-px-3 hover:ud-rounded-md hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+              >
+                <a class="ud-flex ud-gap-4" href="#">
+                  <div class="ud-flex-shrink-0">
+                    <img src="./images/user/user-02.png" alt="User" />
+                  </div>
+
+                  <div>
+                    <h6>
+                      <span
+                        class="ud-font-medium ud-text-sm ud-text-black dark:ud-text-white"
+                        >John Doe
+                      </span>
+                      <span class="ud-text-xs">Component on product</span>
+                    </h6>
+                    <p class="ud-text-sm ud-mt-0.5 ud-mb-1">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Aliquam, repellendus.
+                    </p>
+                    <span class="ud-text-xs">10 mins ago</span>
+                  </div>
+                </a>
+              </li>
+              <li
+                class="ud-border-b last:ud-border-none ud-border-stroke dark:ud-border-strokedark ud-py-4 ud-px-3 hover:ud-rounded-md hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+              >
+                <a class="ud-flex ud-gap-4" href="#">
+                  <div class="ud-flex-shrink-0">
+                    <img src="./images/user/user-03.png" alt="User" />
+                  </div>
+
+                  <div>
+                    <h6>
+                      <span
+                        class="ud-font-medium ud-text-sm ud-text-black dark:ud-text-white"
+                        >John Doe
+                      </span>
+                      <span class="ud-text-xs">Component on product</span>
+                    </h6>
+                    <p class="ud-text-sm ud-mt-0.5 ud-mb-1">
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                      Aliquam, repellendus.
+                    </p>
+                    <span class="ud-text-xs">10 mins ago</span>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- Dropdown End -->
+        </li>
+        <!-- Notification Menu Area -->
+
+        <!-- Chat Notification Area -->
+        <li class="ud-relative" x-data="{ dropdownOpen: false }">
+          <a
+            class="ud-relative"
+            href="#"
+            @click.prevent="dropdownOpen = ! dropdownOpen"
+            @click.outside="dropdownOpen = false"
+            @keydown.escape.window="dropdownOpen = false"
+          >
+            <span
+              class="ud-absolute -ud-top-0.5 -ud-right-0.5 ud-w-2 ud-h-2 ud-rounded-full ud-bg-meta-1 ud-z-1"
+            >
+              <span
+                class="ud-animate-ping ud-absolute ud-inline-flex ud-h-full ud-w-full ud-rounded-full ud-bg-meta-1 ud-opacity-75 -ud-z-1"
+              ></span>
+            </span>
+
+            <svg
+              class="ud-fill-body hover:ud-fill-primary ud-ease-in-out ud-duration-300"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M4 5C3.45228 5 3 5.45228 3 6V18C3 18.5477 3.45228 19 4 19H20C20.5477 19 21 18.5477 21 18V6C21 5.45228 20.5477 5 20 5H4ZM1 6C1 4.34772 2.34772 3 4 3H20C21.6523 3 23 4.34772 23 6V18C23 19.6523 21.6523 21 20 21H4C2.34772 21 1 19.6523 1 18V6Z"
+                fill=""
+              />
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M1.18085 5.42662C1.49757 4.97417 2.1211 4.86414 2.57355 5.18085L12.0001 11.7794L21.4266 5.18085C21.8791 4.86414 22.5026 4.97417 22.8193 5.42662C23.136 5.87907 23.026 6.5026 22.5735 6.81932L12.5735 13.8193C12.2292 14.0603 11.7709 14.0603 11.4266 13.8193L1.42662 6.81932C0.974174 6.5026 0.864139 5.87907 1.18085 5.42662Z"
+                fill=""
+              />
+            </svg>
+          </a>
+
+          <!-- Dropdown Start -->
+          <div
+            x-show="dropdownOpen"
+            class="ud-dropdown ud-mt-7 -ud-right-8.5 before:ud-right-10 ud-max-w-90 ud-w-90 ud-h-80"
+          >
+            <div
+              class="ud-flex ud-items-center ud-justify-between ud-border-b ud-border-stroke dark:ud-border-strokedark ud-pb-3"
+            >
+              <h5
+                class="ud-font-semibold ud-text-sm ud-text-black dark:ud-text-white"
+              >
+                Message
+              </h5>
+              <a
+                class="ud-text-xs hover:ud-text-primary ud-ease-in-out ud-duration-300"
+                href="#"
+                >View All</a
+              >
+            </div>
+
+            <ul class="ud-flex ud-flex-col ud-overflow-y-auto ud-no-scrollbar">
+              <li
+                class="ud-border-b last:ud-border-none ud-border-stroke dark:ud-border-strokedark ud-py-4 ud-px-3 hover:ud-rounded-md hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+              >
+                <a class="ud-flex ud-gap-4" href="#">
+                  <div class="ud-flex-shrink-0">
+                    <img src="./images/user/user-02.png" alt="User" />
+                  </div>
+
+                  <div>
+                    <h6
+                      class="ud-font-medium ud-text-sm ud-text-black dark:ud-text-white"
+                    >
+                      John Doe
+                    </h6>
+                    <p class="ud-text-sm ud-mt-0.5 ud-mb-1">
+                      Hey!I can across your profile and ...
+                    </p>
+                    <span class="ud-text-xs">1h ago</span>
+                  </div>
+                </a>
+              </li>
+              <li
+                class="ud-border-b last:ud-border-none ud-border-stroke dark:ud-border-strokedark ud-py-4 ud-px-3 hover:ud-rounded-md hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+              >
+                <a class="ud-flex ud-gap-4" href="#">
+                  <div class="ud-flex-shrink-0">
+                    <img src="./images/user/user-03.png" alt="User" />
+                  </div>
+
+                  <div>
+                    <h6
+                      class="ud-font-medium ud-text-sm ud-text-black dark:ud-text-white"
+                    >
+                      John Doe
+                    </h6>
+                    <p class="ud-text-sm ud-mt-0.5 ud-mb-1">
+                      Hey!I can across your profile and ...
+                    </p>
+                    <span class="ud-text-xs">10 mins ago</span>
+                  </div>
+                </a>
+              </li>
+              <li
+                class="ud-border-b last:ud-border-none ud-border-stroke dark:ud-border-strokedark ud-py-4 ud-px-3 hover:ud-rounded-md hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+              >
+                <a class="ud-flex ud-gap-4" href="#">
+                  <div class="ud-flex-shrink-0">
+                    <img src="./images/user/user-02.png" alt="User" />
+                  </div>
+
+                  <div>
+                    <h6
+                      class="ud-font-medium ud-text-sm ud-text-black dark:ud-text-white"
+                    >
+                      Anee Lee
+                    </h6>
+                    <p class="ud-text-sm ud-mt-0.5 ud-mb-1">
+                      Would you mind please checking out
+                    </p>
+                    <span class="ud-text-xs">12 mins ago</span>
+                  </div>
+                </a>
+              </li>
+              <li
+                class="ud-border-b last:ud-border-none ud-border-stroke dark:ud-border-strokedark ud-py-4 ud-px-3 hover:ud-rounded-md hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+              >
+                <a class="ud-flex ud-gap-4" href="#">
+                  <div class="ud-flex-shrink-0">
+                    <img src="./images/user/user-03.png" alt="User" />
+                  </div>
+
+                  <div>
+                    <h6
+                      class="ud-font-medium ud-text-sm ud-text-black dark:ud-text-white"
+                    >
+                      Jacob Jones
+                    </h6>
+                    <p class="ud-text-sm ud-mt-0.5 ud-mb-1">
+                      Hey!I can across your profile and ...
+                    </p>
+                    <span class="ud-text-xs">10 mins ago</span>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <!-- Dropdown End -->
+        </li>
+        <!-- Chat Notification Area -->
+      </ul>
+
+      <!-- User Area -->
+      <div class="ud-relative" x-data="{ dropdownOpen: false }">
+        <a
+          class="ud-flex ud-items-center ud-gap-4"
+          href="#"
+          @click.prevent="dropdownOpen = ! dropdownOpen"
+          @click.outside="dropdownOpen = false"
+          @keydown.escape.window="dropdownOpen = false"
+        >
+          <span class="ud-hidden lg:ud-block ud-text-right">
+            <span
+              class="ud-block ud-font-medium ud-text-sm ud-text-black dark:ud-text-white"
+              >Thomas Anree</span
+            >
+            <span class="ud-block ud-text-xs">Ux Designer</span>
+          </span>
+          <img src="./images/user/user-01.png" alt="User" />
+          <svg
+            :class="dropdownOpen && 'ud-rotate-180'"
+            class="ud-fill-body dark:ud-fill-bodydark ud-hidden sm:ud-block ud-ease-linear ud-duration-150"
+            width="12"
+            height="8"
+            viewBox="0 0 12 8"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill-rule="evenodd"
+              clip-rule="evenodd"
+              d="M0.410765 0.910734C0.736202 0.585297 1.26384 0.585297 1.58928 0.910734L6.00002 5.32148L10.4108 0.910734C10.7362 0.585297 11.2638 0.585297 11.5893 0.910734C11.9147 1.23617 11.9147 1.76381 11.5893 2.08924L6.58928 7.08924C6.26384 7.41468 5.7362 7.41468 5.41077 7.08924L0.410765 2.08924C0.0853277 1.76381 0.0853277 1.23617 0.410765 0.910734Z"
+              fill=""
+            />
+          </svg>
+        </a>
+
+        <!-- Dropdown Start -->
+        <ul
+          x-show="dropdownOpen"
+          class="ud-dropdown ud-w-35 ud-max-w-35 ud-right-0 ud-mt-4 before:ud-right-12.5"
+        >
+          <li>
+            <a
+              href="#"
+              class="ud-text-sm ud-flex ud-items-center ud-gap-2 ud-ease-in-out ud-duration-300 hover:ud-text-primary"
+            >
+              Settings
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              class="ud-text-sm ud-flex ud-items-center ud-gap-2 ud-ease-in-out ud-duration-300 hover:ud-text-primary"
+            >   
+              Downloads
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              class="ud-text-sm ud-flex ud-items-center ud-gap-2 ud-ease-in-out ud-duration-300 hover:ud-text-primary"
+            >
+              Log out
+            </a>
+          </li>
+        </ul>
+        <!-- Dropdown End -->
+      </div>
+      <!-- User Area -->
+    </div>
+  </div>
+</header>

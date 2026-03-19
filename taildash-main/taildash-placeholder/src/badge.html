@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Badge | Taildash - Tailwind CSS Admin Dashboard Template</title>
+  </head>
+  <body
+    x-data="{ page: 'badge', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'ud-dark ud-text-bodydark ud-bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="ud-overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Header Start ===== -->
+      <include src="./partials/header.html" />
+      <!-- ===== Header End ===== -->
+
+      <!-- ===== Main Content Start ===== -->
+      <main class="lg:ud-pl-72.5 ud-pt-26 lg:ud-pt-22.5">
+        <div class="ud-p-4 md:ud-p-6 2xl:ud-p-11">
+          <h2
+            class="ud-font-semibold ud-text-title-md ud-text-black dark:ud-text-white ud-mb-2"
+          >
+            Badge
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit cras
+            ultrices lectus sem.
+          </p>
+
+          <!-- Badge Item -->
+          <div
+            class="ud-rounded-md ud-shadow-2 ud-bg-white dark:ud-bg-boxdark ud-mt-10"
+          >
+            <div
+              class="ud-px-9 ud-py-3.5 ud-border-b ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h3
+                class="ud-font-medium ud-text-lg ud-text-black dark:ud-text-white"
+              >
+                Primary Bage
+              </h3>
+            </div>
+
+            <div class="ud-p-9">
+              <span
+                class="ud-bg-primary ud-m-2 ud-inline-block ud-rounded ud-py-1 ud-px-2 ud-text-sm ud-font-semibold ud-text-white"
+              >
+                Primary
+              </span>
+              <span
+                class="ud-border-primary ud-text-primary ud-m-2 ud-inline-block ud-rounded ud-border ud-py-1 ud-px-2 ud-text-sm ud-font-semibold"
+              >
+                Primary
+              </span>
+              <span
+                class="ud-bg-primary ud-m-2 ud-inline-block ud-rounded-full ud-py-1 ud-px-3 ud-text-sm ud-font-semibold ud-text-white"
+              >
+                Primary
+              </span>
+              <span
+                class="ud-border-primary ud-text-primary ud-m-2 ud-inline-block ud-rounded-full ud-border ud-py-1 ud-px-3 ud-text-sm ud-font-semibold"
+              >
+                Primary
+              </span>
+
+              <span
+                class="ud-border-primary ud-bg-primary ud-text-primary ud-m-2 ud-inline-block ud-rounded-full ud-border ud-bg-opacity-5 ud-py-1 ud-px-3 ud-text-sm ud-font-semibold"
+              >
+                Primary
+              </span>
+
+              <span
+                class="ud-border-primary ud-bg-primary ud-text-primary ud-m-2 ud-inline-block ud-rounded ud-border ud-bg-opacity-5 ud-py-1 ud-px-2 ud-text-sm ud-font-semibold"
+              >
+                Primary
+              </span>
+            </div>
+
+            <div
+              class="ud-p-9 ud-border-t ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h2
+                class="ud-font-semibold ud-text-lg ud-text-black dark:ud-text-white ud-mb-5"
+              >
+                HTML
+              </h2>
+
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <span
+        class="ud-bg-primary ud-m-2 ud-inline-block ud-rounded ud-py-1 ud-px-2 ud-text-sm ud-font-semibold ud-text-white"
+      >
+        Primary
+      </span>
+      <span
+        class="ud-border-primary ud-text-primary ud-m-2 ud-inline-block ud-rounded ud-border ud-py-1 ud-px-2 ud-text-sm ud-font-semibold"
+      >
+        Primary
+      </span>
+      <span
+        class="ud-bg-primary ud-m-2 ud-inline-block ud-rounded-full ud-py-1 ud-px-3 ud-text-sm ud-font-semibold ud-text-white"
+      >
+        Primary
+      </span>
+      <span
+        class="ud-border-primary ud-text-primary ud-m-2 ud-inline-block ud-rounded-full ud-border ud-py-1 ud-px-3 ud-text-sm ud-font-semibold"
+      >
+        Primary
+      </span>
+
+      <span
+        class="ud-border-primary ud-bg-primary ud-text-primary ud-m-2 ud-inline-block ud-rounded-full ud-border ud-bg-opacity-5 ud-py-1 ud-px-3 ud-text-sm ud-font-semibold"
+      >
+        Primary
+      </span>
+
+      <span
+        class="ud-border-primary ud-bg-primary ud-text-primary ud-m-2 ud-inline-block ud-rounded ud-border ud-bg-opacity-5 ud-py-1 ud-px-2 ud-text-sm ud-font-semibold"
+      >
+        Primary
+      </span>
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+
+          <!-- Badge Item -->
+          <div
+            class="ud-rounded-md ud-shadow-2 ud-bg-white dark:ud-bg-boxdark ud-mt-10"
+          >
+            <div
+              class="ud-px-9 ud-py-3.5 ud-border-b ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h3
+                class="ud-font-medium ud-text-lg ud-text-black dark:ud-text-white"
+              >
+                Danger Bage
+              </h3>
+            </div>
+
+            <div class="ud-p-9">
+              <span
+                class="ud-bg-danger ud-m-2 ud-inline-block ud-rounded ud-py-1 ud-px-2 ud-text-sm ud-font-semibold ud-text-white"
+              >
+                Danger
+              </span>
+              <span
+                class="ud-border-danger ud-text-danger ud-m-2 ud-inline-block ud-rounded ud-border ud-py-1 ud-px-2 ud-text-sm ud-font-semibold"
+              >
+                Danger
+              </span>
+              <span
+                class="ud-bg-danger ud-m-2 ud-inline-block ud-rounded-full ud-py-1 ud-px-3 ud-text-sm ud-font-semibold ud-text-white"
+              >
+                Danger
+              </span>
+              <span
+                class="ud-border-danger ud-text-danger ud-m-2 ud-inline-block ud-rounded-full ud-border ud-py-1 ud-px-3 ud-text-sm ud-font-semibold"
+              >
+                Danger
+              </span>
+
+              <span
+                class="ud-border-danger ud-bg-danger ud-text-danger ud-m-2 ud-inline-block ud-rounded-full ud-border ud-bg-opacity-5 ud-py-1 ud-px-3 ud-text-sm ud-font-semibold"
+              >
+                Danger
+              </span>
+
+              <span
+                class="ud-border-danger ud-bg-danger ud-text-danger ud-m-2 ud-inline-block ud-rounded ud-border ud-bg-opacity-5 ud-py-1 ud-px-2 ud-text-sm ud-font-semibold"
+              >
+                Danger
+              </span>
+            </div>
+
+            <div
+              class="ud-p-9 ud-border-t ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h2
+                class="ud-font-semibold ud-text-lg ud-text-black dark:ud-text-white ud-mb-5"
+              >
+                HTML
+              </h2>
+
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <span
+        class="ud-bg-danger ud-m-2 ud-inline-block ud-rounded ud-py-1 ud-px-2 ud-text-sm ud-font-semibold ud-text-white"
+      >
+        Danger
+      </span>
+      <span
+        class="ud-border-danger ud-text-danger ud-m-2 ud-inline-block ud-rounded ud-border ud-py-1 ud-px-2 ud-text-sm ud-font-semibold"
+      >
+        Danger
+      </span>
+      <span
+        class="ud-bg-danger ud-m-2 ud-inline-block ud-rounded-full ud-py-1 ud-px-3 ud-text-sm ud-font-semibold ud-text-white"
+      >
+        Danger
+      </span>
+      <span
+        class="ud-border-danger ud-text-danger ud-m-2 ud-inline-block ud-rounded-full ud-border ud-py-1 ud-px-3 ud-text-sm ud-font-semibold"
+      >
+        Danger
+      </span>
+
+      <span
+        class="ud-border-danger ud-bg-danger ud-text-danger ud-m-2 ud-inline-block ud-rounded-full ud-border ud-bg-opacity-5 ud-py-1 ud-px-3 ud-text-sm ud-font-semibold"
+      >
+        Danger
+      </span>
+
+      <span
+        class="ud-border-danger ud-bg-danger ud-text-danger ud-m-2 ud-inline-block ud-rounded ud-border ud-bg-opacity-5 ud-py-1 ud-px-2 ud-text-sm ud-font-semibold"
+      >
+        Danger
+      </span>
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+
+          <!-- Badge Item -->
+          <div
+            class="ud-rounded-md ud-shadow-2 ud-bg-white dark:ud-bg-boxdark ud-mt-10"
+          >
+            <div
+              class="ud-px-9 ud-py-3.5 ud-border-b ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h3
+                class="ud-font-medium ud-text-lg ud-text-black dark:ud-text-white"
+              >
+                Warning Bage
+              </h3>
+            </div>
+
+            <div class="ud-p-9">
+              <span
+                class="ud-bg-warning ud-m-2 ud-inline-block ud-rounded ud-py-1 ud-px-2 ud-text-sm ud-font-semibold ud-text-black"
+              >
+                Warning
+              </span>
+              <span
+                class="ud-border-warning ud-text-warning ud-m-2 ud-inline-block ud-rounded ud-border ud-py-1 ud-px-2 ud-text-sm ud-font-semibold"
+              >
+                Warning
+              </span>
+              <span
+                class="ud-bg-warning ud-m-2 ud-inline-block ud-rounded-full ud-py-1 ud-px-3 ud-text-sm ud-font-semibold ud-text-black"
+              >
+                Warning
+              </span>
+              <span
+                class="ud-border-warning ud-text-warning ud-m-2 ud-inline-block ud-rounded-full ud-border ud-py-1 ud-px-3 ud-text-sm ud-ud-font-semibold"
+              >
+                Warning
+              </span>
+
+              <span
+                class="ud-border-warning ud-bg-warning ud-text-warning ud-m-2 ud-inline-block ud-rounded-full ud-border ud-bg-opacity-5 ud-py-1 ud-px-3 ud-text-sm ud-font-semibold"
+              >
+                Warning
+              </span>
+
+              <span
+                class="ud-border-warning ud-bg-warning ud-text-warning ud-m-2 ud-inline-block ud-rounded ud-border ud-bg-opacity-5 ud-py-1 ud-px-2 ud-text-sm ud-font-semibold"
+              >
+                Warning
+              </span>
+            </div>
+
+            <div
+              class="ud-p-9 ud-border-t ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h2
+                class="ud-font-semibold ud-text-lg ud-text-black dark:ud-text-white ud-mb-5"
+              >
+                HTML
+              </h2>
+
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <span
+        class="ud-bg-warning ud-m-2 ud-inline-block ud-rounded ud-py-1 ud-px-2 ud-text-sm ud-font-semibold ud-text-black"
+      >
+        Warning
+      </span>
+      <span
+        class="ud-border-warning ud-text-warning ud-m-2 ud-inline-block ud-rounded ud-border ud-py-1 ud-px-2 ud-text-sm ud-font-semibold"
+      >
+        Warning
+      </span>
+      <span
+        class="ud-bg-warning ud-m-2 ud-inline-block ud-rounded-full ud-py-1 ud-px-3 ud-text-sm ud-font-semibold ud-text-black"
+      >
+        Warning
+      </span>
+      <span
+        class="ud-border-warning ud-text-warning ud-m-2 ud-inline-block ud-rounded-full ud-border ud-py-1 ud-px-3 ud-text-sm ud-ud-font-semibold"
+      >
+        Warning
+      </span>
+
+      <span
+        class="ud-border-warning ud-bg-warning ud-text-warning ud-m-2 ud-inline-block ud-rounded-full ud-border ud-bg-opacity-5 ud-py-1 ud-px-3 ud-text-sm ud-font-semibold"
+      >
+        Warning
+      </span>
+
+      <span
+        class="ud-border-warning ud-bg-warning ud-text-warning ud-m-2 ud-inline-block ud-rounded ud-border ud-bg-opacity-5 ud-py-1 ud-px-2 ud-text-sm ud-font-semibold"
+      >
+        Warning
+      </span>
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+    <!-- ====== Back To Top Start ===== -->
+    <include src="./partials/scrolltop.html" />
+    <!-- ====== Back To Top End ===== -->
+  </body>
+</html>

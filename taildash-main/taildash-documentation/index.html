@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Taildash - Tailwind CSS Admin Dashboard HTML Template</title>
+        <link href="css/collection.css" rel="stylesheet">
+        <link href="css/custom.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,300,400,500%7CLato:300,400" rel="stylesheet" type="text/css">
+        <script src="js/other.js"></script>
+        <script src="js/custom.js"></script>
+    </head>
+
+    <body data-spy="scroll" data-target=".sidebar" data-offset="200">
+        <aside class="sidebar sidebar-boxed sidebar-dark">  
+            <ul class="nav sidenav dropable">
+                <li><a href="#introduction" title="Introduction">Introduction</a></li>
+                <li><a href="#getting_started" title="Setup Development Envrionment">Setup Development Environment</a></li>
+                <li><a href="#documenter_cover">Pages and Components Info</a></li>
+                <li><a href="#dependencies" title="Dependencies">Dependencies</a></li>
+                <li><a href="#fonts_used" title="Fonts">Fonts</a></li>
+                <li><a href="#credits" title="Credits">Credits</a></li>
+                <li><a href="#supports" title="Support">Support</a></li>
+            </ul>
+        </aside>
+
+        <header class="site-header navbar-transparent"> 
+            <div class="banner auto-size" style="background-color: #455aa2">
+                <div class="container-fluid">
+                    <h1><strong>Taildash - Tailwind</strong> Documentation</h1>
+                </div>
+            </div>
+        </header>
+        
+        <main class="container-fluid"> 
+            <article class="main-content" role="main">
+                <section id="introduction">
+                    <div class="page-header">
+                        <h3>Introduction</h3>
+                    </div>
+                    <p>Taildash - Analytics Dashboard Tailwind CSS HTML Template. As for JavaScript, we have started adopting third-party libraries like Alpine js. It is purely developed without jQuery. The template contains reusable separate partials. In order to make the content easier to read and maintain, we have sliced the HTML pages content into partials by taking advantages of html-loader for Webpack.</p>
+                </section>
+			 
+                <section id="getting_started">
+                    <div class="page-header">
+                        <h3>Setup Development Environment</h3>
+                    </div>
+                    <p>
+                        To kickstart the development of the template, at first need to setup the development environment.
+                    </p>
+                    <p>Following tools are needed to setup a development environment:</p>
+                    <ul>
+                        <li><b>Node JS</b></li>
+                        <p>
+                            NodeJS works as a node package manager behind the scene. It is recommended to download and install the latest version of Node JS from its official site <a href="https://nodejs.org/en/" target="_blank">https://nodejs.org/en/</a>
+                        </p>
+                    </ul>
+                    
+                    <div class="page-header">
+                        <h3>Preparation</h3>
+                    </div>
+
+                    <p>
+                        You'll need to install <a href="https://nodejs.org/en/" target="_blank">Node.js >=v14.16+ (Recommended Version)</a> (NPM comes along with it) and serve (an NPM package)
+                    </p>
+
+                    <p>Use terminal and navigate to the project(Taildash) root.</p>
+
+                    <strong>Let's have a look on the setup process:</strong> <br>
+                    <p>Use terminal and navigate to the project root.</p>
+                    <p>Then run : <code class="language-markup">npm install</code></p>
+                    <p>Then run : <code class="language-markup">npm start</code></p>
+                    <p>Now, in the browser go to <a href="http://localhost:8000/">localhost:3000</a></p>
+					
+                    <div class="page-header">
+                        <h3>For Production Build</h3>
+                    </div>
+                    <p>Run : <code class="language-markup">npm run build</code></p>
+                    <p>This command will generate a <b>Build</b> folder in the root of your template that you can upload to your server.</a></p>
+                </section>
+
+                <section id="documenter_cover">
+                    <div class="page-header">
+                        <h3>Pages and Components Info</h3>
+                    </div>
+                    
+                    <div id="documenter_buttons"></div>
+					<ul>
+						<li>Dashboard Analytics (<b>/index.html</b>)</li>
+						<li>Dashboard eCommerce (<b>/index-ecommerce.html</b>)</li>
+						<li>Chat (<b>chat.html</b>)</li>
+						<li>Inbox (<b>/inbox.html</b>)</li>
+						<li>Calendar (<b>/calendar.html</b>)</li>
+						<li>Log In (<b>/signin.html</b>)</li>
+						<li>Register (<b>/signup.html</b>)</li>
+						<li>Etc....</li>
+					</ul>
+		
+                    <h6 style="margin-top:20px"><strong>Common Partials:</strong></h6>
+                    <ul>
+                        <li>Chart One (<b>/partials/chart-01.html</b>)</li>
+                        <li>Chart Two (<b>/partials/chart-02.html</b>)</li>
+                        <li>Chart Three (<b>/partials/chart-03.html</b>)</li>
+                        <li>Header (<b>/partials/header.html</b>)</li>
+                        <li>Preloader (<b>/partials/preloader.html</b>)</li>
+                        <li>Scroll Top (<b>/partials/scrolltop.html</b>)</li>
+                        <li>Sidebar (<b>/partials/sidebar.html</b>)</li>
+					</ul>
+			   
+                    <h6 style="margin-top:20px"><strong>Template Features:</strong></h6>
+                    <ul>
+                        <li>ES6+</li>
+                        <li>Webpack 5+</li>
+                        <li>Alpine JS 3+</li>
+                        <li>Tailwind CSS v3.x</li>
+                        <li>Easy Customization</li>
+                    </ul>
+                </section>
+
+                <section id="dependencies">
+                    <div class="page-header">
+                        <h3>Dependencies</h3>
+                    </div>
+                    <p> Here are the <strong>dependencies</strong> list which being used in the Hovar Template:</p>
+                    <pre class="line-numbers">
+<code class="language-markup"> 
+"dependencies": {
+    "@alpinejs/intersect": "^3.10.4",
+    "alpinejs": "^3.10.3",
+    "apexcharts": "^3.36.3",
+    "prismjs": "^1.29.0"
+}
+</code>
+                    </pre class="brush:css">
+                </section>
+	 
+                <section id="fonts_used">
+                    <div class="page-header">
+                        <h3>Fonts Used</h3>
+                    </div>
+                    <p> By default, the template loads <strong>IBM Plex Mono,IBM Plex Sans, Oswald & Playfair Display</strong> font from Google Web Font Services, you can change the font with the one that suits you best. <a href="https://fonts.google.com/" target="_blank">Google Fonts</a></p></p>
+                    <p>You will find the font code in the &quot;<strong>style.css</strong> file: <code class="language-css">src/css/style.css</code></p>
+                    <pre class="line-numbers">
+<code class="language-css">
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+</code>
+                    </pre>
+                </section>
+		  
+                <section id="credits">
+                    <div class="page-header">
+                        <h3>Credits</h3>
+                    </div>
+                    <strong>Icons</strong><br>
+                    <a href="https://lineicons.com/" target="_blank">Line Icons</a><br />
+                    <div class="height-15"></div>
+                    <strong>Images</strong><br>
+                    <a href="https://unsplash.com/" target="_blank">Unsplash</a><br />
+                    <a href="https://pixabay.com/" target="_blank">Pixabay</a><br />
+                    <a href="https://picjumbo.com/" target="_blank">Picjumbo</a><br />
+                    <a href="https://www.freepik.com/" target="_blank">Freepick</a><br />
+                    <div class="height-15"></div>
+                    <strong>Packages</strong><br>
+                    <a href="https://tailwindcss.com/docs/installation" target="_blank">Tailwind CSS</a><br />
+                    <a href="https://alpinejs.dev/essentials/installation" target="_blank">Alpine.js</a><br />
+                    <a href="https://apexcharts.com/" target="_blank">APEXCHARTS.JS</a><br />
+                    <a href="https://fonts.google.com/" target="_blank">Google Fonts</a><br />
+                </section>
+                
+                <section id="supports">
+                    <div class="page-header">
+                        <h3 style="margin-top: 0; margin-bottom: 12px;">24-Hour Turnaround Support:</h3>
+                    </div>
+					 
+					<p>Thank you for purchasing Taildash - Analytics Dashboard Tailwind CSS HTML Template. If you have any questions that are beyond the scope of this help file, please feel free to email, via my user page contact form or put a ticket at Support Center. Thankyou so much!</p>
+                </section>
+            </article> 
+        </main>
+ 
+        <footer class="site-footer">
+            <div class="container-fluid"> <a id="scroll-up" href="#"><i class="fa fa-angle-up"></i></a>
+                <div class="row">
+                    <div class="col-md-6 col-sm-6">
+                        <p>Copyright &copy; 2022. All right reserved</p>
+                    </div>
+                </div>
+            </div>
+        </footer> 
+    </body>
+</html>

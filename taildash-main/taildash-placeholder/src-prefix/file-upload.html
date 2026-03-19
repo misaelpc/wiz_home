@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taildash - Tailwind CSS Admin Dashboard Template</title>
+  </head>
+  <body
+    x-data="{ page: 'fileUpload', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'ud-dark ud-text-bodydark ud-bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="ud-overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Header Start ===== -->
+      <include src="./partials/header.html" />
+      <!-- ===== Header End ===== -->
+
+      <!-- ===== Main Content Start ===== -->
+      <main class="lg:ud-pl-72.5 ud-pt-19.5">
+        <div class="ud-p-4 md:ud-p-6 2xl:ud-p-11">
+          <h2
+            class="ud-font-semibold ud-text-title-md ud-text-black dark:ud-text-white ud-mb-2"
+          >
+            File upload
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit cras
+            ultrices lectus sem.
+          </p>
+
+          <!-- File Upload Item -->
+          <div
+            class="ud-rounded-md ud-shadow-2 ud-bg-white dark:ud-bg-boxdark ud-mt-10"
+          >
+            <div
+              class="ud-px-9 ud-py-3.5 ud-border-b ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h3
+                class="ud-font-medium ud-text-lg ud-text-black dark:ud-text-white"
+              >
+                Default file input
+              </h3>
+            </div>
+
+            <div class="ud-p-9">
+              <div class="-ud-mx-4 ud-flex ud-flex-wrap">
+                <div class="ud-w-full lg:ud-w-1/2 ud-px-4">
+                  <label
+                    class="ud-mb-3 ud-block ud-font-medium ud-text-black dark:ud-text-white"
+                  >
+                    Default file input
+                  </label>
+                  <input
+                    type="file"
+                    class="ud-border-stroke focus:ud-border-primary active:ud-border-primary file:ud-border-stroke file:hover:ud-bg-primary ud-w-full ud-cursor-pointer ud-rounded-lg ud-border-[1.5px] ud-font-medium ud-outline-none ud-transition file:ud-mr-5 file:ud-border-collapse file:ud-cursor-pointer file:ud-border-0 file:ud-border-r file:ud-border-solid file:ud-bg-whiter file:ud-py-3 file:ud-px-5 file:hover:ud-bg-opacity-10 disabled:ud-cursor-default disabled:ud-bg-whiter"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="ud-p-9 ud-border-t ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h2
+                class="ud-font-semibold ud-text-lg ud-text-black dark:ud-text-white ud-mb-5"
+              >
+                HTML
+              </h2>
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <label class="ud-mb-3 ud-block ud-font-medium ud-text-black dark:ud-text-white">
+        Default file input
+      </label>
+      <input
+        type="file"
+        class="ud-border-stroke focus:ud-border-primary active:ud-border-primary file:ud-border-stroke file:hover:ud-bg-primary ud-w-full ud-cursor-pointer ud-rounded-lg ud-border-[1.5px] ud-font-medium ud-outline-none ud-transition file:ud-mr-5 file:ud-border-collapse file:ud-cursor-pointer file:ud-border-0 file:ud-border-r file:ud-border-solid file:ud-bg-whiter file:ud-py-3 file:ud-px-5 file:hover:ud-bg-opacity-10 disabled:ud-cursor-default disabled:ud-bg-whiter"
+        />
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+
+          <!-- File Upload Item -->
+          <div
+            class="ud-rounded-md ud-shadow-2 ud-bg-white dark:ud-bg-boxdark ud-mt-10"
+          >
+            <div
+              class="ud-px-9 ud-py-3.5 ud-border-b ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h3
+                class="ud-font-medium ud-text-lg ud-text-black dark:ud-text-white"
+              >
+                Upload a File
+              </h3>
+            </div>
+
+            <div class="ud-p-9">
+              <div class="-ud-mx-4 ud-flex ud-flex-wrap">
+                <div class="ud-w-full lg:ud-w-1/2 ud-px-4">
+                  <label
+                    class="ud-mb-3 ud-block ud-font-medium ud-text-black dark:ud-text-white"
+                  >
+                    Upload a File:
+                  </label>
+                  <input
+                    type="file"
+                    class="ud-w-full ud-rounded-md ud-border ud-border-stroke ud-p-3 ud-outline-none ud-transition file:ud-mr-4 file:ud-rounded file:ud-border-[0.5px] file:ud-border-stroke file:ud-bg-[#EEEEEE] file:ud-py-1 file:ud-px-2.5 file:ud-text-sm file:ud-font-medium focus:ud-border-primary file:focus:ud-border-primary active:ud-border-primary disabled:ud-cursor-default disabled:ud-bg-whiter"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="ud-p-9 ud-border-t ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h2
+                class="ud-font-semibold ud-text-lg ud-text-black dark:ud-text-white ud-mb-5"
+              >
+                HTML
+              </h2>
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <label class="ud-mb-3 ud-block ud-font-medium ud-text-black dark:ud-text-white">
+        Upload a File:
+      </label>
+      <input
+        type="file"
+        class="ud-w-full ud-rounded-md ud-border ud-border-stroke ud-p-3 ud-outline-none ud-transition file:ud-mr-4 file:ud-rounded file:ud-border-[0.5px] file:ud-border-stroke file:ud-bg-[#EEEEEE] file:ud-py-1 file:ud-px-2.5 file:ud-text-sm file:ud-font-medium focus:ud-border-primary file:focus:ud-border-primary active:ud-border-primary disabled:ud-cursor-default disabled:ud-bg-whiter"
+        />
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+
+          <!-- File Upload Item -->
+          <div
+            class="ud-rounded-md ud-shadow-2 ud-bg-white dark:ud-bg-boxdark ud-mt-10"
+          >
+            <div
+              class="ud-px-9 ud-py-3.5 ud-border-b ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h3
+                class="ud-font-medium ud-text-lg ud-text-black dark:ud-text-white"
+              >
+                Attachments
+              </h3>
+            </div>
+
+            <div class="ud-p-9">
+              <div class="-ud-mx-4 ud-flex ud-flex-wrap">
+                <div class="ud-w-full lg:ud-w-1/2 ud-px-4">
+                  <label
+                    class="ud-mb-3 ud-block ud-font-medium ud-text-black dark:ud-text-white"
+                  >
+                    Attachments
+                  </label>
+                  <div class="ud-relative">
+                    <label
+                      for="file"
+                      class="ud-min-h-[175px] ud-w-full ud-cursor-pointer ud-flex ud-items-center ud-justify-center ud-rounded-md ud-border ud-border-dashed ud-border-primary ud-p-6"
+                    >
+                      <div>
+                        <input
+                          type="file"
+                          name="file"
+                          id="file"
+                          class="ud-sr-only"
+                        />
+                        <span
+                          class="ud-mx-auto ud-mb-3 ud-h-12.5 ud-w-12.5 ud-flex ud-items-center ud-justify-center ud-rounded-full ud-border ud-border-stroke ud-bg-white"
+                        >
+                          <svg
+                            width="20"
+                            height="20"
+                            viewBox="0 0 20 20"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              fill-rule="evenodd"
+                              clip-rule="evenodd"
+                              d="M2.5013 11.666C2.96154 11.666 3.33464 12.0391 3.33464 12.4993V15.8327C3.33464 16.0537 3.42243 16.2657 3.57871 16.4219C3.73499 16.5782 3.94695 16.666 4.16797 16.666H15.8346C16.0556 16.666 16.2676 16.5782 16.4239 16.4219C16.5802 16.2657 16.668 16.0537 16.668 15.8327V12.4993C16.668 12.0391 17.0411 11.666 17.5013 11.666C17.9615 11.666 18.3346 12.0391 18.3346 12.4993V15.8327C18.3346 16.4957 18.0712 17.1316 17.6024 17.6004C17.1336 18.0693 16.4977 18.3327 15.8346 18.3327H4.16797C3.50493 18.3327 2.86904 18.0693 2.4002 17.6004C1.93136 17.1316 1.66797 16.4957 1.66797 15.8327V12.4993C1.66797 12.0391 2.04106 11.666 2.5013 11.666Z"
+                              fill="#3056D3"
+                            ></path>
+                            <path
+                              fill-rule="evenodd"
+                              clip-rule="evenodd"
+                              d="M9.41074 1.91009C9.73618 1.58466 10.2638 1.58466 10.5893 1.91009L14.7559 6.07676C15.0814 6.4022 15.0814 6.92984 14.7559 7.25527C14.4305 7.58071 13.9028 7.58071 13.5774 7.25527L10 3.67786L6.42259 7.25527C6.09715 7.58071 5.56951 7.58071 5.24408 7.25527C4.91864 6.92984 4.91864 6.4022 5.24408 6.07676L9.41074 1.91009Z"
+                              fill="#3056D3"
+                            ></path>
+                            <path
+                              fill-rule="evenodd"
+                              clip-rule="evenodd"
+                              d="M10.0013 1.66602C10.4615 1.66602 10.8346 2.03911 10.8346 2.49935V12.4994C10.8346 12.9596 10.4615 13.3327 10.0013 13.3327C9.54106 13.3327 9.16797 12.9596 9.16797 12.4994V2.49935C9.16797 2.03911 9.54106 1.66602 10.0013 1.66602Z"
+                              fill="#3056D3"
+                            ></path>
+                          </svg>
+                        </span>
+                        <span>
+                          Drag &amp; drop or
+                          <span class="ud-text-primary ud-underline">
+                            browse
+                          </span>
+                        </span>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="ud-p-9 ud-border-t ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h2
+                class="ud-font-semibold ud-text-lg ud-text-black dark:ud-text-white ud-mb-5"
+              >
+                HTML
+              </h2>
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <label class="ud-mb-3 ud-block ud-font-medium ud-text-black dark:ud-text-white">
+        Attachments
+      </label>
+      <div class="ud-relative">
+        <label for="file" class="ud-min-h-[175px] ud-w-full ud-cursor-pointer ud-flex ud-items-center ud-justify-center ud-rounded-md ud-border ud-border-dashed ud-border-primary ud-p-6">
+          <div>
+            <input type="file" name="file" id="file" class="ud-sr-only">
+            <span class="ud-mx-auto ud-mb-3 ud-h-12.5 ud-w-12.5 ud-flex ud-items-center ud-justify-center ud-rounded-full ud-border ud-border-stroke ud-bg-white">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                 <path fill-rule="evenodd" clip-rule="evenodd" d="M2.5013 11.666C2.96154 11.666 3.33464 12.0391 3.33464 12.4993V15.8327C3.33464 16.0537 3.42243 16.2657 3.57871 16.4219C3.73499 16.5782 3.94695 16.666 4.16797 16.666H15.8346C16.0556 16.666 16.2676 16.5782 16.4239 16.4219C16.5802 16.2657 16.668 16.0537 16.668 15.8327V12.4993C16.668 12.0391 17.0411 11.666 17.5013 11.666C17.9615 11.666 18.3346 12.0391 18.3346 12.4993V15.8327C18.3346 16.4957 18.0712 17.1316 17.6024 17.6004C17.1336 18.0693 16.4977 18.3327 15.8346 18.3327H4.16797C3.50493 18.3327 2.86904 18.0693 2.4002 17.6004C1.93136 17.1316 1.66797 16.4957 1.66797 15.8327V12.4993C1.66797 12.0391 2.04106 11.666 2.5013 11.666Z" fill="#3056D3"></path>
+                 <path fill-rule="evenodd" clip-rule="evenodd" d="M9.41074 1.91009C9.73618 1.58466 10.2638 1.58466 10.5893 1.91009L14.7559 6.07676C15.0814 6.4022 15.0814 6.92984 14.7559 7.25527C14.4305 7.58071 13.9028 7.58071 13.5774 7.25527L10 3.67786L6.42259 7.25527C6.09715 7.58071 5.56951 7.58071 5.24408 7.25527C4.91864 6.92984 4.91864 6.4022 5.24408 6.07676L9.41074 1.91009Z" fill="#3056D3"></path>
+                 <path fill-rule="evenodd" clip-rule="evenodd" d="M10.0013 1.66602C10.4615 1.66602 10.8346 2.03911 10.8346 2.49935V12.4994C10.8346 12.9596 10.4615 13.3327 10.0013 13.3327C9.54106 13.3327 9.16797 12.9596 9.16797 12.4994V2.49935C9.16797 2.03911 9.54106 1.66602 10.0013 1.66602Z" fill="#3056D3"></path>
+              </svg>
+           </span>
+           <span>
+              Drag &amp; drop or
+              <span class="ud-text-primary ud-underline"> browse </span>
+           </span>
+          </div>
+        </label>
+      </div>
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+    <!-- ====== Back To Top Start ===== -->
+    <include src="./partials/scrolltop.html" />
+    <!-- ====== Back To Top End ===== -->
+  </body>
+</html>

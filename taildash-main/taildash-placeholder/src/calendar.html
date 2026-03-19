@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar | Taildash - Tailwind CSS Admin Dashboard Template</title>
+  </head>
+  <body
+    x-data="{ page: 'calendar', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'ud-dark ud-text-bodydark ud-bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="ud-overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Header Start ===== -->
+      <include src="./partials/header.html" />
+      <!-- ===== Header End ===== -->
+
+      <!-- ===== Main Content Start ===== -->
+      <main class="lg:ud-pl-72.5 ud-pt-26 lg:ud-pt-22.5">
+        <div class="ud-p-4 md:ud-p-6 2xl:ud-p-11">
+          <!-- ====== Calendar Section Start -->
+          <div class="ud-mx-auto ud-max-w-280">
+            <div
+              class="ud-flex ud-flex-col-reverse sm:ud-flex-row sm:ud-items-center sm:ud-justify-between ud-gap-6 ud-rounded-lg ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-white dark:ud-bg-boxdark ud-mb-7.5 ud-p-4 ud-pl-5"
+            >
+              <div class="ud-flex ud-items-center ud-gap-5">
+                <p
+                  class="ud-font-semibold ud-text-black dark:ud-text-white sm:ud-text-xl"
+                >
+                  December 2025
+                </p>
+
+                <div class="ud-flex ud-items-center ud-gap-2">
+                  <button>
+                    <svg
+                      width="8"
+                      height="14"
+                      viewBox="0 0 8 14"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M7.70711 0.292893C8.09763 0.683418 8.09763 1.31658 7.70711 1.70711L2.41421 7L7.70711 12.2929C8.09763 12.6834 8.09763 13.3166 7.70711 13.7071C7.31658 14.0976 6.68342 14.0976 6.29289 13.7071L0.292893 7.70711C-0.0976323 7.31658 -0.0976323 6.68342 0.292893 6.29289L6.29289 0.292893C6.68342 -0.0976311 7.31658 -0.0976311 7.70711 0.292893Z"
+                        fill="#637381"
+                      />
+                    </svg>
+                  </button>
+                  <button>
+                    <svg
+                      width="8"
+                      height="14"
+                      viewBox="0 0 8 14"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M0.292893 13.7071C-0.0976311 13.3166 -0.0976311 12.6834 0.292893 12.2929L5.58579 7L0.292893 1.7071C-0.097631 1.31658 -0.097631 0.683415 0.292893 0.292892C0.683418 -0.0976334 1.31658 -0.0976333 1.70711 0.292892L7.70711 6.29289C8.09763 6.68342 8.09763 7.31658 7.70711 7.70711L1.70711 13.7071C1.31658 14.0976 0.683418 14.0976 0.292893 13.7071Z"
+                        fill="#637381"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <div class="ud-flex ud-items-center ud-gap-4">
+                <div
+                  class="ud-relative ud-z-20 ud-inline-flex ud-rounded ud-bg-white dark:ud-bg-boxdark"
+                >
+                  <select
+                    name=""
+                    id=""
+                    class="ud-relative ud-z-20 ud-h-11 ud-appearance-none ud-rounded ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-transparent ud-pr-9 ud-pl-5 ud-outline-none"
+                  >
+                    <option value="">Week</option>
+                    <option value="">Month</option>
+                    <option value="">Year</option>
+                  </select>
+                  <span
+                    class="ud-absolute ud-right-4 ud-top-1/2 ud-z-10 -ud-translate-y-1/2"
+                  >
+                    <svg
+                      width="11"
+                      height="6"
+                      viewBox="0 0 11 6"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M5.49652 5.57195C5.29784 5.57195 5.09917 5.50239 4.93361 5.34588L0.496609 0.963677C0.380718 0.841949 0.380718 0.650662 0.480054 0.528935C0.595945 0.407207 0.778061 0.407207 0.893953 0.511545L5.33096 4.89375C5.41374 4.9807 5.56274 4.9807 5.66208 4.89375L10.0991 0.511545C10.215 0.389817 10.3971 0.407207 10.513 0.528935C10.6289 0.650662 10.6123 0.841949 10.4964 0.963677L6.05942 5.32849C5.89386 5.485 5.69519 5.57195 5.49652 5.57195Z"
+                        fill="#212B36"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M4.65444 5.65773L0.212873 1.27101L0.208441 1.26636C-0.0635564 0.980663 -0.0621445 0.535609 0.170632 0.250361L0.180818 0.237879L0.191885 0.226255C0.463883 -0.0594399 0.887599 -0.0579557 1.15917 0.186543L1.16629 0.192953L5.49652 4.4697L9.81622 0.203348C10.1204 -0.109866 10.5585 -0.0286158 10.8011 0.226255C11.1055 0.545928 11.0287 1.01 10.7846 1.26636L10.7799 1.27131L6.3321 5.64672C6.10301 5.86329 5.8101 6 5.49652 6C5.20451 6 4.90666 5.89629 4.66099 5.66405L4.65444 5.65773ZM10.0991 0.511545L5.66208 4.89375C5.56274 4.9807 5.41374 4.9807 5.33096 4.89375L0.893953 0.511545C0.778061 0.407207 0.595945 0.407207 0.480054 0.528935C0.380718 0.650662 0.380718 0.841949 0.496609 0.963677L4.93361 5.34588C5.09917 5.50239 5.29784 5.57195 5.49652 5.57195C5.69519 5.57195 5.89386 5.485 6.05942 5.32849L10.4964 0.963677C10.6123 0.841949 10.6289 0.650662 10.513 0.528935C10.3971 0.407207 10.215 0.389817 10.0991 0.511545Z"
+                        fill="#212B36"
+                      />
+                    </svg>
+                  </span>
+                </div>
+
+                <div>
+                  <button
+                    class="ud-flex ud-items-center ud-gap-2.5 ud-rounded-md ud-font-medium ud-text-white ud-bg-primary hover:ud-shadow-1 ud-py-3 ud-px-4"
+                  >
+                    <svg
+                      class="ud-fill-current"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 20 20"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M18.75 9.3125H10.7187V1.25C10.7187 0.875 10.4062 0.53125 10 0.53125C9.625 0.53125 9.28125 0.84375 9.28125 1.25V9.3125H1.25C0.875 9.3125 0.53125 9.625 0.53125 10.0312C0.53125 10.4062 0.84375 10.75 1.25 10.75H9.3125V18.75C9.3125 19.125 9.625 19.4687 10.0312 19.4687C10.4062 19.4687 10.75 19.1562 10.75 18.75V10.7187H18.75C19.125 10.7187 19.4687 10.4062 19.4687 10C19.4687 9.625 19.125 9.3125 18.75 9.3125Z"
+                        fill="white"
+                      />
+                    </svg>
+
+                    Add Event
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="ud-w-full ud-max-w-full ud-bg-white dark:ud-bg-boxdark">
+              <table class="ud-w-full">
+                <thead>
+                  <tr class="ud-flex ud-rounded-t ud-bg-primary ud-text-white">
+                    <th
+                      class="ud-flex ud-items-center ud-justify-center ud-h-10 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-text-xs xl:ud-text-sm ud-p-1 xl:ud-p-5 ud-rounded-tl"
+                    >
+                      <span class="ud-hidden lg:ud-block"> Sunday </span>
+                      <span class="ud-block lg:ud-hidden"> Sun </span>
+                    </th>
+                    <th
+                      class="ud-flex ud-items-center ud-justify-center ud-h-10 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-text-xs xl:ud-text-sm ud-p-1 xl:ud-p-5"
+                    >
+                      <span class="ud-hidden lg:ud-block"> Monday </span>
+                      <span class="ud-block lg:ud-hidden"> Mon </span>
+                    </th>
+                    <th
+                      class="ud-flex ud-items-center ud-justify-center ud-h-10 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-text-xs xl:ud-text-sm ud-p-1 xl:ud-p-5"
+                    >
+                      <span class="ud-hidden lg:ud-block"> Tuesday </span>
+                      <span class="ud-block lg:ud-hidden"> Tue </span>
+                    </th>
+                    <th
+                      class="ud-flex ud-items-center ud-justify-center ud-h-10 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-text-xs xl:ud-text-sm ud-p-1 xl:ud-p-5"
+                    >
+                      <span class="ud-hidden lg:ud-block"> Wednesday </span>
+                      <span class="ud-block lg:ud-hidden"> Wed </span>
+                    </th>
+                    <th
+                      class="ud-flex ud-items-center ud-justify-center ud-h-10 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-text-xs xl:ud-text-sm ud-p-1 xl:ud-p-5"
+                    >
+                      <span class="ud-hidden lg:ud-block"> Thursday </span>
+                      <span class="ud-block lg:ud-hidden"> Thur </span>
+                    </th>
+                    <th
+                      class="ud-flex ud-items-center ud-justify-center ud-h-10 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-text-xs xl:ud-text-sm ud-p-1 xl:ud-p-5"
+                    >
+                      <span class="ud-hidden lg:ud-block"> Friday </span>
+                      <span class="ud-block lg:ud-hidden"> Fri </span>
+                    </th>
+                    <th
+                      class="ud-flex ud-items-center ud-justify-center ud-h-10 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-text-xs xl:ud-text-sm ud-p-1 xl:ud-p-5 ud-rounded-tr"
+                    >
+                      <span class="ud-hidden lg:ud-block"> Saturday </span>
+                      <span class="ud-block lg:ud-hidden"> Sat </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Line 1 -->
+                  <tr class="ud-flex">
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >1</span
+                      >
+                      <div
+                        class="ud-group md:ud-h-30 ud-h-16 ud-w-full ud-flex-grow ud-cursor-pointer ud-py-1"
+                      >
+                        <span class="group-hover:ud-text-primary md:ud-hidden">
+                          More
+                        </span>
+                        <div
+                          class="ud-event ud-invisible ud-flex ud-flex-col ud-absolute ud-left-2 ud-z-999 ud-mb-1 ud-w-[200%] ud-rounded ud-border-l-[3px] ud-border-primary ud-bg-gray dark:ud-bg-boxdark-2 ud-px-3 ud-py-1 ud-text-left ud-opacity-0 group-hover:ud-visible group-hover:ud-opacity-100 md:ud-visible md:ud-w-[190%] md:ud-opacity-100"
+                        >
+                          <span
+                            class="ud-event-name ud-text-sm ud-font-semibold ud-text-black dark:ud-text-white"
+                          >
+                            Redesign Website
+                          </span>
+                          <span
+                            class="ud-time ud-text-sm ud-font-medium ud-text-black dark:ud-text-white"
+                          >
+                            1 Dec - 2 Dec
+                          </span>
+                        </div>
+                      </div>
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >2</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >3</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >4</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >5</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >6</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >7</span
+                      >
+                    </td>
+                  </tr>
+                  <!-- Line 1 -->
+                  <!-- Line 2 -->
+                  <tr class="ud-flex">
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >8</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >9</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >10</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >11</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >12</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >13</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-1 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >14</span
+                      >
+                    </td>
+                  </tr>
+                  <!-- Line 2 -->
+                  <!-- Line 3 -->
+                  <tr class="ud-flex">
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >15</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >16</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >17</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >18</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >19</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >20</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-1 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >21</span
+                      >
+                    </td>
+                  </tr>
+                  <!-- Line 3 -->
+                  <!-- Line 4 -->
+                  <tr class="ud-flex">
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >22</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >23</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >24</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >25</span
+                      >
+                      <div
+                        class="ud-group md:ud-h-30 ud-h-16 ud-w-full ud-flex-grow ud-cursor-pointer ud-py-1"
+                      >
+                        <span class="group-hover:ud-text-primary md:ud-hidden">
+                          More
+                        </span>
+                        <div
+                          class="ud-event ud-invisible ud-flex ud-flex-col ud-absolute ud-left-2 ud-z-999 ud-mb-1 ud-w-[300%] ud-rounded ud-border-l-[3px] ud-border-primary ud-bg-gray dark:ud-bg-boxdark-2 ud-px-3 ud-py-1 ud-text-left ud-opacity-0 group-hover:ud-visible group-hover:ud-opacity-100 md:ud-visible md:ud-w-[290%] md:ud-opacity-100"
+                        >
+                          <span
+                            class="ud-event-name ud-text-sm ud-font-semibold ud-text-black dark:ud-text-white"
+                          >
+                            App Design
+                          </span>
+                          <span
+                            class="ud-time ud-text-sm ud-font-medium ud-text-black dark:ud-text-white"
+                          >
+                            25 Dec - 27 Dec
+                          </span>
+                        </div>
+                      </div>
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >26</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >27</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-1 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >28</span
+                      >
+                    </td>
+                  </tr>
+                  <!-- Line 4 -->
+                  <!-- Line 5 -->
+                  <tr class="ud-flex">
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >29</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >30</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >31</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >1</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >2</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39.5 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-2 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >3</span
+                      >
+                    </td>
+                    <td
+                      class="ud-relative ud-cursor-pointer ud-h-20 md:ud-h-25 xl:ud-h-40 ud-w-10 xsm:ud-w-12 lsm:ud-w-14 md:ud-w-25.5 lg:ud-w-24.5 xl:ud-w-39 2xl:ud-w-40 ud-border ud-border-stroke dark:ud-border-strokedark ud-transition ud-ease ud-duration-500 hover:ud-bg-gray dark:hover:ud-bg-boxdark-2 ud-p-1 md:ud-p-5"
+                    >
+                      <span
+                        class="ud-font-semibold ud-text-black dark:ud-text-white"
+                        >4</span
+                      >
+                    </td>
+                  </tr>
+                  <!-- Line 5 -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- ====== Calendar Section End -->
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+    <!-- ====== Back To Top Start ===== -->
+    <include src="./partials/scrolltop.html" />
+    <!-- ====== Back To Top End ===== -->
+  </body>
+</html>

@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Data Tables | Taildash - Tailwind CSS Admin Dashboard Template
+    </title>
+  </head>
+  <body
+    x-data="{ page: 'dataTables', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'ud-dark ud-text-bodydark ud-bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="ud-overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Header Start ===== -->
+      <include src="./partials/header.html" />
+      <!-- ===== Header End ===== -->
+
+      <!-- ===== Main Content Start ===== -->
+      <main class="lg:ud-pl-72.5 ud-pt-26 lg:ud-pt-22.5">
+        <div class="ud-p-4 md:ud-p-6 2xl:ud-p-11">
+          <!-- Data Tables Start -->
+          <h2
+            class="ud-font-semibold ud-text-title-md ud-text-black dark:ud-text-white ud-mb-2"
+          >
+            Data Tables Style 1
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit cras
+            ultrices lectus sem.
+          </p>
+
+          <div
+            class="ud-rounded-md ud-shadow-2 ud-bg-white dark:ud-bg-boxdark ud-my-10"
+          >
+            <div class="ud-p-9">
+              <div
+                class="ud-rounded-lg ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-white dark:ud-bg-boxdark"
+              >
+                <div class="ud-max-w-full ud-overflow-x-auto">
+                  <table class="ud-w-full ud-table-auto ud-rounded-lg">
+                    <thead>
+                      <tr
+                        class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+                      >
+                        <th class="ud-min-w-[260px] ud-py-5 ud-pr-4 ud-pl-9">
+                          <p
+                            class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                          >
+                            Customer
+                          </p>
+                        </th>
+                        <th class="ud-min-w-[260px] ud-py-5 ud-px-4">
+                          <p
+                            class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                          >
+                            Product
+                          </p>
+                        </th>
+                        <th class="min-w-[160px] ud-py-5 ud-px-4">
+                          <p
+                            class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                          >
+                            Order Number
+                          </p>
+                        </th>
+                        <th class="ud-min-w-[170px] ud-py-5 ud-px-4">
+                          <p
+                            class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                          >
+                            Date
+                          </p>
+                        </th>
+                        <th class="ud-min-w-[150px] ud-py-5 ud-px-4">
+                          <p
+                            class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                          >
+                            Status
+                          </p>
+                        </th>
+                        <th class="ud-min-w-[200px] ud-py-5 ud-pl-4 ud-pr-9">
+                          <p
+                            class="ud-text-right ud-font-medium ud-text-black dark:ud-text-white"
+                          >
+                            Confirmation
+                          </p>
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      <tr
+                        class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+                      >
+                        <td class="ud-py-6 ud-pr-4 ud-pl-9">
+                          <h5 class="ud-font-medium">Musharof Chowdhury</h5>
+                          <p class="ud-text-sm">musharof@gmail.com</p>
+                        </td>
+
+                        <td class="ud-py-6 ud-px-4">
+                          <h5 class="ud-font-medium">Apple Macbook Pro M1</h5>
+                          <p class="ud-text-sm">8/256 GB</p>
+                        </td>
+
+                        <td class="ud-py-6 ud-px-4">
+                          <p>#WE234343</p>
+                        </td>
+                        <td class="ud-py-6 ud-px-4">
+                          <p>25 Dec 2024</p>
+                        </td>
+                        <td class="ud-py-6 ud-px-4">
+                          <p
+                            class="ud-inline-flex ud-items-center ud-justify-center ud-rounded-full ud-bg-warning/10 ud-py-1 ud-px-3.5 ud-text-sm ud-font-medium ud-text-warning"
+                          >
+                            <span
+                              class="ud-mr-2 ud-block ud-h-2 ud-w-2 ud-rounded-full ud-bg-warning"
+                            ></span>
+                            Pending
+                          </p>
+                        </td>
+                        <td class="ud-py-6 ud-pl-4 ud-pr-9 ud-text-right">
+                          <button
+                            class="ud-inline-flex ud-items-center ud-justify-center ud-rounded ud-border ud-border-primary ud-py-2 ud-px-4 ud-font-medium ud-text-primary hover:ud-bg-primary hover:ud-text-white ud-ease-in-out ud-duration-300"
+                          >
+                            Confirm Order
+                          </button>
+                        </td>
+                      </tr>
+
+                      <tr
+                        class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+                      >
+                        <td class="ud-py-6 ud-pr-4 ud-pl-9">
+                          <h5 class="ud-font-medium">Shafiq Hammad</h5>
+                          <p class="ud-text-sm">shafiq@gmail.com</p>
+                        </td>
+
+                        <td class="ud-py-6 ud-px-4">
+                          <h5 class="ud-font-medium">iPhone 13 Pro Max</h5>
+                          <p class="ud-text-sm">4/256 GB</p>
+                        </td>
+
+                        <td class="ud-py-6 ud-px-4">
+                          <p>#WE234343</p>
+                        </td>
+                        <td class="ud-py-6 ud-px-4">
+                          <p>25 Dec 2024</p>
+                        </td>
+                        <td class="ud-py-6 ud-px-4">
+                          <p
+                            class="ud-inline-flex ud-items-center ud-justify-center ud-rounded-full ud-bg-warning/10 ud-py-1 ud-px-3.5 ud-text-sm ud-font-medium ud-text-warning"
+                          >
+                            <span
+                              class="ud-mr-2 ud-block ud-h-2 ud-w-2 ud-rounded-full ud-bg-warning"
+                            ></span>
+                            Pending
+                          </p>
+                        </td>
+                        <td class="ud-py-6 ud-pl-4 ud-pr-9 ud-text-right">
+                          <button
+                            class="ud-inline-flex ud-items-center ud-justify-center ud-rounded ud-border ud-border-primary ud-py-2 ud-px-4 ud-font-medium ud-text-primary hover:ud-bg-primary hover:ud-text-white ud-ease-in-out ud-duration-300"
+                          >
+                            Confirm Order
+                          </button>
+                        </td>
+                      </tr>
+
+                      <tr
+                        class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+                      >
+                        <td class="ud-py-6 ud-pr-4 ud-pl-9">
+                          <h5 class="ud-font-medium">Naimur Rahman</h5>
+                          <p class="ud-text-sm">naim@gmail.com</p>
+                        </td>
+
+                        <td class="ud-py-6 ud-px-4">
+                          <h5 class="ud-font-medium">Apple watch series 7</h5>
+                        </td>
+
+                        <td class="ud-py-6 ud-px-4">
+                          <p>#WE234343</p>
+                        </td>
+                        <td class="ud-py-6 ud-px-4">
+                          <p>25 Dec 2024</p>
+                        </td>
+                        <td class="ud-py-6 ud-px-4">
+                          <p
+                            class="ud-inline-flex ud-items-center ud-justify-center ud-rounded-full ud-bg-danger/10 ud-py-1 ud-px-3.5 ud-text-sm ud-font-medium ud-text-danger"
+                          >
+                            <span
+                              class="ud-mr-2 ud-block ud-h-2 ud-w-2 ud-rounded-full ud-bg-danger"
+                            ></span>
+                            Cancelled
+                          </p>
+                        </td>
+                        <td class="ud-py-6 ud-pl-4 ud-pr-9 ud-text-right"></td>
+                      </tr>
+
+                      <tr class="ud-border-b ud-border-transparent">
+                        <td class="ud-py-6 ud-pr-4 ud-pl-9">
+                          <h5 class="ud-font-medium">Jhon Smith</h5>
+                          <p class="ud-text-sm">smith@gmail.com</p>
+                        </td>
+
+                        <td class="ud-py-6 ud-px-4">
+                          <h5 class="ud-font-medium">Apple Macbook air M1</h5>
+                          <p class="ud-text-sm">8/256 GB</p>
+                        </td>
+
+                        <td class="ud-py-6 ud-px-4">
+                          <p>#WE234343</p>
+                        </td>
+                        <td class="ud-py-6 ud-px-4">
+                          <p>25 Dec 2024</p>
+                        </td>
+                        <td class="ud-py-6 ud-px-4">
+                          <p
+                            class="ud-inline-flex ud-items-center ud-justify-center ud-rounded-full ud-bg-success/10 ud-py-1 ud-px-3.5 ud-text-sm ud-font-medium ud-text-success"
+                          >
+                            <span
+                              class="ud-mr-2 ud-block ud-h-2 ud-w-2 ud-rounded-full ud-bg-success"
+                            ></span>
+                            Shipped
+                          </p>
+                        </td>
+                        <td class="ud-py-6 ud-pl-4 ud-pr-9 ud-text-right"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="ud-p-9 ud-border-t ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h2
+                class="ud-font-semibold ud-text-lg ud-text-black dark:ud-text-white ud-mb-5"
+              >
+                HTML
+              </h2>
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <div class="ud-rounded-lg ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-white dark:ud-bg-boxdark">
+        <div class="ud-max-w-full ud-overflow-x-auto">
+          <table class="ud-w-full ud-table-auto ud-rounded-lg">
+            <thead>
+              <tr
+                class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+              >
+                <th class="ud-min-w-[260px] ud-py-5 ud-pr-4 ud-pl-9">
+                  <p
+                    class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                  >
+                    Customer
+                  </p>
+                </th>
+                <th class="ud-min-w-[260px] ud-py-5 ud-px-4">
+                  <p
+                    class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                  >
+                    Product
+                  </p>
+                </th>
+                <th class="min-w-[160px] ud-py-5 ud-px-4">
+                  <p
+                    class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                  >
+                    Order Number
+                  </p>
+                </th>
+                <th class="ud-min-w-[170px] ud-py-5 ud-px-4">
+                  <p
+                    class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                  >
+                    Date
+                  </p>
+                </th>
+                <th class="ud-min-w-[150px] ud-py-5 ud-px-4">
+                  <p
+                    class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                  >
+                    Status
+                  </p>
+                </th>
+                <th class="ud-min-w-[200px] ud-py-5 ud-pl-4 ud-pr-9">
+                  <p
+                    class="ud-text-right ud-font-medium ud-text-black dark:ud-text-white"
+                  >
+                    Confirmation
+                  </p>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr
+                class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+              >
+                <td class="ud-py-6 ud-pr-4 ud-pl-9">
+                  <h5 class="ud-font-medium">Musharof Chowdhury</h5>
+                  <p class="ud-text-sm">musharof@gmail.com</p>
+                </td>
+
+                <td class="ud-py-6 ud-px-4">
+                  <h5 class="ud-font-medium">Apple Macbook Pro M1</h5>
+                  <p class="ud-text-sm">8/256 GB</p>
+                </td>
+
+                <td class="ud-py-6 ud-px-4">
+                  <p>#WE234343</p>
+                </td>
+                <td class="ud-py-6 ud-px-4">
+                  <p>25 Dec 2024</p>
+                </td>
+                <td class="ud-py-6 ud-px-4">
+                  <p
+                    class="ud-inline-flex ud-items-center ud-justify-center ud-rounded-full ud-bg-warning/10 ud-py-1 ud-px-3.5 ud-text-sm ud-font-medium ud-text-warning"
+                  >
+                    <span
+                      class="ud-mr-2 ud-block ud-h-2 ud-w-2 ud-rounded-full ud-bg-warning"
+                    ></span>
+                    Pending
+                  </p>
+                </td>
+                <td class="ud-py-6 ud-pl-4 ud-pr-9 ud-text-right">
+                  <button
+                    class="ud-inline-flex ud-items-center ud-justify-center ud-rounded ud-border ud-border-primary ud-py-2 ud-px-4 ud-font-medium ud-text-primary hover:ud-bg-primary hover:ud-text-white ud-ease-in-out ud-duration-300"
+                  >
+                    Confirm Order
+                  </button>
+                </td>
+              </tr>
+
+              <tr
+                class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+              >
+                <td class="ud-py-6 ud-pr-4 ud-pl-9">
+                  <h5 class="ud-font-medium">Shafiq Hammad</h5>
+                  <p class="ud-text-sm">shafiq@gmail.com</p>
+                </td>
+
+                <td class="ud-py-6 ud-px-4">
+                  <h5 class="ud-font-medium">iPhone 13 Pro Max</h5>
+                  <p class="ud-text-sm">4/256 GB</p>
+                </td>
+
+                <td class="ud-py-6 ud-px-4">
+                  <p>#WE234343</p>
+                </td>
+                <td class="ud-py-6 ud-px-4">
+                  <p>25 Dec 2024</p>
+                </td>
+                <td class="ud-py-6 ud-px-4">
+                  <p
+                    class="ud-inline-flex ud-items-center ud-justify-center ud-rounded-full ud-bg-warning/10 ud-py-1 ud-px-3.5 ud-text-sm ud-font-medium ud-text-warning"
+                  >
+                    <span
+                      class="ud-mr-2 ud-block ud-h-2 ud-w-2 ud-rounded-full ud-bg-warning"
+                    ></span>
+                    Pending
+                  </p>
+                </td>
+                <td class="ud-py-6 ud-pl-4 ud-pr-9 ud-text-right">
+                  <button
+                    class="ud-inline-flex ud-items-center ud-justify-center ud-rounded ud-border ud-border-primary ud-py-2 ud-px-4 ud-font-medium ud-text-primary hover:ud-bg-primary hover:ud-text-white ud-ease-in-out ud-duration-300"
+                  >
+                    Confirm Order
+                  </button>
+                </td>
+              </tr>
+
+              <tr
+                class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+              >
+                <td class="ud-py-6 ud-pr-4 ud-pl-9">
+                  <h5 class="ud-font-medium">Naimur Rahman</h5>
+                  <p class="ud-text-sm">naim@gmail.com</p>
+                </td>
+
+                <td class="ud-py-6 ud-px-4">
+                  <h5 class="ud-font-medium">Apple watch series 7</h5>
+                </td>
+
+                <td class="ud-py-6 ud-px-4">
+                  <p>#WE234343</p>
+                </td>
+                <td class="ud-py-6 ud-px-4">
+                  <p>25 Dec 2024</p>
+                </td>
+                <td class="ud-py-6 ud-px-4">
+                  <p
+                    class="ud-inline-flex ud-items-center ud-justify-center ud-rounded-full ud-bg-danger/10 ud-py-1 ud-px-3.5 ud-text-sm ud-font-medium ud-text-danger"
+                  >
+                    <span
+                      class="ud-mr-2 ud-block ud-h-2 ud-w-2 ud-rounded-full ud-bg-danger"
+                    ></span>
+                    Cancelled
+                  </p>
+                </td>
+                <td class="ud-py-6 ud-pl-4 ud-pr-9 ud-text-right"></td>
+              </tr>
+
+              <tr class="ud-border-b ud-border-transparent">
+                <td class="ud-py-6 ud-pr-4 ud-pl-9">
+                  <h5 class="ud-font-medium">Jhon Smith</h5>
+                  <p class="ud-text-sm">smith@gmail.com</p>
+                </td>
+
+                <td class="ud-py-6 ud-px-4">
+                  <h5 class="ud-font-medium">Apple Macbook air M1</h5>
+                  <p class="ud-text-sm">8/256 GB</p>
+                </td>
+
+                <td class="ud-py-6 ud-px-4">
+                  <p>#WE234343</p>
+                </td>
+                <td class="ud-py-6 ud-px-4">
+                  <p>25 Dec 2024</p>
+                </td>
+                <td class="ud-py-6 ud-px-4">
+                  <p
+                    class="ud-inline-flex ud-items-center ud-justify-center ud-rounded-full ud-bg-success/10 ud-py-1 ud-px-3.5 ud-text-sm ud-font-medium ud-text-success"
+                  >
+                    <span
+                      class="ud-mr-2 ud-block ud-h-2 ud-w-2 ud-rounded-full ud-bg-success"
+                    ></span>
+                    Shipped
+                  </p>
+                </td>
+                <td class="ud-py-6 ud-pl-4 ud-pr-9 ud-text-right"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+
+          <!-- Data Tables Start -->
+          <h2
+            class="ud-font-semibold ud-text-title-md ud-text-black dark:ud-text-white ud-mb-2"
+          >
+            Data Tables Style 2
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit cras
+            ultrices lectus sem.
+          </p>
+
+          <div
+            class="ud-rounded-md ud-shadow-2 ud-bg-white dark:ud-bg-boxdark ud-mt-10"
+          >
+            <div class="ud-p-9">
+              <div
+                class="ud-rounded-lg ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-white dark:ud-bg-boxdark"
+              >
+                <div class="ud-max-w-full ud-overflow-x-auto">
+                  <table class="ud-w-full ud-table-auto">
+                    <thead>
+                      <tr
+                        class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+                      >
+                        <th class="ud-min-w-75 ud-py-5 ud-pl-8 ud-pr-4">
+                          <p
+                            class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                          >
+                            Product Name
+                          </p>
+                        </th>
+                        <th class="ud-min-w-22.5 ud-py-5 ud-px-4">
+                          <p
+                            class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                          >
+                            Category
+                          </p>
+                        </th>
+                        <th class="ud-min-w-22.5 ud-py-5 ud-px-4">
+                          <p
+                            class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                          >
+                            Price
+                          </p>
+                        </th>
+                        <th class="ud-min-w-22.5 ud-py-5 ud-px-4">
+                          <p
+                            class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                          >
+                            Sold
+                          </p>
+                        </th>
+                        <th class="ud-min-w-22.5 ud-py-5 ud-pl-4 ud-pr-8">
+                          <p
+                            class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                          >
+                            Profit
+                          </p>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+                      >
+                        <td class="ud-py-4.5 ud-pl-6 ud-pr-3">
+                          <div class="ud-flex ud-items-center">
+                            <label
+                              for="checkbox-1"
+                              class="ud-cursor-pointer ud-select-none ud-flex"
+                            >
+                              <div class="ud-relative">
+                                <input
+                                  type="checkbox"
+                                  id="checkbox-1"
+                                  class="ud-tableCheckbox ud-sr-only"
+                                />
+                                <div
+                                  class="ud-box ud-mr-4 ud-h-5 ud-w-5 ud-flex ud-items-center ud-justify-center ud-rounded-[3px] ud-border-[.5px] ud-border-stroke dark:ud-border-strokedark ud-bg-gray-2 dark:ud-bg-boxdark-2 ud-text-white"
+                                >
+                                  <span class="ud-opacity-0">
+                                    <svg
+                                      width="14"
+                                      height="14"
+                                      viewBox="0 0 10 10"
+                                      class="ud-stroke-white"
+                                    >
+                                      <path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M8.62796 2.20602C8.79068 2.36874 8.79068 2.63256 8.62796 2.79528L4.04463 7.37861C3.88191 7.54133 3.61809 7.54133 3.45537 7.37861L1.37204 5.29528C1.20932 5.13256 1.20932 4.86874 1.37204 4.70602C1.53476 4.5433 1.79858 4.5433 1.96129 4.70602L3.75 6.49473L8.03871 2.20602C8.20142 2.0433 8.46524 2.0433 8.62796 2.20602Z"
+                                        fill=""
+                                      />
+                                    </svg>
+                                  </span>
+                                </div>
+                              </div>
+                            </label>
+                            <div class="ud-flex ud-items-center">
+                              <img
+                                src="https://cdn.tailgrids.com/2.0/image/application/images/tables/table-12/image-01.jpg"
+                                alt="product"
+                                class="ud-mr-4 ud-h-12.5 ud-w-15 ud-rounded ud-object-cover ud-object-center"
+                              />
+                              <p class="ud-text-sm">Apple Watch Series 7</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="ud-py-4.5 ud-px-4">
+                          <p class="ud-text-sm">Electronics</p>
+                        </td>
+                        <td class="ud-py-4.5 ud-px-4">
+                          <p class="ud-text-sm">$269</p>
+                        </td>
+                        <td class="ud-py-4.5 ud-px-4">
+                          <p class="ud-text-sm">22</p>
+                        </td>
+                        <td class="ud-py-4.5 ud-px-4">
+                          <p class="ud-text-sm">$45</p>
+                        </td>
+                        <td class="ud-py-4.5 ud-pl-4 ud-pr-6">
+                          <div
+                            x-data="{openDropDown: false}"
+                            class="ud-relative ud-text-right"
+                          >
+                            <button @click="openDropDown = !openDropDown">
+                              <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <path
+                                  d="M6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <path
+                                  d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                              </svg>
+                            </button>
+                            <div
+                              x-show="openDropDown"
+                              @click.outside="openDropDown = false"
+                              class="ud-absolute ud-right-0 ud-top-full ud-z-40 ud-w-40 ud-space-y-1 ud-rounded ud-shadow ud-bg-white dark:ud-bg-boxdark ud-border ud-border-stroke dark:ud-border-strokedark ud-p-2"
+                            >
+                              <button
+                                class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+                      >
+                        <td class="ud-py-4.5 ud-pl-6 ud-pr-3">
+                          <div class="ud-flex ud-items-center">
+                            <label
+                              for="checkbox-2"
+                              class="ud-cursor-pointer ud-select-none ud-flex"
+                            >
+                              <div class="ud-relative">
+                                <input
+                                  type="checkbox"
+                                  id="checkbox-2"
+                                  class="ud-tableCheckbox ud-sr-only"
+                                />
+                                <div
+                                  class="ud-box ud-mr-4 ud-h-5 ud-w-5 ud-flex ud-items-center ud-justify-center ud-rounded-[3px] ud-border-[.5px] ud-border-stroke dark:ud-border-strokedark ud-bg-gray-2 dark:ud-bg-boxdark-2 ud-text-white"
+                                >
+                                  <span class="ud-opacity-0">
+                                    <svg
+                                      width="14"
+                                      height="14"
+                                      viewBox="0 0 10 10"
+                                      class="ud-stroke-white"
+                                    >
+                                      <path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M8.62796 2.20602C8.79068 2.36874 8.79068 2.63256 8.62796 2.79528L4.04463 7.37861C3.88191 7.54133 3.61809 7.54133 3.45537 7.37861L1.37204 5.29528C1.20932 5.13256 1.20932 4.86874 1.37204 4.70602C1.53476 4.5433 1.79858 4.5433 1.96129 4.70602L3.75 6.49473L8.03871 2.20602C8.20142 2.0433 8.46524 2.0433 8.62796 2.20602Z"
+                                        fill=""
+                                      />
+                                    </svg>
+                                  </span>
+                                </div>
+                              </div>
+                            </label>
+                            <div class="ud-flex ud-items-center">
+                              <img
+                                src="https://cdn.tailgrids.com/2.0/image/application/images/tables/table-12/image-02.jpg"
+                                alt="product"
+                                class="ud-mr-4 ud-h-12.5 ud-w-15 ud-rounded ud-object-cover ud-object-center"
+                              />
+                              <p class="ud-text-sm">Macbook Pro M1</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="ud-py-4.5 ud-px-4">
+                          <p class="ud-text-sm">Electronics</p>
+                        </td>
+                        <td class="ud-py-4.5 ud-px-4">
+                          <p class="ud-text-sm">$546</p>
+                        </td>
+                        <td class="ud-py-4.5 ud-px-4">
+                          <p class="ud-text-sm">34</p>
+                        </td>
+                        <td class="ud-py-4.5 ud-px-4">
+                          <p class="ud-text-sm">$125</p>
+                        </td>
+                        <td class="ud-py-4.5 ud-pl-4 ud-pr-6">
+                          <div
+                            x-data="{openDropDown: false}"
+                            class="ud-relative ud-text-right"
+                          >
+                            <button @click="openDropDown = !openDropDown">
+                              <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <path
+                                  d="M6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <path
+                                  d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                              </svg>
+                            </button>
+                            <div
+                              x-show="openDropDown"
+                              @click.outside="openDropDown = false"
+                              class="ud-absolute ud-right-0 ud-top-full ud-z-40 ud-w-40 ud-space-y-1 ud-rounded ud-shadow ud-bg-white dark:ud-bg-boxdark ud-border ud-border-stroke dark:ud-border-strokedark ud-p-2"
+                            >
+                              <button
+                                class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+                      >
+                        <td class="ud-py-4.5 ud-pl-6 ud-pr-3">
+                          <div class="ud-flex ud-items-center">
+                            <label
+                              for="checkbox-3"
+                              class="ud-cursor-pointer ud-select-none ud-flex"
+                            >
+                              <div class="ud-relative">
+                                <input
+                                  type="checkbox"
+                                  id="checkbox-3"
+                                  class="ud-tableCheckbox ud-sr-only"
+                                />
+                                <div
+                                  class="ud-box ud-mr-4 ud-h-5 ud-w-5 ud-flex ud-items-center ud-justify-center ud-rounded-[3px] ud-border-[.5px] ud-border-stroke dark:ud-border-strokedark ud-bg-gray-2 dark:ud-bg-boxdark-2 ud-text-white"
+                                >
+                                  <span class="ud-opacity-0">
+                                    <svg
+                                      width="14"
+                                      height="14"
+                                      viewBox="0 0 10 10"
+                                      class="ud-stroke-white"
+                                    >
+                                      <path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M8.62796 2.20602C8.79068 2.36874 8.79068 2.63256 8.62796 2.79528L4.04463 7.37861C3.88191 7.54133 3.61809 7.54133 3.45537 7.37861L1.37204 5.29528C1.20932 5.13256 1.20932 4.86874 1.37204 4.70602C1.53476 4.5433 1.79858 4.5433 1.96129 4.70602L3.75 6.49473L8.03871 2.20602C8.20142 2.0433 8.46524 2.0433 8.62796 2.20602Z"
+                                        fill=""
+                                      />
+                                    </svg>
+                                  </span>
+                                </div>
+                              </div>
+                            </label>
+                            <div class="ud-flex ud-items-center">
+                              <img
+                                src="https://cdn.tailgrids.com/2.0/image/application/images/tables/table-12/image-03.jpg"
+                                alt="product"
+                                class="ud-mr-4 ud-h-12.5 ud-w-15 ud-rounded ud-object-cover ud-object-center"
+                              />
+                              <p class="ud-text-sm">Dell Inspiron 15</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="ud-py-4.5 ud-px-4">
+                          <p class="ud-text-sm">Electronics</p>
+                        </td>
+                        <td class="ud-py-4.5 ud-px-4">
+                          <p class="ud-text-sm">$444</p>
+                        </td>
+                        <td class="ud-py-4.5 ud-px-4">
+                          <p class="ud-text-sm">64</p>
+                        </td>
+                        <td class="ud-py-4.5 ud-px-4">
+                          <p class="ud-text-sm">$247</p>
+                        </td>
+                        <td class="ud-py-4.5 ud-pl-4 ud-pr-6">
+                          <div
+                            x-data="{openDropDown: false}"
+                            class="ud-relative ud-text-right"
+                          >
+                            <button @click="openDropDown = !openDropDown">
+                              <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <path
+                                  d="M6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <path
+                                  d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                              </svg>
+                            </button>
+                            <div
+                              x-show="openDropDown"
+                              @click.outside="openDropDown = false"
+                              class="ud-absolute ud-right-0 ud-top-full ud-z-40 ud-w-40 ud-space-y-1 ud-rounded ud-shadow ud-bg-white dark:ud-bg-boxdark ud-border ud-border-stroke dark:ud-border-strokedark ud-p-2"
+                            >
+                              <button
+                                class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr
+                        class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+                      >
+                        <td class="ud-py-4.5 ud-pl-6 ud-pr-3">
+                          <div class="ud-flex ud-items-center">
+                            <label
+                              for="checkbox-4"
+                              class="ud-cursor-pointer ud-select-none ud-flex"
+                            >
+                              <div class="ud-relative">
+                                <input
+                                  type="checkbox"
+                                  id="checkbox-4"
+                                  class="ud-tableCheckbox ud-sr-only"
+                                />
+                                <div
+                                  class="ud-box ud-mr-4 ud-h-5 ud-w-5 ud-flex ud-items-center ud-justify-center ud-rounded-[3px] ud-border-[.5px] ud-border-stroke dark:ud-border-strokedark ud-bg-gray-2 dark:ud-bg-boxdark-2 ud-text-white"
+                                >
+                                  <span class="ud-opacity-0">
+                                    <svg
+                                      width="14"
+                                      height="14"
+                                      viewBox="0 0 10 10"
+                                      class="ud-stroke-white"
+                                    >
+                                      <path
+                                        fill-rule="evenodd"
+                                        clip-rule="evenodd"
+                                        d="M8.62796 2.20602C8.79068 2.36874 8.79068 2.63256 8.62796 2.79528L4.04463 7.37861C3.88191 7.54133 3.61809 7.54133 3.45537 7.37861L1.37204 5.29528C1.20932 5.13256 1.20932 4.86874 1.37204 4.70602C1.53476 4.5433 1.79858 4.5433 1.96129 4.70602L3.75 6.49473L8.03871 2.20602C8.20142 2.0433 8.46524 2.0433 8.62796 2.20602Z"
+                                        fill=""
+                                      />
+                                    </svg>
+                                  </span>
+                                </div>
+                              </div>
+                            </label>
+                            <div class="ud-flex ud-items-center">
+                              <img
+                                src="https://cdn.tailgrids.com/2.0/image/application/images/tables/table-12/image-04.jpg"
+                                alt="product"
+                                class="ud-mr-4 ud-h-12.5 ud-w-15 ud-rounded ud-object-cover ud-object-center"
+                              />
+                              <p class="ud-text-sm">HP Probook 450</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="ud-py-4.5 ud-px-4">
+                          <p class="ud-text-sm">Electronics</p>
+                        </td>
+                        <td class="ud-py-4.5 ud-px-4">
+                          <p class="ud-text-sm">$499</p>
+                        </td>
+                        <td class="ud-py-4.5 ud-px-4">
+                          <p class="ud-text-sm">72</p>
+                        </td>
+                        <td class="ud-py-4.5 ud-px-4">
+                          <p class="ud-text-sm">$103</p>
+                        </td>
+                        <td class="ud-py-4.5 ud-pl-4 ud-pr-6">
+                          <div
+                            x-data="{openDropDown: false}"
+                            class="ud-relative ud-text-right"
+                          >
+                            <button @click="openDropDown = !openDropDown">
+                              <svg
+                                width="24"
+                                height="24"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <path
+                                  d="M6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                                <path
+                                  d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z"
+                                  stroke="#637381"
+                                  stroke-width="2"
+                                  stroke-linecap="round"
+                                  stroke-linejoin="round"
+                                />
+                              </svg>
+                            </button>
+                            <div
+                              x-show="openDropDown"
+                              @click.outside="openDropDown = false"
+                              class="ud-absolute ud-right-0 ud-bottom-full ud-z-40 ud-w-40 ud-space-y-1 ud-rounded ud-shadow ud-bg-white dark:ud-bg-boxdark ud-border ud-border-stroke dark:ud-border-strokedark ud-p-2"
+                            >
+                              <button
+                                class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                              >
+                                Edit
+                              </button>
+                              <button
+                                class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="ud-p-9 ud-border-t ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h2
+                class="ud-font-semibold ud-text-lg ud-text-black dark:ud-text-white ud-mb-5"
+              >
+                HTML
+              </h2>
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <div class="ud-rounded-lg ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-white dark:ud-bg-boxdark">
+        <div class="ud-max-w-full ud-overflow-x-auto">
+          <table class="ud-w-full ud-table-auto">
+            <thead>
+              <tr
+                class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+              >
+                <th class="ud-min-w-75 ud-py-5 ud-pl-8 ud-pr-4">
+                  <p
+                    class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                  >
+                    Product Name
+                  </p>
+                </th>
+                <th class="ud-min-w-22.5 ud-py-5 ud-px-4">
+                  <p
+                    class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                  >
+                    Category
+                  </p>
+                </th>
+                <th class="ud-min-w-22.5 ud-py-5 ud-px-4">
+                  <p
+                    class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                  >
+                    Price
+                  </p>
+                </th>
+                <th class="ud-min-w-22.5 ud-py-5 ud-px-4">
+                  <p
+                    class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                  >
+                    Sold
+                  </p>
+                </th>
+                <th class="ud-min-w-22.5 ud-py-5 ud-pl-4 ud-pr-8">
+                  <p
+                    class="ud-text-left ud-font-medium ud-text-black dark:ud-text-white"
+                  >
+                    Profit
+                  </p>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+              >
+                <td class="ud-py-4.5 ud-pl-6 ud-pr-3">
+                  <div class="ud-flex ud-items-center">
+                    <label
+                      for="checkbox-1"
+                      class="ud-cursor-pointer ud-select-none ud-flex"
+                    >
+                      <div class="ud-relative">
+                        <input
+                          type="checkbox"
+                          id="checkbox-1"
+                          class="ud-tableCheckbox ud-sr-only"
+                        />
+                        <div
+                          class="ud-box ud-mr-4 ud-h-5 ud-w-5 ud-flex ud-items-center ud-justify-center ud-rounded-[3px] ud-border-[.5px] ud-border-stroke dark:ud-border-strokedark ud-bg-gray-2 dark:ud-bg-boxdark-2 ud-text-white"
+                        >
+                          <span class="ud-opacity-0">
+                            <svg
+                              width="14"
+                              height="14"
+                              viewBox="0 0 10 10"
+                              class="ud-stroke-white"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M8.62796 2.20602C8.79068 2.36874 8.79068 2.63256 8.62796 2.79528L4.04463 7.37861C3.88191 7.54133 3.61809 7.54133 3.45537 7.37861L1.37204 5.29528C1.20932 5.13256 1.20932 4.86874 1.37204 4.70602C1.53476 4.5433 1.79858 4.5433 1.96129 4.70602L3.75 6.49473L8.03871 2.20602C8.20142 2.0433 8.46524 2.0433 8.62796 2.20602Z"
+                                fill=""
+                              />
+                            </svg>
+                          </span>
+                        </div>
+                      </div>
+                    </label>
+                    <div class="ud-flex ud-items-center">
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/application/images/tables/table-12/image-01.jpg"
+                        alt="product"
+                        class="ud-mr-4 ud-h-12.5 ud-w-15 ud-rounded ud-object-cover ud-object-center"
+                      />
+                      <p class="ud-text-sm">Apple Watch Series 7</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="ud-py-4.5 ud-px-4">
+                  <p class="ud-text-sm">Electronics</p>
+                </td>
+                <td class="ud-py-4.5 ud-px-4">
+                  <p class="ud-text-sm">$269</p>
+                </td>
+                <td class="ud-py-4.5 ud-px-4">
+                  <p class="ud-text-sm">22</p>
+                </td>
+                <td class="ud-py-4.5 ud-px-4">
+                  <p class="ud-text-sm">$45</p>
+                </td>
+                <td class="ud-py-4.5 ud-pl-4 ud-pr-6">
+                  <div
+                    x-data="{openDropDown: false}"
+                    class="ud-relative ud-text-right"
+                  >
+                    <button @click="openDropDown = !openDropDown">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+                    <div
+                      x-show="openDropDown"
+                      @click.outside="openDropDown = false"
+                      class="ud-absolute ud-right-0 ud-top-full ud-z-40 ud-w-40 ud-space-y-1 ud-rounded ud-shadow ud-bg-white dark:ud-bg-boxdark ud-border ud-border-stroke dark:ud-border-strokedark ud-p-2"
+                    >
+                      <button
+                        class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+              >
+                <td class="ud-py-4.5 ud-pl-6 ud-pr-3">
+                  <div class="ud-flex ud-items-center">
+                    <label
+                      for="checkbox-2"
+                      class="ud-cursor-pointer ud-select-none ud-flex"
+                    >
+                      <div class="ud-relative">
+                        <input
+                          type="checkbox"
+                          id="checkbox-2"
+                          class="ud-tableCheckbox ud-sr-only"
+                        />
+                        <div
+                          class="ud-box ud-mr-4 ud-h-5 ud-w-5 ud-flex ud-items-center ud-justify-center ud-rounded-[3px] ud-border-[.5px] ud-border-stroke dark:ud-border-strokedark ud-bg-gray-2 dark:ud-bg-boxdark-2 ud-text-white"
+                        >
+                          <span class="ud-opacity-0">
+                            <svg
+                              width="14"
+                              height="14"
+                              viewBox="0 0 10 10"
+                              class="ud-stroke-white"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M8.62796 2.20602C8.79068 2.36874 8.79068 2.63256 8.62796 2.79528L4.04463 7.37861C3.88191 7.54133 3.61809 7.54133 3.45537 7.37861L1.37204 5.29528C1.20932 5.13256 1.20932 4.86874 1.37204 4.70602C1.53476 4.5433 1.79858 4.5433 1.96129 4.70602L3.75 6.49473L8.03871 2.20602C8.20142 2.0433 8.46524 2.0433 8.62796 2.20602Z"
+                                fill=""
+                              />
+                            </svg>
+                          </span>
+                        </div>
+                      </div>
+                    </label>
+                    <div class="ud-flex ud-items-center">
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/application/images/tables/table-12/image-02.jpg"
+                        alt="product"
+                        class="ud-mr-4 ud-h-12.5 ud-w-15 ud-rounded ud-object-cover ud-object-center"
+                      />
+                      <p class="ud-text-sm">Macbook Pro M1</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="ud-py-4.5 ud-px-4">
+                  <p class="ud-text-sm">Electronics</p>
+                </td>
+                <td class="ud-py-4.5 ud-px-4">
+                  <p class="ud-text-sm">$546</p>
+                </td>
+                <td class="ud-py-4.5 ud-px-4">
+                  <p class="ud-text-sm">34</p>
+                </td>
+                <td class="ud-py-4.5 ud-px-4">
+                  <p class="ud-text-sm">$125</p>
+                </td>
+                <td class="ud-py-4.5 ud-pl-4 ud-pr-6">
+                  <div
+                    x-data="{openDropDown: false}"
+                    class="ud-relative ud-text-right"
+                  >
+                    <button @click="openDropDown = !openDropDown">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+                    <div
+                      x-show="openDropDown"
+                      @click.outside="openDropDown = false"
+                      class="ud-absolute ud-right-0 ud-top-full ud-z-40 ud-w-40 ud-space-y-1 ud-rounded ud-shadow ud-bg-white dark:ud-bg-boxdark ud-border ud-border-stroke dark:ud-border-strokedark ud-p-2"
+                    >
+                      <button
+                        class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+              >
+                <td class="ud-py-4.5 ud-pl-6 ud-pr-3">
+                  <div class="ud-flex ud-items-center">
+                    <label
+                      for="checkbox-3"
+                      class="ud-cursor-pointer ud-select-none ud-flex"
+                    >
+                      <div class="ud-relative">
+                        <input
+                          type="checkbox"
+                          id="checkbox-3"
+                          class="ud-tableCheckbox ud-sr-only"
+                        />
+                        <div
+                          class="ud-box ud-mr-4 ud-h-5 ud-w-5 ud-flex ud-items-center ud-justify-center ud-rounded-[3px] ud-border-[.5px] ud-border-stroke dark:ud-border-strokedark ud-bg-gray-2 dark:ud-bg-boxdark-2 ud-text-white"
+                        >
+                          <span class="ud-opacity-0">
+                            <svg
+                              width="14"
+                              height="14"
+                              viewBox="0 0 10 10"
+                              class="ud-stroke-white"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M8.62796 2.20602C8.79068 2.36874 8.79068 2.63256 8.62796 2.79528L4.04463 7.37861C3.88191 7.54133 3.61809 7.54133 3.45537 7.37861L1.37204 5.29528C1.20932 5.13256 1.20932 4.86874 1.37204 4.70602C1.53476 4.5433 1.79858 4.5433 1.96129 4.70602L3.75 6.49473L8.03871 2.20602C8.20142 2.0433 8.46524 2.0433 8.62796 2.20602Z"
+                                fill=""
+                              />
+                            </svg>
+                          </span>
+                        </div>
+                      </div>
+                    </label>
+                    <div class="ud-flex ud-items-center">
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/application/images/tables/table-12/image-03.jpg"
+                        alt="product"
+                        class="ud-mr-4 ud-h-12.5 ud-w-15 ud-rounded ud-object-cover ud-object-center"
+                      />
+                      <p class="ud-text-sm">Dell Inspiron 15</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="ud-py-4.5 ud-px-4">
+                  <p class="ud-text-sm">Electronics</p>
+                </td>
+                <td class="ud-py-4.5 ud-px-4">
+                  <p class="ud-text-sm">$444</p>
+                </td>
+                <td class="ud-py-4.5 ud-px-4">
+                  <p class="ud-text-sm">64</p>
+                </td>
+                <td class="ud-py-4.5 ud-px-4">
+                  <p class="ud-text-sm">$247</p>
+                </td>
+                <td class="ud-py-4.5 ud-pl-4 ud-pr-6">
+                  <div
+                    x-data="{openDropDown: false}"
+                    class="ud-relative ud-text-right"
+                  >
+                    <button @click="openDropDown = !openDropDown">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+                    <div
+                      x-show="openDropDown"
+                      @click.outside="openDropDown = false"
+                      class="ud-absolute ud-right-0 ud-top-full ud-z-40 ud-w-40 ud-space-y-1 ud-rounded ud-shadow ud-bg-white dark:ud-bg-boxdark ud-border ud-border-stroke dark:ud-border-strokedark ud-p-2"
+                    >
+                      <button
+                        class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+              <tr
+                class="ud-border-b ud-border-stroke dark:ud-border-strokedark"
+              >
+                <td class="ud-py-4.5 ud-pl-6 ud-pr-3">
+                  <div class="ud-flex ud-items-center">
+                    <label
+                      for="checkbox-4"
+                      class="ud-cursor-pointer ud-select-none ud-flex"
+                    >
+                      <div class="ud-relative">
+                        <input
+                          type="checkbox"
+                          id="checkbox-4"
+                          class="ud-tableCheckbox ud-sr-only"
+                        />
+                        <div
+                          class="ud-box ud-mr-4 ud-h-5 ud-w-5 ud-flex ud-items-center ud-justify-center ud-rounded-[3px] ud-border-[.5px] ud-border-stroke dark:ud-border-strokedark ud-bg-gray-2 dark:ud-bg-boxdark-2 ud-text-white"
+                        >
+                          <span class="ud-opacity-0">
+                            <svg
+                              width="14"
+                              height="14"
+                              viewBox="0 0 10 10"
+                              class="ud-stroke-white"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M8.62796 2.20602C8.79068 2.36874 8.79068 2.63256 8.62796 2.79528L4.04463 7.37861C3.88191 7.54133 3.61809 7.54133 3.45537 7.37861L1.37204 5.29528C1.20932 5.13256 1.20932 4.86874 1.37204 4.70602C1.53476 4.5433 1.79858 4.5433 1.96129 4.70602L3.75 6.49473L8.03871 2.20602C8.20142 2.0433 8.46524 2.0433 8.62796 2.20602Z"
+                                fill=""
+                              />
+                            </svg>
+                          </span>
+                        </div>
+                      </div>
+                    </label>
+                    <div class="ud-flex ud-items-center">
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/application/images/tables/table-12/image-04.jpg"
+                        alt="product"
+                        class="ud-mr-4 ud-h-12.5 ud-w-15 ud-rounded ud-object-cover ud-object-center"
+                      />
+                      <p class="ud-text-sm">HP Probook 450</p>
+                    </div>
+                  </div>
+                </td>
+                <td class="ud-py-4.5 ud-px-4">
+                  <p class="ud-text-sm">Electronics</p>
+                </td>
+                <td class="ud-py-4.5 ud-px-4">
+                  <p class="ud-text-sm">$499</p>
+                </td>
+                <td class="ud-py-4.5 ud-px-4">
+                  <p class="ud-text-sm">72</p>
+                </td>
+                <td class="ud-py-4.5 ud-px-4">
+                  <p class="ud-text-sm">$103</p>
+                </td>
+                <td class="ud-py-4.5 ud-pl-4 ud-pr-6">
+                  <div
+                    x-data="{openDropDown: false}"
+                    class="ud-relative ud-text-right"
+                  >
+                    <button @click="openDropDown = !openDropDown">
+                      <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M13 12C13 11.4477 12.5523 11 12 11C11.4477 11 11 11.4477 11 12C11 12.5523 11.4477 13 12 13C12.5523 13 13 12.5523 13 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M6 12C6 11.4477 5.55228 11 5 11C4.44772 11 4 11.4477 4 12C4 12.5523 4.44772 13 5 13C5.55228 13 6 12.5523 6 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                        <path
+                          d="M20 12C20 11.4477 19.5523 11 19 11C18.4477 11 18 11.4477 18 12C18 12.5523 18.4477 13 19 13C19.5523 13 20 12.5523 20 12Z"
+                          stroke="#637381"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+                    </button>
+                    <div
+                      x-show="openDropDown"
+                      @click.outside="openDropDown = false"
+                      class="ud-absolute ud-right-0 ud-bottom-full ud-z-40 ud-w-40 ud-space-y-1 ud-rounded ud-shadow ud-bg-white dark:ud-bg-boxdark ud-border ud-border-stroke dark:ud-border-strokedark ud-p-2"
+                    >
+                      <button
+                        class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+    <!-- ====== Back To Top Start ===== -->
+    <include src="./partials/scrolltop.html" />
+    <!-- ====== Back To Top End ===== -->
+  </body>
+</html>

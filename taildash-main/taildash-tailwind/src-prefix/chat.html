@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat | Taildash - Tailwind CSS Admin Dashboard Template</title>
+  </head>
+  <body
+    x-data="{ page: 'chat', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'ud-dark ud-text-bodydark ud-bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="ud-overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Header Start ===== -->
+      <include src="./partials/header.html" />
+      <!-- ===== Header End ===== -->
+
+      <!-- ===== Main Content Start ===== -->
+      <main class="lg:ud-pl-72.5 ud-pt-32 lg:ud-pt-22.5 ud-min-h-screen">
+        <div class="ud-chat-height ud-overflow-hidden">
+          <div class="ud-h-full xl:ud-flex ud-bg-white dark:ud-bg-boxdark">
+            <div class="ud-hidden xl:ud-block xl:ud-w-1/4">
+              <!-- ====== Chat List Start -->
+              <div
+                class="ud-border-b ud-border-stroke dark:ud-border-strokedark ud-px-6 ud-py-5"
+              >
+                <h3
+                  class="ud-text-lg 2xl:ud-text-xl ud-font-medium ud-text-black dark:ud-text-white"
+                >
+                  Active Conversations
+                  <span
+                    class="ud-ml-4 ud-rounded-md ud-border-[.5px] ud-border-stroke dark:ud-border-strokedark ud-bg-gray-2 dark:ud-bg-boxdark-2 ud-py-0.5 ud-px-2 ud-text-base ud-font-medium ud-text-black dark:ud-text-white"
+                    >7</span
+                  >
+                </h3>
+              </div>
+              <div class="ud-h-full ud-p-5">
+                <form class="ud-relative ud-mb-7">
+                  <input
+                    type="text"
+                    class="ud-w-full ud-rounded ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-gray-2 dark:ud-bg-boxdark-2 ud-py-2.5 ud-pl-5 ud-pr-10 ud-text-sm ud-outline-none focus:ud-border-primary"
+                    placeholder="Search..."
+                  />
+                  <button
+                    class="ud-absolute ud-top-1/2 ud-right-4 -ud-translate-y-1/2"
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 18 18"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M8.25 3C5.3505 3 3 5.3505 3 8.25C3 11.1495 5.3505 13.5 8.25 13.5C11.1495 13.5 13.5 11.1495 13.5 8.25C13.5 5.3505 11.1495 3 8.25 3ZM1.5 8.25C1.5 4.52208 4.52208 1.5 8.25 1.5C11.9779 1.5 15 4.52208 15 8.25C15 11.9779 11.9779 15 8.25 15C4.52208 15 1.5 11.9779 1.5 8.25Z"
+                        fill="#637381"
+                      />
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M11.957 11.958C12.2499 11.6651 12.7247 11.6651 13.0176 11.958L16.2801 15.2205C16.573 15.5133 16.573 15.9882 16.2801 16.2811C15.9872 16.574 15.5124 16.574 15.2195 16.2811L11.957 13.0186C11.6641 12.7257 11.6641 12.2508 11.957 11.958Z"
+                        fill="#637381"
+                      />
+                    </svg>
+                  </button>
+                </form>
+                <div class="ud-max-h-full ud-overflow-auto ud-no-scrollbar ud-space-y-2.5 ud-mb-7">
+                  <!-- Chat List Item -->
+                  <div
+                    class="ud-cursor-pointer ud-flex ud-items-center ud-rounded ud-py-2 ud-px-4 hover:ud-bg-gray-2 dark:hover:ud-bg-strokedark"
+                  >
+                    <div
+                      class="ud-relative ud-mr-3.5 ud-h-11 ud-w-full ud-max-w-11 ud-rounded-full"
+                    >
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/dashboard/images/chat-list/image-01.png"
+                        alt="profile"
+                        class="ud-h-full ud-w-full ud-object-cover ud-object-center"
+                      />
+                      <span
+                        class="ud-absolute ud-bottom-0 ud-right-0 ud-block ud-h-3 ud-w-3 ud-rounded-full ud-border-2 ud-border-gray-2 ud-bg-success"
+                      ></span>
+                    </div>
+                    <div class="ud-w-full">
+                      <h5
+                        class="ud-text-sm ud-font-medium ud-text-black dark:ud-text-white"
+                      >
+                        Henry Dholi
+                      </h5>
+                      <p class="ud-text-sm">I cam across your profile and...</p>
+                    </div>
+                  </div>
+                  <!-- Chat List Item -->
+                  <div
+                    class="ud-cursor-pointer ud-flex ud-items-center ud-rounded ud-py-2 ud-px-4 hover:ud-bg-gray-2 dark:hover:ud-bg-strokedark"
+                  >
+                    <div
+                      class="ud-relative ud-mr-3.5 ud-h-11 ud-w-full ud-max-w-11 ud-rounded-full"
+                    >
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/dashboard/images/chat-list/image-02.png"
+                        alt="profile"
+                        class="ud-h-full ud-w-full ud-object-cover ud-object-center"
+                      />
+                      <span
+                        class="absolute bottom-0 right-0 block h-3 w-3 rounded-full border-2 border-gray-2 bg-success"
+                      ></span>
+                    </div>
+                    <div class="ud-w-full">
+                      <h5
+                        class="ud-text-sm ud-font-medium ud-text-black dark:ud-text-white"
+                      >
+                        Mariya Desoja
+                      </h5>
+                      <p class="ud-text-sm">I like your confidence 💪</p>
+                    </div>
+                  </div>
+                  <!-- Chat List Item -->
+                  <div
+                    class="ud-cursor-pointer ud-flex ud-items-center ud-rounded ud-py-2 ud-px-4 hover:ud-bg-gray-2 dark:hover:ud-bg-strokedark"
+                  >
+                    <div
+                      class="ud-relative ud-mr-3.5 ud-h-11 ud-w-full ud-max-w-11 ud-rounded-full"
+                    >
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/dashboard/images/chat-list/image-03.png"
+                        alt="profile"
+                        class="ud-h-full ud-w-full ud-object-cover ud-object-center"
+                      />
+                      <span
+                        class="ud-absolute ud-bottom-0 ud-right-0 ud-block ud-h-3 ud-w-3 ud-rounded-full ud-border-2 ud-border-gray-2 ud-bg-success"
+                      ></span>
+                    </div>
+                    <div class="ud-w-full">
+                      <h5
+                        class="ud-text-sm ud-font-medium ud-text-black dark:ud-text-white"
+                      >
+                        Robert Jhon
+                      </h5>
+                      <p class="ud-text-sm">Can you share your offer?</p>
+                    </div>
+                  </div>
+                  <!-- Chat List Item -->
+                  <div
+                    class="ud-cursor-pointer ud-flex ud-items-center ud-rounded ud-py-2 ud-px-4 hover:ud-bg-gray-2 dark:hover:ud-bg-strokedark"
+                  >
+                    <div
+                      class="ud-relative ud-mr-3.5 ud-h-11 ud-w-full ud-max-w-11 ud-rounded-full"
+                    >
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/dashboard/images/chat-list/image-04.png"
+                        alt="profile"
+                        class="ud-h-full ud-w-full ud-object-cover ud-object-center"
+                      />
+                      <span
+                        class="ud-absolute ud-bottom-0 ud-right-0 ud-block ud-h-3 ud-w-3 ud-rounded-full ud-border-2 ud-border-gray-2 ud-bg-success"
+                      ></span>
+                    </div>
+                    <div class="ud-w-full">
+                      <h5
+                        class="ud-text-sm ud-font-medium ud-text-black dark:ud-text-white"
+                      >
+                        Cody Fisher
+                      </h5>
+                      <p class="ud-text-sm">I'm waiting for you response!</p>
+                    </div>
+                  </div>
+                  <!-- Chat List Item -->
+                  <div
+                    class="ud-cursor-pointer ud-flex ud-items-center ud-rounded ud-py-2 ud-px-4 hover:ud-bg-gray-2 dark:hover:ud-bg-strokedark"
+                  >
+                    <div
+                      class="ud-relative ud-mr-3.5 ud-h-11 ud-w-full ud-max-w-11 ud-rounded-full"
+                    >
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/dashboard/images/chat-list/image-05.png"
+                        alt="profile"
+                        class="ud-h-full ud-w-full ud-object-cover ud-object-center"
+                      />
+                      <span
+                        class="ud-absolute ud-bottom-0 ud-right-0 ud-block ud-h-3 ud-w-3 ud-rounded-full ud-border-2 ud-border-gray-2 ud-bg-success"
+                      ></span>
+                    </div>
+                    <div class="w-full">
+                      <h5
+                        class="ud-text-sm ud-font-medium ud-text-black dark:ud-text-white"
+                      >
+                        Jenny Wilson
+                      </h5>
+                      <p class="ud-text-sm">I'm waiting for you response!</p>
+                    </div>
+                  </div>
+                  <!-- Chat List Item -->
+                  <div
+                    class="ud-cursor-pointer ud-flex ud-items-center ud-rounded ud-py-2 ud-px-4 hover:ud-bg-gray-2 dark:hover:ud-bg-strokedark"
+                  >
+                    <div
+                      class="ud-relative ud-mr-3.5 ud-h-11 ud-w-full ud-max-w-11 ud-rounded-full"
+                    >
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/dashboard/images/chat-list/image-01.png"
+                        alt="profile"
+                        class="ud-h-full ud-w-full ud-object-cover ud-object-center"
+                      />
+                      <span
+                        class="ud-absolute ud-bottom-0 ud-right-0 ud-block ud-h-3 ud-w-3 ud-rounded-full ud-border-2 ud-border-gray-2 ud-bg-success"
+                      ></span>
+                    </div>
+                    <div class="ud-w-full">
+                      <h5
+                        class="ud-text-sm ud-font-medium ud-text-black dark:ud-text-white"
+                      >
+                        Henry Dholi
+                      </h5>
+                      <p class="ud-text-sm">I cam across your profile and...</p>
+                    </div>
+                  </div>
+                  <!-- Chat List Item -->
+                  <div
+                    class="ud-cursor-pointer ud-flex ud-items-center ud-rounded ud-py-2 ud-px-4 hover:ud-bg-gray-2 dark:hover:ud-bg-strokedark"
+                  >
+                    <div
+                      class="ud-relative ud-mr-3.5 ud-h-11 ud-w-full ud-max-w-11 ud-rounded-full"
+                    >
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/dashboard/images/chat-list/image-02.png"
+                        alt="profile"
+                        class="ud-h-full ud-w-full ud-object-cover ud-object-center"
+                      />
+                      <span
+                        class="absolute bottom-0 right-0 block h-3 w-3 rounded-full border-2 border-gray-2 bg-success"
+                      ></span>
+                    </div>
+                    <div class="ud-w-full">
+                      <h5
+                        class="ud-text-sm ud-font-medium ud-text-black dark:ud-text-white"
+                      >
+                        Mariya Desoja
+                      </h5>
+                      <p class="ud-text-sm">I like your confidence 💪</p>
+                    </div>
+                  </div>
+                  <!-- Chat List Item -->
+                  <div
+                    class="ud-cursor-pointer ud-flex ud-items-center ud-rounded ud-py-2 ud-px-4 hover:ud-bg-gray-2 dark:hover:ud-bg-strokedark"
+                  >
+                    <div
+                      class="ud-relative ud-mr-3.5 ud-h-11 ud-w-full ud-max-w-11 ud-rounded-full"
+                    >
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/dashboard/images/chat-list/image-03.png"
+                        alt="profile"
+                        class="ud-h-full ud-w-full ud-object-cover ud-object-center"
+                      />
+                      <span
+                        class="ud-absolute ud-bottom-0 ud-right-0 ud-block ud-h-3 ud-w-3 ud-rounded-full ud-border-2 ud-border-gray-2 ud-bg-success"
+                      ></span>
+                    </div>
+                    <div class="ud-w-full">
+                      <h5
+                        class="ud-text-sm ud-font-medium ud-text-black dark:ud-text-white"
+                      >
+                        Robert Jhon
+                      </h5>
+                      <p class="ud-text-sm">Can you share your offer?</p>
+                    </div>
+                  </div>
+                  <!-- Chat List Item -->
+                  <div
+                    class="ud-cursor-pointer ud-flex ud-items-center ud-rounded ud-py-2 ud-px-4 hover:ud-bg-gray-2 dark:hover:ud-bg-strokedark"
+                  >
+                    <div
+                      class="ud-relative ud-mr-3.5 ud-h-11 ud-w-full ud-max-w-11 ud-rounded-full"
+                    >
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/dashboard/images/chat-list/image-04.png"
+                        alt="profile"
+                        class="ud-h-full ud-w-full ud-object-cover ud-object-center"
+                      />
+                      <span
+                        class="ud-absolute ud-bottom-0 ud-right-0 ud-block ud-h-3 ud-w-3 ud-rounded-full ud-border-2 ud-border-gray-2 ud-bg-success"
+                      ></span>
+                    </div>
+                    <div class="ud-w-full">
+                      <h5
+                        class="ud-text-sm ud-font-medium ud-text-black dark:ud-text-white"
+                      >
+                        Cody Fisher
+                      </h5>
+                      <p class="ud-text-sm">I'm waiting for you response!</p>
+                    </div>
+                  </div>
+                  <!-- Chat List Item -->
+                  <div
+                    class="ud-cursor-pointer ud-flex ud-items-center ud-rounded ud-py-2 ud-px-4 hover:ud-bg-gray-2 dark:hover:ud-bg-strokedark"
+                  >
+                    <div
+                      class="ud-relative ud-mr-3.5 ud-h-11 ud-w-full ud-max-w-11 ud-rounded-full"
+                    >
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/dashboard/images/chat-list/image-05.png"
+                        alt="profile"
+                        class="ud-h-full ud-w-full ud-object-cover ud-object-center"
+                      />
+                      <span
+                        class="ud-absolute ud-bottom-0 ud-right-0 ud-block ud-h-3 ud-w-3 ud-rounded-full ud-border-2 ud-border-gray-2 ud-bg-success"
+                      ></span>
+                    </div>
+                    <div class="w-full">
+                      <h5
+                        class="ud-text-sm ud-font-medium ud-text-black dark:ud-text-white"
+                      >
+                        Jenny Wilson
+                      </h5>
+                      <p class="ud-text-sm">I'm waiting for you response!</p>
+                    </div>
+                  </div>
+                  <!-- Chat List Item -->
+                  <div
+                    class="ud-cursor-pointer ud-flex ud-items-center ud-rounded ud-py-2 ud-px-4 hover:ud-bg-gray-2 dark:hover:ud-bg-strokedark"
+                  >
+                    <div
+                      class="ud-relative ud-mr-3.5 ud-h-11 ud-w-full ud-max-w-11 ud-rounded-full"
+                    >
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/dashboard/images/chat-list/image-01.png"
+                        alt="profile"
+                        class="ud-h-full ud-w-full ud-object-cover ud-object-center"
+                      />
+                      <span
+                        class="ud-absolute ud-bottom-0 ud-right-0 ud-block ud-h-3 ud-w-3 ud-rounded-full ud-border-2 ud-border-gray-2 ud-bg-success"
+                      ></span>
+                    </div>
+                    <div class="ud-w-full">
+                      <h5
+                        class="ud-text-sm ud-font-medium ud-text-black dark:ud-text-white"
+                      >
+                        Henry Dholi
+                      </h5>
+                      <p class="ud-text-sm">I cam across your profile and...</p>
+                    </div>
+                  </div>
+                  <!-- Chat List Item -->
+                  <div
+                    class="ud-cursor-pointer ud-flex ud-items-center ud-rounded ud-py-2 ud-px-4 hover:ud-bg-gray-2 dark:hover:ud-bg-strokedark"
+                  >
+                    <div
+                      class="ud-relative ud-mr-3.5 ud-h-11 ud-w-full ud-max-w-11 ud-rounded-full"
+                    >
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/dashboard/images/chat-list/image-02.png"
+                        alt="profile"
+                        class="ud-h-full ud-w-full ud-object-cover ud-object-center"
+                      />
+                      <span
+                        class="absolute bottom-0 right-0 block h-3 w-3 rounded-full border-2 border-gray-2 bg-success"
+                      ></span>
+                    </div>
+                    <div class="ud-w-full">
+                      <h5
+                        class="ud-text-sm ud-font-medium ud-text-black dark:ud-text-white"
+                      >
+                        Mariya Desoja
+                      </h5>
+                      <p class="ud-text-sm">I like your confidence 💪</p>
+                    </div>
+                  </div>
+                  <!-- Chat List Item -->
+                  <div
+                    class="ud-cursor-pointer ud-flex ud-items-center ud-rounded ud-py-2 ud-px-4 hover:ud-bg-gray-2 dark:hover:ud-bg-strokedark"
+                  >
+                    <div
+                      class="ud-relative ud-mr-3.5 ud-h-11 ud-w-full ud-max-w-11 ud-rounded-full"
+                    >
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/dashboard/images/chat-list/image-03.png"
+                        alt="profile"
+                        class="ud-h-full ud-w-full ud-object-cover ud-object-center"
+                      />
+                      <span
+                        class="ud-absolute ud-bottom-0 ud-right-0 ud-block ud-h-3 ud-w-3 ud-rounded-full ud-border-2 ud-border-gray-2 ud-bg-success"
+                      ></span>
+                    </div>
+                    <div class="ud-w-full">
+                      <h5
+                        class="ud-text-sm ud-font-medium ud-text-black dark:ud-text-white"
+                      >
+                        Robert Jhon
+                      </h5>
+                      <p class="ud-text-sm">Can you share your offer?</p>
+                    </div>
+                  </div>
+                  <!-- Chat List Item -->
+                  <div
+                    class="ud-cursor-pointer ud-flex ud-items-center ud-rounded ud-py-2 ud-px-4 hover:ud-bg-gray-2 dark:hover:ud-bg-strokedark"
+                  >
+                    <div
+                      class="ud-relative ud-mr-3.5 ud-h-11 ud-w-full ud-max-w-11 ud-rounded-full"
+                    >
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/dashboard/images/chat-list/image-04.png"
+                        alt="profile"
+                        class="ud-h-full ud-w-full ud-object-cover ud-object-center"
+                      />
+                      <span
+                        class="ud-absolute ud-bottom-0 ud-right-0 ud-block ud-h-3 ud-w-3 ud-rounded-full ud-border-2 ud-border-gray-2 ud-bg-success"
+                      ></span>
+                    </div>
+                    <div class="ud-w-full">
+                      <h5
+                        class="ud-text-sm ud-font-medium ud-text-black dark:ud-text-white"
+                      >
+                        Cody Fisher
+                      </h5>
+                      <p class="ud-text-sm">I'm waiting for you response!</p>
+                    </div>
+                  </div>
+                  <!-- Chat List Item -->
+                  <div
+                    class="ud-cursor-pointer ud-flex ud-items-center ud-rounded ud-py-2 ud-px-4 hover:ud-bg-gray-2 dark:hover:ud-bg-strokedark"
+                  >
+                    <div
+                      class="ud-relative ud-mr-3.5 ud-h-11 ud-w-full ud-max-w-11 ud-rounded-full"
+                    >
+                      <img
+                        src="https://cdn.tailgrids.com/2.0/image/dashboard/images/chat-list/image-05.png"
+                        alt="profile"
+                        class="ud-h-full ud-w-full ud-object-cover ud-object-center"
+                      />
+                      <span
+                        class="ud-absolute ud-bottom-0 ud-right-0 ud-block ud-h-3 ud-w-3 ud-rounded-full ud-border-2 ud-border-gray-2 ud-bg-success"
+                      ></span>
+                    </div>
+                    <div class="w-full">
+                      <h5
+                        class="ud-text-sm ud-font-medium ud-text-black dark:ud-text-white"
+                      >
+                        Jenny Wilson
+                      </h5>
+                      <p class="ud-text-sm">I'm waiting for you response!</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- ====== Chat List End -->
+            </div>
+            <div class="ud-h-full ud-flex ud-flex-col xl:ud-w-1/2 ud-border-l ud-border-r ud-border-stroke dark:ud-border-strokedark">
+              <!-- ====== Chat Box Start -->
+              <div
+                class="ud-flex ud-items-center ud-justify-between ud-border-b ud-border-stroke dark:ud-border-strokedark ud-px-6 ud-py-4.5"
+              >
+                <div class="ud-flex ud-items-center">
+                  <div
+                    class="ud-mr-4.5 ud-h-13 ud-w-full ud-max-w-13 ud-overflow-hidden ud-rounded-full"
+                  >
+                    <img
+                      src="./images/user/user-04.png"
+                      alt="avatar"
+                      class="ud-h-full ud-w-full ud-object-cover ud-object-center"
+                    />
+                  </div>
+                  <div>
+                    <h5 class="ud-font-medium ud-text-black dark:ud-text-white">
+                      Andri Thomas
+                    </h5>
+                    <p class="ud-text-sm">Reply to message</p>
+                  </div>
+                </div>
+                <div>
+                  <div x-data="{openDropDown: false}" class="ud-relative">
+                    <button
+                      @click="openDropDown = !openDropDown"
+                      class="ud-flex ud-h-7.5 ud-w-10 ud-items-center ud-justify-center ud-rounded ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-gray-2 dark:ud-bg-boxdark-2"
+                    >
+                      <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 18 18"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g clip-path="url(#clip0_3019_3034)">
+                          <path
+                            d="M15.75 6.75C14.5074 6.75 13.5 7.75736 13.5 9C13.5 10.2426 14.5074 11.25 15.75 11.25C16.9926 11.25 18 10.2426 18 9C18 7.75736 16.9926 6.75 15.75 6.75Z"
+                            fill="#98A6AD"
+                          />
+                          <path
+                            d="M9 6.75C7.75736 6.75 6.75 7.75736 6.75 9C6.75 10.2426 7.75736 11.25 9 11.25C10.2426 11.25 11.25 10.2426 11.25 9C11.25 7.75736 10.2426 6.75 9 6.75Z"
+                            fill="#98A6AD"
+                          />
+                          <path
+                            d="M2.25 6.75C1.00736 6.75 3.05336e-07 7.75736 1.96701e-07 9C8.80661e-08 10.2426 1.00736 11.25 2.25 11.25C3.49264 11.25 4.5 10.2426 4.5 9C4.5 7.75736 3.49264 6.75 2.25 6.75Z"
+                            fill="#98A6AD"
+                          />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_3019_3034">
+                            <rect
+                              width="18"
+                              height="18"
+                              fill="white"
+                              transform="translate(18 18) rotate(-180)"
+                            />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                    </button>
+                    <div
+                      x-show="openDropDown"
+                      @click.outside="openDropDown = false"
+                      class="ud-absolute ud-right-0 ud-top-full ud-z-40 ud-w-40 ud-space-y-1 ud-rounded ud-shadow ud-bg-white dark:ud-bg-boxdark ud-border ud-border-stroke dark:ud-border-strokedark ud-p-2"
+                    >
+                      <button
+                        class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        class="ud-w-full ud-rounded ud-py-2 ud-px-3 ud-text-left ud-text-sm hover:ud-bg-gray-2 dark:hover:ud-bg-graydark"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="ud-max-h-full ud-overflow-auto ud-no-scrollbar ud-space-y-3.5 ud-px-6 ud-py-7.5">
+                <div class="ud-max-w-125">
+                  <p class="ud-mb-2.5 ud-text-sm ud-font-medium">
+                    Andri Thomas
+                  </p>
+                  <div
+                    class="ud-mb-2.5 ud-rounded-2xl ud-rounded-tl-none ud-bg-gray dark:ud-bg-boxdark-2 ud-py-3 ud-px-5"
+                  >
+                    <p>
+                      I want to make an appointment tomorrow from 2:00 to
+                      5:00pm?
+                    </p>
+                  </div>
+                  <p class="ud-text-xs">1:55pm</p>
+                </div>
+                <div class="ud-max-w-125 ud-ml-auto">
+                  <div
+                    class="ud-mb-2.5 ud-rounded-2xl ud-rounded-br-none ud-bg-primary ud-py-3 ud-px-5"
+                  >
+                    <p class="ud-text-white">
+                      Hello, Thomas! I will check the schedule and inform you
+                    </p>
+                  </div>
+                  <p class="ud-text-right ud-text-xs">1:55pm</p>
+                </div>
+                <div class="ud-max-w-125">
+                  <p class="ud-mb-2.5 ud-text-sm ud-font-medium">
+                    Andri Thomas
+                  </p>
+                  <div
+                    class="ud-mb-2.5 ud-rounded-2xl ud-rounded-tl-none ud-bg-gray dark:ud-bg-boxdark-2 ud-py-3 ud-px-5"
+                  >
+                    <p>Ok, Thanks for your reply.</p>
+                  </div>
+                  <p class="ud-text-xs">1:55pm</p>
+                </div>
+                <div class="ud-max-w-125 ud-ml-auto">
+                  <div
+                    class="ud-mb-2.5 ud-rounded-2xl ud-rounded-br-none ud-bg-primary ud-py-3 ud-px-5"
+                  >
+                    <p class="ud-text-white">You are welcome!</p>
+                  </div>
+                  <p class="ud-text-right ud-text-xs">1:55pm</p>
+                </div>
+                <div class="ud-max-w-125">
+                  <p class="ud-mb-2.5 ud-text-sm ud-font-medium">
+                    Andri Thomas
+                  </p>
+                  <div
+                    class="ud-mb-2.5 ud-rounded-2xl ud-rounded-tl-none ud-bg-gray dark:ud-bg-boxdark-2 ud-py-3 ud-px-5"
+                  >
+                    <p>
+                      I want to make an appointment tomorrow from 2:00 to
+                      5:00pm?
+                    </p>
+                  </div>
+                  <p class="ud-text-xs">1:55pm</p>
+                </div>
+                <div class="ud-max-w-125 ud-ml-auto">
+                  <div
+                    class="ud-mb-2.5 ud-rounded-2xl ud-rounded-br-none ud-bg-primary ud-py-3 ud-px-5"
+                  >
+                    <p class="ud-text-white">
+                      Hello, Thomas! I will check the schedule and inform you
+                    </p>
+                  </div>
+                  <p class="ud-text-right ud-text-xs">1:55pm</p>
+                </div>
+                <div class="ud-max-w-125">
+                  <p class="ud-mb-2.5 ud-text-sm ud-font-medium">
+                    Andri Thomas
+                  </p>
+                  <div
+                    class="ud-mb-2.5 ud-rounded-2xl ud-rounded-tl-none ud-bg-gray dark:ud-bg-boxdark-2 ud-py-3 ud-px-5"
+                  >
+                    <p>Ok, Thanks for your reply.</p>
+                  </div>
+                  <p class="ud-text-xs">1:55pm</p>
+                </div>
+                <div class="ud-max-w-125 ud-ml-auto">
+                  <div
+                    class="ud-mb-2.5 ud-rounded-2xl ud-rounded-br-none ud-bg-primary ud-py-3 ud-px-5"
+                  >
+                    <p class="ud-text-white">You are welcome!</p>
+                  </div>
+                  <p class="ud-text-right ud-text-xs">1:55pm</p>
+                </div>
+              </div>
+              <div class=" ud-bg-white dark:ud-bg-boxdark ud-border-t ud-border-stroke dark:ud-border-strokedark ud-py-5 ud-px-6">
+                <form
+                  class="ud-flex ud-items-center ud-justify-between ud-space-x-4.5"
+                >
+                  <div class="ud-relative ud-w-full">
+                    <input
+                      type="text"
+                      placeholder="Type something here"
+                      class="ud-h-13 ud-w-full ud-rounded-md ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-gray dark:ud-bg-boxdark-2 ud-pl-5 ud-pr-19 ud-text-black dark:ud-text-white ud-placeholder-body ud-outline-none focus:ud-border-primary"
+                    />
+                    <div
+                      class="ud-absolute ud-right-5 ud-top-1/2 ud-inline-flex -ud-translate-y-1/2 ud-items-center ud-justify-end ud-space-x-4"
+                    >
+                      <button class="hover:ud-text-primary">
+                        <svg
+                          width="18"
+                          height="18"
+                          viewBox="0 0 18 18"
+                          class="ud-fill-current"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M11.835 1.79102C11.2378 1.79102 10.6651 2.02824 10.2428 2.45051L3.3503 9.34302C2.64657 10.0467 2.25122 11.0012 2.25122 11.9964C2.25122 12.9917 2.64657 13.9461 3.3503 14.6499C4.05403 15.3536 5.0085 15.7489 6.00372 15.7489C6.99895 15.7489 7.95341 15.3536 8.65714 14.6499L15.5496 7.75736C15.8425 7.46446 16.3174 7.46446 16.6103 7.75736C16.9032 8.05025 16.9032 8.52512 16.6103 8.81802L9.7178 15.7105C8.73277 16.6956 7.39677 17.2489 6.00372 17.2489C4.61067 17.2489 3.27468 16.6956 2.28964 15.7105C1.30461 14.7255 0.751221 13.3895 0.751221 11.9964C0.751221 10.6034 1.30461 9.26739 2.28964 8.28236L9.18214 1.38985C9.88572 0.686279 10.84 0.291016 11.835 0.291016C12.83 0.291016 13.7842 0.686279 14.4878 1.38985C15.1914 2.09343 15.5866 3.04768 15.5866 4.04268C15.5866 5.03769 15.1914 5.99194 14.4878 6.69552L7.5878 13.588C7.16569 14.0101 6.59318 14.2473 5.99622 14.2473C5.39926 14.2473 4.82676 14.0101 4.40464 13.588C3.98253 13.1659 3.74539 12.5934 3.74539 11.9964C3.74539 11.3995 3.98253 10.827 4.40464 10.4049L10.7725 4.04454C11.0655 3.75182 11.5404 3.7521 11.8331 4.04517C12.1258 4.33823 12.1256 4.81311 11.8325 5.10583L5.4653 11.4655C5.32469 11.6063 5.24539 11.7974 5.24539 11.9964C5.24539 12.1956 5.32449 12.3865 5.4653 12.5274C5.60611 12.6682 5.79709 12.7473 5.99622 12.7473C6.19535 12.7473 6.38633 12.6682 6.52714 12.5274L13.4271 5.63486C13.8492 5.21261 14.0866 4.63973 14.0866 4.04268C14.0866 3.4455 13.8494 2.87278 13.4271 2.45051C13.0049 2.02824 12.4321 1.79102 11.835 1.79102Z"
+                          />
+                        </svg>
+                      </button>
+                      <button class="hover:ud-text-primary">
+                        <svg
+                          width="19"
+                          height="18"
+                          viewBox="0 0 19 18"
+                          class="ud-fill-current"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M9.5 2.25C5.77208 2.25 2.75 5.27208 2.75 9C2.75 12.7279 5.77208 15.75 9.5 15.75C13.2279 15.75 16.25 12.7279 16.25 9C16.25 5.27208 13.2279 2.25 9.5 2.25ZM1.25 9C1.25 4.44365 4.94365 0.75 9.5 0.75C14.0564 0.75 17.75 4.44365 17.75 9C17.75 13.5564 14.0564 17.25 9.5 17.25C4.94365 17.25 1.25 13.5564 1.25 9Z"
+                          />
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M7.09769 10.0469C6.84856 9.71825 6.38037 9.6523 6.05004 9.90004C5.71867 10.1486 5.65152 10.6187 5.90004 10.95L6.50004 10.5C5.90004 10.95 5.90022 10.9503 5.90041 10.9505L5.9008 10.9511L5.90167 10.9522L5.90372 10.9549L5.90913 10.962L5.9251 10.9824C5.93803 10.9988 5.95555 11.0204 5.97757 11.0467C6.02155 11.0991 6.08379 11.17 6.16363 11.2533C6.32269 11.4193 6.55512 11.6379 6.85579 11.8566C7.45424 12.2918 8.3559 12.75 9.50004 12.75C10.6442 12.75 11.5458 12.2918 12.1443 11.8566C12.445 11.6379 12.6774 11.4193 12.8365 11.2533C12.9163 11.17 12.9785 11.0991 13.0225 11.0467C13.0445 11.0204 13.0621 10.9988 13.075 10.9824L13.091 10.962L13.0964 10.9549L13.0984 10.9522L13.0993 10.9511L13.0997 10.9505C13.0999 10.9503 13.1 10.95 12.5 10.5L13.1 10.95C13.3486 10.6187 13.2814 10.1486 12.95 9.90004C12.6197 9.6523 12.1515 9.71825 11.9024 10.0469L11.8989 10.0514C11.8945 10.057 11.886 10.0676 11.8736 10.0823C11.8487 10.112 11.8084 10.1582 11.7535 10.2155C11.643 10.3308 11.477 10.4872 11.262 10.6435C10.8292 10.9583 10.2309 11.25 9.50004 11.25C8.76919 11.25 8.17084 10.9583 7.73805 10.6435C7.52309 10.4872 7.35709 10.3308 7.24661 10.2155C7.19168 10.1582 7.15139 10.112 7.12653 10.0823C7.11412 10.0676 7.10563 10.057 7.10117 10.0514L7.09769 10.0469Z"
+                          />
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M6.5 6.75C6.5 6.33579 6.83579 6 7.25 6H7.2575C7.67171 6 8.0075 6.33579 8.0075 6.75C8.0075 7.16421 7.67171 7.5 7.2575 7.5H7.25C6.83579 7.5 6.5 7.16421 6.5 6.75Z"
+                          />
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M11 6.75C11 6.33579 11.3358 6 11.75 6H11.7575C12.1717 6 12.5075 6.33579 12.5075 6.75C12.5075 7.16421 12.1717 7.5 11.7575 7.5H11.75C11.3358 7.5 11 7.16421 11 6.75Z"
+                          />
+                        </svg>
+                      </button>
+                    </div>
+                  </div>
+                  <button
+                    class="ud-h-13 ud-w-full ud-max-w-13 ud-flex ud-items-center ud-justify-center ud-rounded-md ud-bg-primary ud-text-white hover:ud-bg-opacity-90"
+                  >
+                    <svg
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M22 2L11 13"
+                        stroke="white"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M22 2L15 22L11 13L2 9L22 2Z"
+                        stroke="white"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </form>
+              </div>
+              <!-- ====== Chat Box End -->
+            </div>
+            <div class="ud-hidden xl:ud-block xl:ud-w-1/4">
+              <!-- ====== Profile Section Start -->
+              <div class="ud-py-9">
+                <div class="ud-mx-auto ud-max-w-25 ud-mb-5 ud-rounded-full">
+                  <img src="./images/user/user-04.png" alt="profile" />
+                </div>
+
+                <div class="ud-text-center">
+                  <h5
+                    class="ud-font-semibold ud-text-xl ud-text-black dark:ud-text-white"
+                  >
+                    Devid Strassmann
+                  </h5>
+                  <p class="ud-text-sm">UI/UX Designer</p>
+
+                  <span
+                    class="ud-block ud-h-[1px] ud-bg-stroke dark:ud-bg-strokedark ud-my-6"
+                  ></span>
+
+                  <p
+                    class="ud-text-sm ud-mb-4.5 ud-px-4 md:ud-px-8 2xl:ud-px-15"
+                  >
+                    Lorem ipsum dolor sit amet, consectetur solium adipiscing
+                    elit Pellentesque so ferme.
+                  </p>
+                  <a
+                    href="#"
+                    class="ud-mb-5.5 ud-flex ud-items-center ud-justify-center ud-font-medium ud-text-sm ud-text-black dark:ud-text-white hover:ud-text-primary dark:hover:ud-text-primary"
+                  >
+                    <span class="ud-pr-2">
+                      <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 18 18"
+                        class="ud-fill-current"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M9 2.25C5.27208 2.25 2.25 5.27208 2.25 9C2.25 12.7279 5.27208 15.75 9 15.75C12.7279 15.75 15.75 12.7279 15.75 9C15.75 5.27208 12.7279 2.25 9 2.25ZM0.75 9C0.75 4.44365 4.44365 0.75 9 0.75C13.5564 0.75 17.25 4.44365 17.25 9C17.25 13.5564 13.5564 17.25 9 17.25C4.44365 17.25 0.75 13.5564 0.75 9Z"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M0.75 9C0.75 8.58579 1.08579 8.25 1.5 8.25H16.5C16.9142 8.25 17.25 8.58579 17.25 9C17.25 9.41421 16.9142 9.75 16.5 9.75H1.5C1.08579 9.75 0.75 9.41421 0.75 9Z"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M6.75017 8.99996C6.80157 11.3061 7.59469 13.5263 9 15.3369C10.4053 13.5263 11.1984 11.3061 11.2498 8.99996C11.1984 6.69383 10.4053 4.47359 9 2.66306C7.59469 4.47359 6.80157 6.69383 6.75017 8.99996ZM9 1.49996L8.44624 0.994141C6.44767 3.18214 5.31188 6.0216 5.25016 8.98434C5.24995 8.99475 5.24995 9.00517 5.25016 9.01558C5.31188 11.9783 6.44767 14.8178 8.44624 17.0058C8.58834 17.1613 8.78931 17.25 9 17.25C9.21069 17.25 9.41166 17.1613 9.55376 17.0058C11.5523 14.8178 12.6881 11.9783 12.7498 9.01558C12.7501 9.00517 12.7501 8.99475 12.7498 8.98434C12.6881 6.0216 11.5523 3.18214 9.55376 0.994141L9 1.49996Z"
+                        />
+                      </svg>
+                    </span>
+                    https://www.yoursite.com
+                  </a>
+                  <div
+                    class="ud-flex ud-items-center ud-justify-center ud-space-x-2.5"
+                  >
+                    <button
+                      class="ud-h-8.5 ud-rounded-full ud-border ud-border-transparent ud-bg-primary ud-px-5 ud-font-medium ud-text-sm ud-text-white hover:ud-bg-opacity-90"
+                    >
+                      Follow
+                    </button>
+                    <button
+                      class="ud-h-8.5 ud-w-8.5 ud-flex ud-items-center ud-justify-center ud-rounded-full ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-white dark:ud-bg-boxdark-2 hover:ud-border-primary hover:ud-bg-primary hover:ud-text-white dark:hover:ud-bg-primary"
+                    >
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        class="ud-fill-current"
+                      >
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M2.66667 7.33398C3.03486 7.33398 3.33333 7.63246 3.33333 8.00065V13.334C3.33333 13.5108 3.40357 13.6804 3.5286 13.8054C3.65362 13.9304 3.82319 14.0007 4 14.0007H12C12.1768 14.0007 12.3464 13.9304 12.4714 13.8054C12.5964 13.6804 12.6667 13.5108 12.6667 13.334V8.00065C12.6667 7.63246 12.9651 7.33398 13.3333 7.33398C13.7015 7.33398 14 7.63246 14 8.00065V13.334C14 13.8644 13.7893 14.3731 13.4142 14.7482C13.0391 15.1233 12.5304 15.334 12 15.334H4C3.46957 15.334 2.96086 15.1233 2.58579 14.7482C2.21071 14.3731 2 13.8644 2 13.334V8.00065C2 7.63246 2.29848 7.33398 2.66667 7.33398Z"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M7.52843 0.861278C7.78878 0.600928 8.21089 0.600928 8.47124 0.861278L11.1379 3.52794C11.3983 3.78829 11.3983 4.2104 11.1379 4.47075C10.8776 4.7311 10.4554 4.7311 10.1951 4.47075L7.99984 2.27549L5.80458 4.47075C5.54423 4.7311 5.12212 4.7311 4.86177 4.47075C4.60142 4.2104 4.60142 3.78829 4.86177 3.52794L7.52843 0.861278Z"
+                        />
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M8.00016 0.666016C8.36835 0.666016 8.66683 0.964492 8.66683 1.33268V9.99935C8.66683 10.3675 8.36835 10.666 8.00016 10.666C7.63197 10.666 7.3335 10.3675 7.3335 9.99935V1.33268C7.3335 0.964492 7.63197 0.666016 8.00016 0.666016Z"
+                        />
+                      </svg>
+                    </button>
+                    <button
+                      class="ud-h-8.5 ud-w-8.5 ud-flex ud-items-center ud-justify-center ud-rounded-full ud-border ud-border-stroke dark:ud-border-strokedark ud-bg-white dark:ud-bg-boxdark-2 hover:ud-border-primary hover:ud-bg-primary hover:ud-text-white dark:hover:ud-bg-primary"
+                    >
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 14 14"
+                        class="ud-fill-current"
+                      >
+                        <g clip-path="url(#clip0_3019_3044)">
+                          <path
+                            d="M12.25 5.25C11.2835 5.25 10.5 6.0335 10.5 7C10.5 7.9665 11.2835 8.75 12.25 8.75C13.2165 8.75 14 7.9665 14 7C14 6.0335 13.2165 5.25 12.25 5.25Z"
+                          />
+                          <path
+                            d="M7 5.25C6.0335 5.25 5.25 6.0335 5.25 7C5.25 7.9665 6.0335 8.75 7 8.75C7.9665 8.75 8.75 7.9665 8.75 7C8.75 6.0335 7.9665 5.25 7 5.25Z"
+                          />
+                          <path
+                            d="M1.75 5.25C0.783502 5.25 2.37484e-07 6.0335 1.5299e-07 7C6.84959e-08 7.9665 0.783502 8.75 1.75 8.75C2.7165 8.75 3.5 7.9665 3.5 7C3.5 6.0335 2.7165 5.25 1.75 5.25Z"
+                          />
+                        </g>
+                        <defs>
+                          <clipPath id="clip0_3019_3044">
+                            <rect
+                              width="14"
+                              height="14"
+                              fill="white"
+                              transform="translate(14 14) rotate(-180)"
+                            />
+                          </clipPath>
+                        </defs>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div
+                  class="ud-flex ud-items-center ud-justify-center ud-space-x-3 ud-px-3 ud-mt-10"
+                >
+                  <a
+                    href="#"
+                    class="ud-h-5 ud-w-5 ud-flex ud-items-center ud-justify-center hover:ud-text-primary"
+                    name="social-icon"
+                    aria-label="social-icon"
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 18 18"
+                      class="ud-fill-current"
+                    >
+                      <path
+                        d="M10.5 10.125H12.375L13.125 7.125H10.5V5.625C10.5 4.8525 10.5 4.125 12 4.125H13.125V1.605C12.8805 1.57275 11.9572 1.5 10.9822 1.5C8.946 1.5 7.5 2.74275 7.5 5.025V7.125H5.25V10.125H7.5V16.5H10.5V10.125Z"
+                      />
+                    </svg>
+                  </a>
+                  <a
+                    href="#"
+                    class="ud-h-5 ud-w-5 ud-flex ud-items-center ud-justify-center hover:ud-text-primary"
+                    name="social-icon"
+                    aria-label="social-icon"
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 18 18"
+                      class="ud-fill-current"
+                    >
+                      <path
+                        d="M16.6217 4.24121C16.0491 4.49448 15.4419 4.66082 14.8202 4.73471C15.4755 4.34279 15.966 3.72597 16.2002 2.99921C15.5852 3.36521 14.911 3.62171 14.2082 3.76046C13.7362 3.2554 13.1105 2.92043 12.4284 2.80765C11.7464 2.69487 11.0462 2.81058 10.4367 3.1368C9.82716 3.46302 9.34251 3.98147 9.05806 4.61156C8.7736 5.24164 8.70528 5.94805 8.86372 6.62096C7.61655 6.55845 6.39647 6.23435 5.28269 5.66971C4.1689 5.10507 3.18632 4.3125 2.39872 3.34346C2.11994 3.8223 1.97344 4.36663 1.97422 4.92071C1.97422 6.00821 2.52772 6.96896 3.36922 7.53146C2.87123 7.51578 2.3842 7.3813 1.94872 7.13921V7.17821C1.94887 7.90249 2.1995 8.60442 2.65811 9.16501C3.11672 9.72559 3.75508 10.1103 4.46497 10.254C4.00268 10.3792 3.51795 10.3977 3.04747 10.308C3.24762 10.9314 3.63773 11.4766 4.16317 11.8673C4.6886 12.258 5.32307 12.4746 5.97772 12.4867C5.32708 12.9977 4.5821 13.3754 3.78538 13.5983C2.98866 13.8212 2.15582 13.8849 1.33447 13.7857C2.76825 14.7078 4.43729 15.1973 6.14197 15.1957C11.9117 15.1957 15.067 10.416 15.067 6.27071C15.067 6.13571 15.0632 5.99921 15.0572 5.86571C15.6714 5.42184 16.2014 4.87198 16.6225 4.24196L16.6217 4.24121Z"
+                      />
+                    </svg>
+                  </a>
+                  <a
+                    href="#"
+                    class="ud-h-5 ud-w-5 ud-flex ud-items-center ud-justify-center hover:ud-text-primary"
+                    name="social-icon"
+                    aria-label="social-icon"
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 18 18"
+                      class="ud-fill-current"
+                    >
+                      <path
+                        d="M5.20508 3.75075C5.20488 4.14857 5.04665 4.53003 4.76521 4.81119C4.48376 5.09235 4.10215 5.2502 3.70433 5.25C3.3065 5.2498 2.92505 5.09157 2.64389 4.81013C2.36272 4.52868 2.20488 4.14707 2.20508 3.74925C2.20528 3.35143 2.3635 2.96997 2.64495 2.68881C2.92639 2.40765 3.308 2.2498 3.70583 2.25C4.10365 2.2502 4.48511 2.40843 4.76627 2.68987C5.04743 2.97132 5.20528 3.35293 5.20508 3.75075ZM5.25008 6.36075H2.25008V15.7507H5.25008V6.36075ZM9.99008 6.36075H7.00508V15.7507H9.96008V10.8232C9.96008 8.07825 13.5376 7.82325 13.5376 10.8232V15.7507H16.5001V9.80325C16.5001 5.17575 11.2051 5.34825 9.96008 7.62075L9.99008 6.36075Z"
+                      />
+                    </svg>
+                  </a>
+                  <a
+                    href="#"
+                    class="ud-h-5 ud-w-5 ud-flex ud-items-center ud-justify-center hover:ud-text-primary"
+                    name="social-icon"
+                    aria-label="social-icon"
+                  >
+                    <svg
+                      width="18"
+                      height="18"
+                      viewBox="0 0 18 18"
+                      class="ud-fill-current"
+                    >
+                      <path
+                        d="M14.9918 8.679C14.9303 7.49844 14.5197 6.3627 13.812 5.41575C13.5964 5.64797 13.3659 5.86593 13.122 6.06825C12.3727 6.69064 11.5354 7.19864 10.6373 7.57575C10.7625 7.83825 10.8773 8.0925 10.9785 8.3325V8.33475C11.0071 8.40181 11.0346 8.46932 11.061 8.53725C12.1965 8.40975 13.3935 8.45625 14.5538 8.613C14.7083 8.634 14.8538 8.6565 14.9918 8.679ZM7.953 3.0915C8.6839 4.12138 9.35791 5.19048 9.972 6.294C10.8893 5.9325 11.6475 5.4765 12.258 4.96875C12.4699 4.7941 12.6694 4.60489 12.855 4.4025C11.7757 3.49479 10.4102 2.998 9 3C8.64903 2.99976 8.2987 3.03013 7.953 3.09075V3.0915ZM3.18975 7.49775C3.70067 7.48486 4.21098 7.45409 4.71975 7.4055C5.94948 7.29551 7.16871 7.08938 8.36625 6.789C7.74039 5.70166 7.06467 4.64378 6.34125 3.61875C5.56854 4.00155 4.8872 4.54606 4.34343 5.21534C3.79967 5.88463 3.40622 6.66303 3.18975 7.49775ZM4.33725 12.7763C4.62825 12.351 5.01075 11.8725 5.5185 11.352C6.609 10.2345 7.896 9.3645 9.3855 8.8845L9.432 8.871C9.30825 8.598 9.192 8.35425 9.075 8.12475C7.698 8.526 6.2475 8.7765 4.80225 8.90625C4.09725 8.97 3.465 8.99775 3 9.00225C2.99867 10.3767 3.47122 11.7096 4.338 12.7763H4.33725ZM11.2538 14.5613C10.9645 13.1027 10.5551 11.6706 10.0298 10.2795C8.52825 10.8248 7.332 11.622 6.40725 12.573C6.03405 12.9498 5.70286 13.366 5.4195 13.8143C6.45361 14.5858 7.70976 15.0018 9 15C9.77244 15.0011 10.5378 14.8526 11.2538 14.5628V14.5613ZM12.6585 13.755C13.8295 12.8548 14.6271 11.5543 14.8988 10.1025C14.6438 10.0388 14.3205 9.975 13.965 9.9255C13.1746 9.81168 12.3726 9.80336 11.58 9.90075C12.0263 11.1599 12.3866 12.4478 12.6585 13.7558V13.755ZM9 16.5C4.85775 16.5 1.5 13.1423 1.5 9C1.5 4.85775 4.85775 1.5 9 1.5C13.1423 1.5 16.5 4.85775 16.5 9C16.5 13.1423 13.1423 16.5 9 16.5Z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <!-- ====== Profile Section End -->
+            </div>
+          </div>
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+    <!-- ====== Back To Top Start ===== -->
+    <include src="./partials/scrolltop.html" />
+    <!-- ====== Back To Top End ===== -->
+  </body>
+</html>

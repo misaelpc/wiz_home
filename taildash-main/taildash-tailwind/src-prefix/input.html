@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Input | Taildash - Tailwind CSS Admin Dashboard Template</title>
+  </head>
+  <body
+    x-data="{ page: 'input', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'ud-dark ud-text-bodydark ud-bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="ud-overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Header Start ===== -->
+      <include src="./partials/header.html" />
+      <!-- ===== Header End ===== -->
+
+      <!-- ===== Main Content Start ===== -->
+      <main class="lg:ud-pl-72.5 ud-pt-26 lg:ud-pt-22.5">
+        <div class="ud-p-4 md:ud-p-6 2xl:ud-p-11">
+          <h2
+            class="ud-font-semibold ud-text-title-md ud-text-black dark:ud-text-white ud-mb-2"
+          >
+            Input
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit cras
+            ultrices lectus sem.
+          </p>
+
+          <!-- Input Item -->
+          <div
+            class="ud-rounded-md ud-shadow-2 ud-bg-white dark:ud-bg-boxdark ud-mt-10"
+          >
+            <div
+              class="ud-px-9 ud-py-3.5 ud-border-b ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h3
+                class="ud-font-medium ud-text-lg ud-text-black dark:ud-text-white"
+              >
+                Default Input
+              </h3>
+            </div>
+
+            <div class="ud-p-9">
+              <div class="-ud-mx-4 ud-flex ud-flex-wrap">
+                <div class="ud-w-full lg:ud-w-1/2 ud-px-4">
+                  <label
+                    class="ud-mb-3 ud-block ud-font-medium ud-text-black dark:ud-text-white"
+                  >
+                    Default Input
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Default Input"
+                    class="ud-border-stroke focus:ud-border-primary active:ud-border-primary ud-w-full ud-rounded-lg ud-border-[1.5px] ud-py-3 ud-px-5 ud-font-medium ud-outline-none ud-transition disabled:ud-cursor-default disabled:ud-bg-whiter"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="ud-p-9 ud-border-t ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h2
+                class="ud-font-semibold ud-text-lg ud-text-black dark:ud-text-white ud-mb-5"
+              >
+                HTML
+              </h2>
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <label class="ud-mb-3 ud-block ud-font-medium ud-text-black dark:ud-text-white">
+        Default Input
+        </label>
+        <input
+          type="text"
+          placeholder="Default Input"
+          class="ud-border-stroke focus:ud-border-primary active:ud-border-primary ud-w-full ud-rounded-lg ud-border-[1.5px] ud-py-3 ud-px-5 ud-font-medium ud-outline-none ud-transition disabled:ud-cursor-default disabled:ud-bg-whiter"
+          />
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+
+          <!-- Input Item -->
+          <div
+            class="ud-rounded-md ud-shadow-2 ud-bg-white dark:ud-bg-boxdark ud-mt-10"
+          >
+            <div
+              class="ud-px-9 ud-py-3.5 ud-border-b ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h3
+                class="ud-font-medium ud-text-lg ud-text-black dark:ud-text-white"
+              >
+                Active Input
+              </h3>
+            </div>
+
+            <div class="ud-p-9">
+              <div class="-ud-mx-4 ud-flex ud-flex-wrap">
+                <div class="ud-w-full lg:ud-w-1/2 ud-px-4">
+                  <label
+                    class="ud-mb-3 ud-block ud-font-medium ud-text-black dark:ud-text-white"
+                  >
+                    Active Input
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Active Input"
+                    class="ud-border-primary focus:ud-border-primary active:ud-border-primary ud-w-full ud-rounded-lg ud-border-[1.5px] ud-py-3 ud-px-5 ud-font-medium ud-outline-none ud-transition disabled:ud-cursor-default disabled:ud-bg-whiter"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="ud-p-9 ud-border-t ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h2
+                class="ud-font-semibold ud-text-lg ud-text-black dark:ud-text-white ud-mb-5"
+              >
+                HTML
+              </h2>
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <label class="ud-mb-3 ud-block ud-font-medium ud-text-black dark:ud-text-white">
+        Active Input
+      </label>
+      <input
+        type="text"
+        placeholder="Active Input"
+        class="ud-border-primary focus:ud-border-primary active:ud-border-primary ud-w-full ud-rounded-lg ud-border-[1.5px] ud-py-3 ud-px-5 ud-font-medium ud-outline-none ud-transition disabled:ud-cursor-default disabled:ud-bg-whiter"
+        />
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+
+          <!-- Input Item -->
+          <div
+            class="ud-rounded-md ud-shadow-2 ud-bg-white dark:ud-bg-boxdark ud-mt-10"
+          >
+            <div
+              class="ud-px-9 ud-py-3.5 ud-border-b ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h3
+                class="ud-font-medium ud-text-lg ud-text-black dark:ud-text-white"
+              >
+                Disabled label
+              </h3>
+            </div>
+
+            <div class="ud-p-9">
+              <div class="-ud-mx-4 ud-flex ud-flex-wrap">
+                <div class="ud-w-full lg:ud-w-1/2 ud-px-4">
+                  <label
+                    class="ud-mb-3 ud-block ud-font-medium ud-text-black dark:ud-text-white"
+                  >
+                    Disabled label
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Disabled label"
+                    disabled=""
+                    class="ud-border-stroke focus:ud-border-primary active:ud-border-primary ud-w-full ud-rounded-lg ud-border-[1.5px] ud-py-3 ud-px-5 ud-font-medium ud-outline-none ud-transition disabled:ud-cursor-default disabled:ud-bg-whiter"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="ud-p-9 ud-border-t ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h2
+                class="ud-font-semibold ud-text-lg ud-text-black dark:ud-text-white ud-mb-5"
+              >
+                HTML
+              </h2>
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <label class="ud-mb-3 ud-block ud-font-medium ud-text-black dark:ud-text-white">
+        Disabled label
+      </label>
+      <input
+        type="text"
+        placeholder="Disabled label"
+        disabled=""
+        class="ud-border-stroke focus:ud-border-primary active:ud-border-primary ud-w-full ud-rounded-lg ud-border-[1.5px] ud-py-3 ud-px-5 ud-font-medium ud-outline-none ud-transition disabled:ud-cursor-default disabled:ud-bg-whiter"
+        />
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+
+          <!-- Input Item -->
+          <div
+            class="ud-rounded-md ud-shadow-2 ud-bg-white dark:ud-bg-boxdark ud-mt-10"
+          >
+            <div
+              class="ud-px-9 ud-py-3.5 ud-border-b ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h3
+                class="ud-font-medium ud-text-lg ud-text-black dark:ud-text-white"
+              >
+                Input With Icon
+              </h3>
+            </div>
+
+            <div class="ud-p-9">
+              <div class="-ud-mx-4 ud-flex ud-flex-wrap">
+                <div class="ud-w-full lg:ud-w-1/2 ud-px-4">
+                  <label
+                    class="ud-mb-3 ud-block ud-font-medium ud-text-black dark:ud-text-white"
+                  >
+                    Name
+                  </label>
+                  <div class="ud-relative">
+                    <input
+                      type="text"
+                      placeholder="Devid Jhon"
+                      class="ud-w-full ud-rounded-md ud-border ud-border-stroke ud-p-3 ud-pl-12 ud-text-black ud-outline-none ud-transition focus:ud-border-primary active:ud-border-primary disabled:ud-cursor-default disabled:ud-bg-whiter"
+                    />
+                    <span
+                      class="ud-absolute ud-top-1/2 ud-left-4 -ud-translate-y-1/2"
+                    >
+                      <svg
+                        width="20"
+                        height="20"
+                        viewBox="0 0 20 20"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <g opacity="0.8">
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M3.72039 12.8864C4.50179 12.105 5.5616 11.666 6.66667 11.666H13.3333C14.4384 11.666 15.4982 12.105 16.2796 12.8864C17.061 13.6678 17.5 14.7276 17.5 15.8327V17.4993C17.5 17.9596 17.1269 18.3327 16.6667 18.3327C16.2064 18.3327 15.8333 17.9596 15.8333 17.4993V15.8327C15.8333 15.1696 15.5699 14.5338 15.1011 14.0649C14.6323 13.5961 13.9964 13.3327 13.3333 13.3327H6.66667C6.00363 13.3327 5.36774 13.5961 4.8989 14.0649C4.43006 14.5338 4.16667 15.1696 4.16667 15.8327V17.4993C4.16667 17.9596 3.79357 18.3327 3.33333 18.3327C2.8731 18.3327 2.5 17.9596 2.5 17.4993V15.8327C2.5 14.7276 2.93899 13.6678 3.72039 12.8864Z"
+                            fill="#637381"
+                          ></path>
+                          <path
+                            fill-rule="evenodd"
+                            clip-rule="evenodd"
+                            d="M10.0007 3.33268C8.61994 3.33268 7.50065 4.45197 7.50065 5.83268C7.50065 7.21339 8.61994 8.33268 10.0007 8.33268C11.3814 8.33268 12.5006 7.21339 12.5006 5.83268C12.5006 4.45197 11.3814 3.33268 10.0007 3.33268ZM5.83398 5.83268C5.83398 3.5315 7.69946 1.66602 10.0007 1.66602C12.3018 1.66602 14.1673 3.5315 14.1673 5.83268C14.1673 8.13387 12.3018 9.99935 10.0007 9.99935C7.69946 9.99935 5.83398 8.13387 5.83398 5.83268Z"
+                            fill="#637381"
+                          ></path>
+                        </g>
+                      </svg>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="ud-p-9 ud-border-t ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h2
+                class="ud-font-semibold ud-text-lg ud-text-black dark:ud-text-white ud-mb-5"
+              >
+                HTML
+              </h2>
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <label class="ud-mb-3 ud-block ud-font-medium ud-text-black dark:ud-text-white">
+        Disabled label
+      </label>
+      <input
+        type="text"
+        placeholder="Disabled label"
+        disabled=""
+        class="ud-border-stroke focus:ud-border-primary active:ud-border-primary ud-w-full ud-rounded-lg ud-border-[1.5px] ud-py-3 ud-px-5 ud-font-medium ud-outline-none ud-transition disabled:ud-cursor-default disabled:ud-bg-whiter"
+        />
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+    <!-- ====== Back To Top Start ===== -->
+    <include src="./partials/scrolltop.html" />
+    <!-- ====== Back To Top End ===== -->
+  </body>
+</html>

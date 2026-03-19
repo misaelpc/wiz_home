@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Taildash - Tailwind CSS Admin Dashboard Template</title>
+  </head>
+  <body
+    x-data="{ page: 'tabs', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }"
+    x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))"
+    :class="{'ud-dark ud-text-bodydark ud-bg-boxdark-2': darkMode === true}"
+  >
+    <!-- ===== Preloader Start ===== -->
+    <include src="./partials/preloader.html"></include>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="ud-overflow-hidden">
+      <!-- ===== Sidebar Start ===== -->
+      <include src="./partials/sidebar.html"></include>
+      <!-- ===== Sidebar End ===== -->
+
+      <!-- ===== Header Start ===== -->
+      <include src="./partials/header.html" />
+      <!-- ===== Header End ===== -->
+
+      <!-- ===== Main Content Start ===== -->
+      <main class="lg:ud-pl-72.5 ud-pt-19.5">
+        <div class="ud-p-4 md:ud-p-6 2xl:ud-p-11">
+          <h2
+            class="ud-font-semibold ud-text-title-md ud-text-black dark:ud-text-white ud-mb-2"
+          >
+            Tab Style 1
+          </h2>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit cras
+            ultrices lectus sem.
+          </p>
+
+          <div
+            class="ud-rounded-md ud-shadow-2 ud-bg-white dark:ud-bg-boxdark ud-mt-10"
+          >
+            <div class="ud-p-9">
+              <div
+                x-data="
+                  {
+                  openTab: 1,
+                  activeClasses: 'ud-bg-primary ud-text-white',
+                  inactiveClasses: 'hover:ud-bg-primary hover:ud-text-white',
+                  }
+                  "
+                class="ud-mb-14 ud-w-full"
+              >
+                <div
+                  class="ud-flex ud-flex-wrap ud-rounded-lg ud-border ud-border-stroke ud-py-3 ud-px-4"
+                >
+                  <a
+                    href="#"
+                    @click="openTab = 1"
+                    :class="openTab === 1 ? activeClasses : inactiveClasses"
+                    class="ud-bg-primary ud-rounded-md ud-py-3 ud-px-4 ud-text-sm ud-font-medium ud-text-white md:ud-text-base lg:ud-px-6"
+                  >
+                    Home
+                  </a>
+                  <a
+                    href="#"
+                    @click="openTab = 2"
+                    :class="openTab === 2 ? activeClasses : inactiveClasses"
+                    class="hover:ud-bg-primary ud-rounded-md ud-py-3 ud-px-4 ud-text-sm ud-font-medium hover:ud-text-white md:ud-text-base lg:ud-px-6"
+                  >
+                    About Us
+                  </a>
+                  <a
+                    href="#"
+                    @click="openTab = 3"
+                    :class="openTab === 3 ? activeClasses : inactiveClasses"
+                    class="hover:ud-bg-primary ud-rounded-md ud-py-3 ud-px-4 ud-text-sm ud-font-medium hover:ud-text-white md:ud-text-base lg:ud-px-6"
+                  >
+                    Our Team
+                  </a>
+                  <a
+                    href="#"
+                    @click="openTab = 4"
+                    :class="openTab === 4 ? activeClasses : inactiveClasses"
+                    class="hover:ud-bg-primary ud-rounded-md ud-py-3 ud-px-4 ud-text-sm ud-font-medium hover:ud-text-white md:ud-text-base lg:ud-px-6"
+                  >
+                    Company Details
+                  </a>
+                </div>
+                <div>
+                  <div x-show="openTab === 1" class="ud-p-6 ud-leading-relaxed">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Officia nisi, doloribus nulla cumque molestias corporis
+                    eaque harum vero! Quas sit odit optio debitis nulla
+                    quisquam, dolorum quaerat animi iusto quod.
+                  </div>
+                  <div
+                    x-show="openTab === 2"
+                    class="ud-p-6 ud-leading-relaxed"
+                    style="display: none"
+                  >
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Officia nisi, doloribus nulla cumque molestias corporis
+                    eaque harum vero! Quas sit odit optio debitis nulla
+                    quisquam, dolorum quaerat animi iusto quod. Lorem ipsum
+                    dolor, sit amet consectetur adipisicing elit. Unde ex
+                    dolorum voluptate cupiditate adipisci doloremque, vel quam
+                    praesentium nihil veritatis.
+                  </div>
+                  <div
+                    x-show="openTab === 3"
+                    class="ud-p-6 ud-leading-relaxed"
+                    style="display: none"
+                  >
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Officia nisi, doloribus nulla cumque molestias corporis
+                    eaque harum vero! Quas sit odit optio debitis nulla
+                    quisquam, dolorum quaerat animi iusto quod. <br />
+                    <br />
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Suscipit mollitia nam eligendi reprehenderit reiciendis
+                    saepe laboriosam maiores voluptas. Quo, culpa amet fugiat
+                    ipsam sed quod hic, veritatis ducimus recusandae repellat
+                    quasi eaque, suscipit praesentium totam?
+                  </div>
+                  <div
+                    x-show="openTab === 4"
+                    class="ud-p-6 ud-leading-relaxed"
+                    style="display: none"
+                  >
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Officia nisi, doloribus nulla cumque molestias corporis
+                    eaque harum vero! Quas sit odit optio debitis nulla
+                    quisquam, dolorum quaerat animi iusto quod.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="ud-p-9 ud-border-t ud-border-stroke dark:ud-border-strokedark"
+            >
+              <h2
+                class="ud-font-semibold ud-text-lg ud-text-black dark:ud-text-white ud-mb-5"
+              >
+                HTML
+              </h2>
+
+              <pre>
+  <code class="language-markup">
+    <xmp>
+      <div
+        x-data="
+          {
+          openTab: 1,
+          activeClasses: 'ud-bg-primary ud-text-white',
+          inactiveClasses: 'hover:ud-bg-primary hover:ud-text-white',
+          }
+          "
+        class="ud-mb-14 ud-w-full"
+      >
+        <div class="ud-flex ud-flex-wrap ud-rounded-lg ud-border ud-border-stroke ud-py-3 ud-px-4">
+          <a
+            href="#"
+            @click="openTab = 1"
+            :class="openTab === 1 ? activeClasses : inactiveClasses"
+            class="ud-bg-primary ud-rounded-md ud-py-3 ud-px-4 ud-text-sm ud-font-medium ud-text-white md:ud-text-base lg:ud-px-6"
+          >
+            Home
+          </a>
+          <a
+            href="#"
+            @click="openTab = 2"
+            :class="openTab === 2 ? activeClasses : inactiveClasses"
+            class="hover:ud-bg-primary ud-rounded-md ud-py-3 ud-px-4 ud-text-sm ud-font-medium hover:ud-text-white md:ud-text-base lg:ud-px-6"
+          >
+            About Us
+          </a>
+          <a
+            href="#"
+            @click="openTab = 3"
+            :class="openTab === 3 ? activeClasses : inactiveClasses"
+            class="hover:ud-bg-primary ud-rounded-md ud-py-3 ud-px-4 ud-text-sm ud-font-medium hover:ud-text-white md:ud-text-base lg:ud-px-6"
+          >
+            Our Team
+          </a>
+          <a
+            href="#"
+            @click="openTab = 4"
+            :class="openTab === 4 ? activeClasses : inactiveClasses"
+            class="hover:ud-bg-primary ud-rounded-md ud-py-3 ud-px-4 ud-text-sm ud-font-medium hover:ud-text-white md:ud-text-base lg:ud-px-6"
+          >
+            Company Details
+          </a>
+        </div>
+        <div>
+          <div x-show="openTab === 1" class="ud-p-6 ud-leading-relaxed">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia nisi, doloribus nulla cumque molestias corporis eaque harum vero! Quas sit odit optio debitis nulla quisquam, dolorum quaerat animi iusto quod.
+          </div>
+          <div
+            x-show="openTab === 2"
+            class="ud-p-6 ud-leading-relaxed"
+            style="display: none"
+          >
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia nisi, doloribus nulla cumque molestias corporis eaque harum vero! Quas sit odit optio debitis nulla quisquam, dolorum quaerat animi iusto quod. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Unde ex dolorum voluptate cupiditate adipisci doloremque, vel quam praesentium nihil veritatis.
+          </div>
+          <div
+            x-show="openTab === 3"
+            class="ud-p-6 ud-leading-relaxed"
+            style="display: none"
+          >
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia nisi, doloribus nulla cumque molestias corporis eaque harum vero! Quas sit odit optio debitis nulla quisquam, dolorum quaerat animi iusto quod. <br />
+            <br />
+            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit mollitia nam eligendi reprehenderit reiciendis saepe laboriosam maiores voluptas. Quo, culpa amet fugiat ipsam sed quod hic, veritatis ducimus recusandae repellat quasi eaque, suscipit praesentium totam?
+          </div>
+          <div
+            x-show="openTab === 4"
+            class="ud-p-6 ud-leading-relaxed"
+            style="display: none"
+          >
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia nisi, doloribus nulla cumque molestias corporis eaque harum vero! Quas sit odit optio debitis nulla quisquam, dolorum quaerat animi iusto quod.
+          </div>
+        </div>
+      </div>
+    </xmp>
+  </code>
+</pre>
+            </div>
+          </div>
+        </div>
+      </main>
+      <!-- ===== Main Content End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+
+    <!-- ====== Back To Top Start ===== -->
+    <include src="./partials/scrolltop.html" />
+    <!-- ====== Back To Top End ===== -->
+  </body>
+</html>
