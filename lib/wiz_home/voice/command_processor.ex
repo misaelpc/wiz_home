@@ -33,24 +33,25 @@ defmodule WizHome.Voice.CommandProcessor do
   """
   def process(text, light_ips, api_key \\ nil) when is_binary(text) and is_list(light_ips) do
     # Intentar primero con LLM si tenemos API key
-    result = if api_key do
-      case WizHome.Voice.LLMCommandParser.parse_command(text, light_ips, api_key) do
-        {:ok, action, affected_ips} ->
-          {:ok, action, affected_ips}
+    result =
+      if api_key do
+        case WizHome.Voice.LLMCommandParser.parse_command(text, light_ips, api_key) do
+          {:ok, action, affected_ips} ->
+            {:ok, action, affected_ips}
 
-        :no_command ->
-          # Fallback a regex si LLM no detecta comando
-          Logger.debug("LLM no detectó comando, intentando con regex")
-          try_regex_fallback(text, light_ips)
+          :no_command ->
+            # Fallback a regex si LLM no detecta comando
+            Logger.debug("LLM no detectó comando, intentando con regex")
+            try_regex_fallback(text, light_ips)
 
-        {:error, reason} ->
-          Logger.warning("Error en LLM, usando regex fallback: #{inspect(reason)}")
-          try_regex_fallback(text, light_ips)
+          {:error, reason} ->
+            Logger.warning("Error en LLM, usando regex fallback: #{inspect(reason)}")
+            try_regex_fallback(text, light_ips)
+        end
+      else
+        # Sin API key, usar solo regex
+        try_regex_fallback(text, light_ips)
       end
-    else
-      # Sin API key, usar solo regex
-      try_regex_fallback(text, light_ips)
-    end
 
     result
   end
@@ -108,6 +109,7 @@ defmodule WizHome.Voice.CommandProcessor do
     case Regex.run(~r/(\d+)/, text) do
       [_, num_str] ->
         num = String.to_integer(num_str)
+
         if num >= 1 and num <= max_focos do
           {:ok, num}
         else
@@ -139,5 +141,4 @@ defmodule WizHome.Voice.CommandProcessor do
       if String.contains?(text, word), do: {:ok, num}, else: nil
     end) || {:error, :foco_no_encontrado}
   end
-
 end

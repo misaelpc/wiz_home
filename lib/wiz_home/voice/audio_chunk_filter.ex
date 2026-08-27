@@ -9,18 +9,20 @@ defmodule WizHome.Voice.AudioChunkFilter do
 
   alias Membrane.RawAudio
 
-  def_input_pad :input, accepted_format: RawAudio, flow_control: :auto
-  def_output_pad :output, accepted_format: RawAudio, flow_control: :auto
+  def_input_pad(:input, accepted_format: RawAudio, flow_control: :auto)
+  def_output_pad(:output, accepted_format: RawAudio, flow_control: :auto)
 
-  def_options controller_pid: [
-                spec: pid(),
-                description: "PID del GenServer VoiceController que recibirá los chunks"
-              ],
-              chunk_duration_ms: [
-                spec: pos_integer(),
-                default: 3000,
-                description: "Duración del chunk en milisegundos antes de enviar"
-              ]
+  def_options(
+    controller_pid: [
+      spec: pid(),
+      description: "PID del GenServer VoiceController que recibirá los chunks"
+    ],
+    chunk_duration_ms: [
+      spec: pos_integer(),
+      default: 3000,
+      description: "Duración del chunk en milisegundos antes de enviar"
+    ]
+  )
 
   @impl true
   def handle_init(_ctx, opts) do

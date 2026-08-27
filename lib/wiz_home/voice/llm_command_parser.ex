@@ -91,21 +91,23 @@ defmodule WizHome.Voice.LLMCommandParser do
 
   # Llama a la API de OpenAI GPT
   defp call_gpt_api(prompt, api_key) do
-    body = Jason.encode!(%{
-      model: "gpt-4o-mini",
-      messages: [
-        %{
-          role: "system",
-          content: "Eres un asistente que analiza comandos de voz y responde SOLO con JSON válido."
-        },
-        %{
-          role: "user",
-          content: prompt
-        }
-      ],
-      temperature: 0.1,
-      max_tokens: 150
-    })
+    body =
+      Jason.encode!(%{
+        model: "gpt-4o-mini",
+        messages: [
+          %{
+            role: "system",
+            content:
+              "Eres un asistente que analiza comandos de voz y responde SOLO con JSON válido."
+          },
+          %{
+            role: "user",
+            content: prompt
+          }
+        ],
+        temperature: 0.1,
+        max_tokens: 150
+      })
 
     headers = [
       {"Authorization", "Bearer #{api_key}"},
@@ -153,19 +155,20 @@ defmodule WizHome.Voice.LLMCommandParser do
       {:ok, %{"action" => action, "focos" => focos}} when action in ["turn_on", "turn_off"] ->
         action_atom = if action == "turn_on", do: :turn_on, else: :turn_off
 
-        affected_ips = case focos do
-          "all" ->
-            light_ips
+        affected_ips =
+          case focos do
+            "all" ->
+              light_ips
 
-          focos_list when is_list(focos_list) ->
-            focos_list
-            |> Enum.map(&normalize_foco_number/1)
-            |> Enum.filter(fn idx -> idx >= 1 and idx <= length(light_ips) end)
-            |> Enum.map(fn idx -> Enum.at(light_ips, idx - 1) end)
+            focos_list when is_list(focos_list) ->
+              focos_list
+              |> Enum.map(&normalize_foco_number/1)
+              |> Enum.filter(fn idx -> idx >= 1 and idx <= length(light_ips) end)
+              |> Enum.map(fn idx -> Enum.at(light_ips, idx - 1) end)
 
-          _ ->
-            []
-        end
+            _ ->
+              []
+          end
 
         if length(affected_ips) > 0 do
           Logger.info("LLM detectó comando: #{action} en focos #{inspect(affected_ips)}")
@@ -187,11 +190,13 @@ defmodule WizHome.Voice.LLMCommandParser do
 
   # Normaliza números de focos (puede venir como string o integer)
   defp normalize_foco_number(num) when is_integer(num), do: num
+
   defp normalize_foco_number(num) when is_binary(num) do
     case Integer.parse(num) do
       {int, _} -> int
       :error -> 0
     end
   end
+
   defp normalize_foco_number(_), do: 0
 end

@@ -11,8 +11,7 @@ defmodule WizHome.Application do
       WizHomeWeb.Telemetry,
       WizHome.Repo,
       {Ecto.Migrator,
-        repos: Application.fetch_env!(:wiz_home, :ecto_repos),
-        skip: skip_migrations?()},
+       repos: Application.fetch_env!(:wiz_home, :ecto_repos), skip: skip_migrations?()},
       {DNSCluster, query: Application.get_env(:wiz_home, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: WizHome.PubSub},
       # Start the Finch HTTP client for sending emails

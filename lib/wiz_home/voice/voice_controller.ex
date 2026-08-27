@@ -43,9 +43,12 @@ defmodule WizHome.Voice.VoiceController do
       {:stop, :missing_api_key}
     else
       # Configuración: acumular chunks antes de procesar
-      batch_size = Keyword.get(opts, :batch_size, 2) # Procesar cada 2 chunks
-      batch_timeout_ms = Keyword.get(opts, :batch_timeout_ms, 2000) # O después de 2 segundos
-      debounce_ms = Keyword.get(opts, :debounce_ms, 1000) # Debounce de 1 segundo entre comandos
+      # Procesar cada 2 chunks
+      batch_size = Keyword.get(opts, :batch_size, 2)
+      # O después de 2 segundos
+      batch_timeout_ms = Keyword.get(opts, :batch_timeout_ms, 2000)
+      # Debounce de 1 segundo entre comandos
+      debounce_ms = Keyword.get(opts, :debounce_ms, 1000)
 
       state = %{
         api_key: api_key,
@@ -114,7 +117,10 @@ defmodule WizHome.Voice.VoiceController do
       Logger.info("Comando ejecutado: #{command} en #{length(affected_ips)} foco(s)")
       {:noreply, %{state | last_command_time: command_time}}
     else
-      Logger.debug("Comando ignorado por debounce (#{time_since_last_command}ms < #{state.debounce_ms}ms)")
+      Logger.debug(
+        "Comando ignorado por debounce (#{time_since_last_command}ms < #{state.debounce_ms}ms)"
+      )
+
       {:noreply, state}
     end
   end
@@ -148,8 +154,10 @@ defmodule WizHome.Voice.VoiceController do
         # Transcribir y procesar comando, retornar resultado
         transcribe_and_process(buffers, stream_format, state)
       end,
-      max_concurrency: 5, # Procesar hasta 5 chunks en paralelo
-      timeout: 30_000, # Timeout de 30 segundos por chunk
+      # Procesar hasta 5 chunks en paralelo
+      max_concurrency: 5,
+      # Timeout de 30 segundos por chunk
+      timeout: 30_000,
       on_timeout: :kill_task
     )
     |> Enum.each(fn

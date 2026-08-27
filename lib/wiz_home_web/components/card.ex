@@ -15,7 +15,10 @@ defmodule WizHomeWeb.Components.Card do
       "rounded-lg border border-stroke dark:border-strokedark bg-white dark:bg-boxdark",
       @class
     ]}>
-      <div :if={@title || @actions != []} class="flex items-center justify-between border-b border-stroke dark:border-strokedark px-6 py-4.5">
+      <div
+        :if={@title || @actions != []}
+        class="flex items-center justify-between border-b border-stroke dark:border-strokedark px-6 py-4.5"
+      >
         <h3 :if={@title} class="font-semibold text-title-sm text-black dark:text-white">
           {@title}
         </h3>

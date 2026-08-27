@@ -7,35 +7,24 @@ defmodule WizHomeWeb.LightsLive do
   alias WizHome.Lights
   alias WizHome.Lights.Bulb
 
-  import WizHomeWeb.Components.Card
-
   @default_color %{r: 255, g: 255, b: 255, brightness: 75, temperature: nil}
-  @mood_image_map %{
-    deep_blue: "http://localhost:3845/assets/0b0bc3ce7861c106e0cc441745db66c1e2f87a15.png",
-    soft_teal: "http://localhost:3845/assets/ff4f8c29046cf6a06ad1bc40427f0bf1356008cc.png",
-    cool_green: "http://localhost:3845/assets/a5ebc4619eb2941d17bbc4a8a518d9817b532c03.png",
-    muted_cyan: "http://localhost:3845/assets/2af0e6d9e4f82d75f7f19b94d0c9254661c182e6.png",
-    warm_white: "http://localhost:3845/assets/38b5e4da69a5e63791f6ebd6f1f52e8e78b67f65.png",
-    pure_white: "http://localhost:3845/assets/826d11ede70b3c6f6bdd2c94e9b45f911eeb5ff7.png"
-  }
-
   @impl true
   def mount(_params, _session, socket) do
     bulbs = Lights.list_bulbs()
-    bulb_states = load_bulb_states(bulbs)
     default_hsl = rgb_to_hsl(@default_color)
 
     socket =
       socket
       |> assign(:bulbs, bulbs)
-      |> assign(:bulb_states, bulb_states)
-      |> assign(:all_lights_on, all_lights_on?(bulbs, bulb_states))
+      |> assign(:bulb_states, %{})
+      |> assign(:all_lights_on, false)
       |> assign(:selected_bulb, nil)
       |> assign(:color, @default_color)
       |> assign(:color_hsl, default_hsl)
       |> assign(:original_color, @default_color)
       |> assign(:form, to_form(Bulb.changeset(%Bulb{}, %{})))
-      |> assign(:current_section, "register")
+      |> assign(:current_section, "home")
+      |> assign(:page_title, "My home")
       |> assign(:sidebar_open, false)
       |> assign(:user_dropdown_open, false)
       |> assign(:show_color_modal, false)
@@ -47,29 +36,51 @@ defmodule WizHomeWeb.LightsLive do
   end
 
   @impl true
-  def handle_params(params, _url, socket) do
-    section = Map.get(params, "section", "register")
-
-    # Validate section - default to register if invalid
-    current_section = if section in ["register", "admin"], do: section, else: "register"
-
-    socket = assign(socket, :current_section, current_section)
+  def handle_params(params, url, socket) do
+    current_section = section_from_action(socket.assigns.live_action, params)
+    path = URI.parse(url).path || "/"
+    canonical = canonical_path(current_section)
 
     socket =
-      if current_section == "admin" do
-        refresh_lights(socket)
+      socket
+      |> assign(:current_section, current_section)
+      |> assign(:page_title, page_title(current_section))
+
+    socket =
+      if current_section == "home" do
+        schedule_bulb_status(socket, Lights.list_bulbs())
       else
-        socket
+        cancel_async(socket, :bulb_status)
       end
 
     socket =
-      if current_section != section do
-        push_patch(socket, to: ~p"/lights/#{current_section}")
+      if path != canonical do
+        push_patch(socket, to: canonical)
       else
         socket
       end
 
     {:noreply, socket}
+  end
+
+  @impl true
+  def handle_async(:bulb_status, {:ok, %{bulb_states: states, all_lights_on: all_on}}, socket) do
+    if socket.assigns.show_color_modal do
+      {:noreply, socket}
+    else
+      {:noreply,
+       socket
+       |> assign(:bulb_states, states)
+       |> assign(:all_lights_on, all_on)}
+    end
+  end
+
+  @impl true
+  def handle_async(:bulb_status, {:exit, _reason}, socket) do
+    {:noreply,
+     socket
+     |> assign(:bulb_states, %{})
+     |> assign(:all_lights_on, false)}
   end
 
   @impl true
@@ -217,12 +228,16 @@ defmodule WizHomeWeb.LightsLive do
   end
 
   @impl true
-  def handle_event("color_changed", %{"r" => r, "g" => g, "b" => b}, socket) do
-    # When color wheel changes, clear temperature (using RGB mode)
-    # Keep saturation at 100% and lightness at 50% for vibrant colors
-    updated_color = Map.merge(socket.assigns.color, %{r: r, g: g, b: b, temperature: nil})
-    hsl = rgb_to_hsl(updated_color)
-    {:noreply, socket |> assign(:color, updated_color) |> assign(:color_hsl, hsl)}
+  def handle_event("color_changed", params, socket) do
+    case rgb_from_params(params) do
+      %{r: _r, g: _g, b: _b} = rgb ->
+        updated_color = Map.merge(socket.assigns.color, Map.put(rgb, :temperature, nil))
+        hsl = rgb_to_hsl(updated_color)
+        {:noreply, socket |> assign(:color, updated_color) |> assign(:color_hsl, hsl)}
+
+      _ ->
+        {:noreply, socket}
+    end
   end
 
   @impl true
@@ -280,8 +295,16 @@ defmodule WizHomeWeb.LightsLive do
   end
 
   @impl true
-  def handle_event("set_color", _params, socket) do
-    color = socket.assigns.color
+  def handle_event("set_color", params, socket) do
+    color =
+      case rgb_from_params(params) do
+        %{r: _r, g: _g, b: _b} = rgb ->
+          Map.merge(socket.assigns.color, Map.put(rgb, :temperature, nil))
+
+        _ ->
+          socket.assigns.color
+      end
+
     mode = socket.assigns.color_modal_mode
 
     case mode do
@@ -446,26 +469,93 @@ defmodule WizHomeWeb.LightsLive do
         %{"id" => id, "brightness" => brightness_raw},
         socket
       ) do
-    case Integer.parse(brightness_raw) do
-      {brightness, _} when brightness >= 10 and brightness <= 100 ->
-        bulb = Lights.get_bulb!(id)
-        color = bulb_color_payload(bulb, brightness)
+    brightness = parse_percent(brightness_raw)
 
-        case apply_color_to_bulb(bulb, color) do
-          {:ok, _updated_bulb} ->
-            {:noreply, refresh_lights(socket)}
+    if is_integer(brightness) and brightness >= 10 and brightness <= 100 do
+      bulb = Lights.get_bulb!(id)
 
-          {:error, _failed_bulb, reason} ->
-            {:noreply,
-             put_flash(socket, :error, "Failed to update brightness: #{inspect(reason)}")}
-        end
+      case WizHome.set_dimming(bulb.ip, brightness) do
+        {:ok, _} ->
+          case Lights.update_bulb_color(bulb, %{last_brightness: brightness}) do
+            {:ok, updated_bulb} ->
+              {:noreply, replace_bulb(socket, updated_bulb)}
 
-      _ ->
-        {:noreply, socket}
+            {:error, _changeset} ->
+              {:noreply, put_flash(socket, :error, "Failed to save brightness")}
+          end
+
+        {:error, reason} ->
+          {:noreply, put_flash(socket, :error, "Failed to update brightness: #{inspect(reason)}")}
+      end
+    else
+      {:noreply, socket}
     end
   end
 
   # Helper functions
+
+  defp section_from_action(:register, _params), do: "register"
+  defp section_from_action(:legacy_home, _params), do: "home"
+
+  defp section_from_action(:legacy, params) do
+    if Map.get(params, "section") == "register", do: "register", else: "home"
+  end
+
+  defp section_from_action(_live_action, _params), do: "home"
+
+  defp canonical_path("register"), do: ~p"/register"
+  defp canonical_path(_section), do: ~p"/"
+
+  defp page_title("register"), do: "Add light"
+  defp page_title(_section), do: "My home"
+
+  defp rgb_from_params(params) when is_map(params) do
+    r = parse_rgb_component(params["r"] || params[:r])
+    g = parse_rgb_component(params["g"] || params[:g])
+    b = parse_rgb_component(params["b"] || params[:b])
+
+    if is_integer(r) and is_integer(g) and is_integer(b) do
+      %{r: r, g: g, b: b}
+    end
+  end
+
+  defp rgb_from_params(_), do: nil
+
+  defp parse_rgb_component(value) when is_integer(value) and value >= 0 and value <= 255,
+    do: value
+
+  defp parse_rgb_component(value) when is_float(value) do
+    parse_rgb_component(round(value))
+  end
+
+  defp parse_rgb_component(value) when is_binary(value) do
+    case Integer.parse(value) do
+      {int, _} -> parse_rgb_component(int)
+      :error -> nil
+    end
+  end
+
+  defp parse_rgb_component(_), do: nil
+
+  defp parse_percent(value) when is_integer(value), do: value
+
+  defp parse_percent(value) when is_binary(value) do
+    case Integer.parse(value) do
+      {int, _} -> int
+      :error -> nil
+    end
+  end
+
+  defp parse_percent(_), do: nil
+
+  defp replace_bulb(socket, updated_bulb) do
+    bulbs =
+      Enum.map(socket.assigns.bulbs, fn bulb ->
+        if bulb.id == updated_bulb.id, do: updated_bulb, else: bulb
+      end)
+
+    assign(socket, :bulbs, bulbs)
+  end
 
   defp atomize_color_params(params) do
     Enum.reduce(params, %{}, fn {key, value}, acc ->
@@ -508,13 +598,18 @@ defmodule WizHomeWeb.LightsLive do
   end
 
   defp refresh_lights(socket) do
-    bulbs = Lights.list_bulbs()
-    bulb_states = load_bulb_states(bulbs)
+    schedule_bulb_status(socket, Lights.list_bulbs())
+  end
 
+  defp schedule_bulb_status(socket, bulbs) do
     socket
     |> assign(:bulbs, bulbs)
-    |> assign(:bulb_states, bulb_states)
-    |> assign(:all_lights_on, all_lights_on?(bulbs, bulb_states))
+    |> start_async(:bulb_status, fn -> build_bulb_status(bulbs) end)
+  end
+
+  defp build_bulb_status(bulbs) do
+    states = load_bulb_states(bulbs)
+    %{bulb_states: states, all_lights_on: all_lights_on?(bulbs, states)}
   end
 
   defp load_bulb_states(bulbs) do
@@ -606,14 +701,27 @@ defmodule WizHomeWeb.LightsLive do
     "background-color: rgb(#{color.r}, #{color.g}, #{color.b}); opacity: #{max(color.brightness, 25) / 100}"
   end
 
+  defp mood_image_map do
+    %{
+      deep_blue: ~p"/images/moods/deep_blue.svg",
+      soft_teal: ~p"/images/moods/soft_teal.svg",
+      cool_green: ~p"/images/moods/cool_green.svg",
+      muted_cyan: ~p"/images/moods/muted_cyan.svg",
+      warm_white: ~p"/images/moods/warm_white.svg",
+      pure_white: ~p"/images/moods/pure_white.svg"
+    }
+  end
+
   defp mood_presets do
+    m = mood_image_map()
+
     [
-      %{key: "deep_blue", label: "My mood 01", image: @mood_image_map.deep_blue},
-      %{key: "soft_teal", label: "My mood 02", image: @mood_image_map.soft_teal},
-      %{key: "cool_green", label: "My mood 03", image: @mood_image_map.cool_green},
-      %{key: "muted_cyan", label: "My mood 04", image: @mood_image_map.muted_cyan},
-      %{key: "warm_white", label: "My mood 05", image: @mood_image_map.warm_white},
-      %{key: "pure_white", label: "My mood 06", image: @mood_image_map.pure_white}
+      %{key: "deep_blue", label: "Deep Blue", image: m.deep_blue},
+      %{key: "soft_teal", label: "Soft Teal", image: m.soft_teal},
+      %{key: "cool_green", label: "Cool Green", image: m.cool_green},
+      %{key: "muted_cyan", label: "Muted Cyan", image: m.muted_cyan},
+      %{key: "warm_white", label: "Warm White", image: m.warm_white},
+      %{key: "pure_white", label: "Pure White", image: m.pure_white}
     ]
   end
 

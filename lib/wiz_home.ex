@@ -19,6 +19,21 @@ defmodule WizHome do
     send_cmd(ip, cmd)
   end
 
+  # Brightness only (10-100). Sending RGB at the same time can make Wiz
+  # bulbs ignore dimming, so slider changes use this command.
+  def set_dimming(ip, dimming) when is_integer(dimming) and dimming >= 10 and dimming <= 100 do
+    cmd = %{
+      id: 1,
+      method: "setPilot",
+      params: %{
+        state: true,
+        dimming: dimming
+      }
+    }
+
+    send_cmd(ip, cmd)
+  end
+
   # RGB: {r, g, b} 0-255, brillo 10-100
   def set_rgb(ip, {r, g, b}, dimming \\ 75) do
     cmd = %{

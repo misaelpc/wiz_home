@@ -73,7 +73,8 @@ defmodule WizHome.Voice.WhisperClient do
     # Format chunk
     fmt_chunk_id = "fmt "
     fmt_chunk_size = 16
-    audio_format = 1  # PCM
+    # PCM
+    audio_format = 1
     bits_per_sample = 16
     byte_rate = sample_rate * channels * div(bits_per_sample, 8)
     block_align = channels * div(bits_per_sample, 8)

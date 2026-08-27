@@ -32,7 +32,7 @@ defmodule WizHome.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:tidewave, "~> 0.5", only: [:dev]},
+      {:tidewave, "~> 0.9", only: [:dev]},
       {:igniter, "~> 0.6", only: [:dev, :test]},
       # Pin rewrite to 1.2.0 - 1.3.0 has Enumerable protocol issue with igniter
       {:rewrite, "1.2.0", override: true},
@@ -43,6 +43,7 @@ defmodule WizHome.MixProject do
       {:phoenix_html, "~> 4.1"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, "~> 1.0"},
+      {:lazy_html, ">= 0.1.0", only: :test},
       {:floki, ">= 0.30.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.8.3"},
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},

@@ -66,7 +66,3 @@ defmodule WizHome.Lights do
     Bulb.changeset(bulb, attrs)
   end
 end
-
-
-
-

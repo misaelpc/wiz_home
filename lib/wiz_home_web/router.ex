@@ -17,11 +17,13 @@ defmodule WizHomeWeb.Router do
   scope "/", WizHomeWeb do
     pipe_through :browser
 
-    get "/", PageController, :home
-
     live_session :lights do
-      live "/lights", LightsLive, :index
-      live "/lights/:section", LightsLive, :index
+      live "/", LightsLive, :index
+      live "/register", LightsLive, :register
+
+      # Legacy URLs from the previous /lights layout
+      live "/lights", LightsLive, :legacy_home
+      live "/lights/:section", LightsLive, :legacy
     end
   end
 
@@ -34,8 +36,8 @@ defmodule WizHomeWeb.Router do
   if Application.compile_env(:wiz_home, :dev_routes) do
     # If you want to use the LiveDashboard in production, you should put
     # it behind authentication and allow only admins to access it.
-    # If your application does not have an admins-only section yet,
-    # you can use Plug.BasicAuth to set up some basic authentication
+    # If you do not have an admins-only section yet, you can
+    # use Plug.BasicAuth to set up some basic authentication
     # as long as you are also using SSL (which you should anyway).
     import Phoenix.LiveDashboard.Router
 
