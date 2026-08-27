@@ -39,6 +39,10 @@ npm-debug.log
 *.db
 *.db-*
 
+# whisper.cpp is cloned + built locally by the voice assistant setup (native
+# binary + downloaded ggml model), not something to commit.
+/priv/whisper.cpp/
+
 
 
 #Ignore cursor AI rules

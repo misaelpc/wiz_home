@@ -149,62 +149,74 @@ end
 
 ### 3. Voice Control System
 
-The voice control system is a real-time audio processing pipeline that captures microphone input, transcribes speech using OpenAI Whisper, and interprets commands using GPT.
+The voice control system runs entirely on-device (ported from the standalone
+[`beemo_elixir_agent`](https://github.com/misaelpc/beemo_elixir_agent) project): a
+wake-word listener holds the mic until it hears its wake word, then hands off to a
+capture pipeline that records until it detects trailing silence, transcribes locally
+with `whisper.cpp`, and asks a local Ollama model to decide what to do. No audio or
+text ever leaves the device.
 
 ```
-┌─────────────────────────────────────────────────────────────────────┐
-│                     Voice Control Pipeline                          │
-├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│  ┌──────────────┐   ┌─────────────────┐   ┌──────────────────────┐ │
-│  │  PortAudio   │──▶│  AudioChunk     │──▶│  VoiceController     │ │
-│  │   Source     │   │    Filter       │   │    (GenServer)       │ │
-│  │ (Microphone) │   │ (3s chunks)     │   │                      │ │
-│  └──────────────┘   └─────────────────┘   └──────────┬───────────┘ │
-│                                                       │             │
-│                                                       ▼             │
-│                           ┌──────────────────────────────────────┐ │
-│                           │         WhisperClient                 │ │
-│                           │    (Speech-to-Text via OpenAI)        │ │
-│                           └──────────────────┬───────────────────┘ │
-│                                              │                      │
-│                                              ▼                      │
-│  ┌──────────────────────────────────────────────────────────────┐  │
-│  │                    CommandProcessor                           │  │
-│  │  ┌───────────────────┐    ┌────────────────────────────────┐ │  │
-│  │  │ LLMCommandParser  │    │   Regex Fallback               │ │  │
-│  │  │  (GPT-4o-mini)    │    │   (Pattern Matching)           │ │  │
-│  │  └───────────────────┘    └────────────────────────────────┘ │  │
-│  └────────────────────────────────────────┬─────────────────────┘  │
-│                                           │                         │
-│                                           ▼                         │
-│                           ┌──────────────────────────────────────┐ │
-│                           │         WizHome.set_state            │ │
-│                           │      (UDP to Smart Bulbs)            │ │
-│                           └──────────────────────────────────────┘ │
-│                                                                      │
-└─────────────────────────────────────────────────────────────────────┘
+┌───────────────────────────────────────────────────────────────────────────┐
+│                    Local Voice Assistant (WizHome.Assistant)              │
+├───────────────────────────────────────────────────────────────────────────┤
+│                                                                            │
+│  ┌──────────────┐   ┌─────────────┐   ┌──────────────────────────────┐  │
+│  │  PortAudio   │──▶│  WakeWord   │──▶│  WakeWord.Listener            │  │
+│  │   Source     │   │  Sink +     │   │  (debounce/threshold/cooldown)│  │
+│  │ (Microphone) │   │  Detector   │   └──────────────┬─────────────────┘  │
+│  └──────────────┘   │  (Ortex/    │                  │ wake word hit      │
+│                      │  ONNX)     │                   ▼                    │
+│                      └─────────────┘   ┌──────────────────────────────┐  │
+│                                         │  Conversation.Orchestrator   │  │
+│                                         │  (GenServer, toggles mic     │  │
+│                                         │   between wake/capture)      │  │
+│                                         └──────────────┬─────────────────┘  │
+│                                                        │ swaps to           │
+│                                                        ▼ Capture.Pipeline   │
+│  ┌──────────────┐   ┌─────────────┐   ┌──────────────────────────────┐  │
+│  │  PortAudio   │──▶│ Capture.Sink│──▶│  Speech.Whisper               │  │
+│  │   Source     │   │ (silence-   │   │  (shells out to whisper-cli) │  │
+│  │ (Microphone) │   │  based EOU) │   └──────────────┬─────────────────┘  │
+│  └──────────────┘   └─────────────┘                  │ transcribed text   │
+│                                                        ▼                    │
+│                                         ┌──────────────────────────────┐  │
+│                                         │  Brain.Ollama                │  │
+│                                         │  (local gemma3:1b, JSON      │  │
+│                                         │   action schema)             │  │
+│                                         └──────────────┬─────────────────┘  │
+│                                                        │ {"action": ...}    │
+│                                                        ▼                    │
+│                                         ┌──────────────────────────────┐  │
+│                                         │  Brain.Actions → Assistant.  │  │
+│                                         │  Lights → WizHome.set_state  │  │
+│                                         │  (UDP to Smart Bulbs)        │  │
+│                                         └──────────────────────────────┘  │
+└───────────────────────────────────────────────────────────────────────────┘
 ```
 
-#### Voice Modules
+#### Voice Modules (`lib/wiz_home/assistant/`)
 
 | Module | Role |
 |--------|------|
-| `VoicePipeline` | Membrane pipeline definition for audio capture |
-| `AudioChunkFilter` | Accumulates audio buffers into 3-second chunks |
-| `VoiceController` | GenServer orchestrating transcription and command execution |
-| `WhisperClient` | Converts PCM audio to WAV and calls OpenAI Whisper API |
-| `CommandProcessor` | High-level command detection (LLM + regex fallback) |
-| `LLMCommandParser` | GPT-based natural language command interpretation |
+| `WakeWord.Detector` | OpenWakeWord streaming inference via Ortex/ONNX |
+| `WakeWord.Sink` / `WakeWord.Pipeline` | Membrane pipeline feeding mic audio to the detector |
+| `WakeWord.Listener` | Debounces scores against a threshold/cooldown, notifies the orchestrator |
+| `Capture.Sink` / `Capture.Pipeline` | Records the command after a wake hit, ends on trailing silence |
+| `Conversation.Orchestrator` | GenServer driving listen → capture → transcribe → ask, one pipeline holding the mic at a time |
+| `Speech.Whisper` | Shells out to a compiled `whisper.cpp` `whisper-cli` binary |
+| `Brain.Ollama` | Chat client for the local Ollama server, schema-constrained JSON replies |
+| `Brain.Actions` | Resolves the model's `{"action": ...}` reply into speakable text and side effects |
+| `Lights` | Turns every registered bulb on/off via `WizHome.set_state/2` |
 
-#### Supported Voice Commands (Spanish)
+#### Supported Voice Commands (English)
 
-| Command Pattern | Action |
-|----------------|--------|
-| "apaga las luces" | Turn off all lights |
-| "prende las luces" | Turn on all lights |
-| "apaga el foco 1" | Turn off specific bulb |
-| "enciende el foco 2" | Turn on specific bulb |
+| Intent | Action |
+|--------|--------|
+| "What time is it?" | Speaks the current time |
+| "Turn on the lights" | Turns on every registered bulb |
+| "Turn off the lights" / "kill the lights" | Turns off every registered bulb |
+| Anything else | Conversational reply from the local model |
 
 ---
 
@@ -313,18 +325,31 @@ WizHome communicates with Wiz smart bulbs using UDP on port **38899**.
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `OPENAI_API_KEY` | For voice control | OpenAI API key for Whisper & GPT |
 | `DATABASE_PATH` | Optional | Custom SQLite database path |
 | `SECRET_KEY_BASE` | Production | Phoenix secret key |
+
+The voice assistant needs no API keys — it depends on a locally built `whisper.cpp`
+binary (`priv/whisper.cpp/build/bin/whisper-cli`) and a local Ollama server
+(`ollama serve`, reachable at `ollama_base_url`), both configured below.
 
 ### Application Config (`config/config.exs`)
 
 ```elixir
 config :wiz_home,
   ecto_repos: [WizHome.Repo],
-  openai_api_key: System.get_env("OPENAI_API_KEY"),
-  default_light_ips: [],
-  voice_chunk_duration_ms: 3000
+  wake_word_threshold: 0.35,
+  wake_word_cooldown_ms: 2_000,
+  wake_word_models: ["wakeword.onnx"],
+  portaudio_input_device_id: :default,
+  capture_silence_peak_threshold: 500,
+  capture_silence_duration_ms: 1_200,
+  capture_max_duration_ms: 15_000,
+  whisper_cli_relpath: "whisper.cpp/build/bin/whisper-cli",
+  whisper_model_relpath: "whisper.cpp/models/ggml-base.en.bin",
+  whisper_language: "en",
+  whisper_threads: 4,
+  ollama_base_url: "http://localhost:11434/api",
+  ollama_model: "gemma3:1b"
 ```
 
 ---
@@ -361,26 +386,25 @@ on color wheel      →   "color_changed"   →   set_rgb/3        →   to bulb
 ### 2. Voice Command Flow
 
 ```
-Microphone      AudioChunk     VoiceController    WhisperClient    OpenAI
-   │                 │              │                   │           Whisper
-   │  PCM Audio      │              │                   │              │
-   ├────────────────▶│  3s chunk    │                   │              │
-   │                 ├─────────────▶│   WAV conversion  │              │
-   │                 │              ├──────────────────▶│  HTTP POST   │
-   │                 │              │                   ├─────────────▶│
-   │                 │              │                   │              │
-   │                 │              │                   │◀─────────────┤
-   │                 │              │◀──────────────────┤  Transcribed │
-   │                 │              │      text         │     text     │
-   │                 │              │                   │              │
-   │                 │              │                   │              │
-   │                 │              ▼                   │              │
-   │                 │       CommandProcessor          │              │
-   │                 │       (LLM or Regex)            │              │
-   │                 │              │                   │              │
-   │                 │              ▼                   │              │
-   │                 │       WizHome.set_state         │              │
-   │                 │       (UDP to bulb)             │              │
+Microphone     WakeWord.Sink    WakeWord.Listener   Orchestrator   Capture.Sink   Speech.Whisper   Brain.Ollama
+   │  PCM audio      │                  │                  │             │              │               │
+   ├────────────────▶│  scores          │                  │             │              │               │
+   │                 ├─────────────────▶│  wake word hit   │             │              │               │
+   │                 │                  ├─────────────────▶│  swap mic   │              │               │
+   │                 │                  │                  ├────────────▶│  PCM audio   │               │
+   │  (mic now held by Capture.Pipeline instead of WakeWord.Pipeline)    │              │               │
+   │                 │                  │                  │  silence    │              │               │
+   │                 │                  │                  │◀────────────┤  utterance   │               │
+   │                 │                  │                  ├─────────────────────────────▶│  WAV file    │
+   │                 │                  │                  │                              ├──────────────▶│
+   │                 │                  │                  │                              │◀──────────────┤
+   │                 │                  │                  │◀─────────────────────────────┤  text        │
+   │                 │                  │                  ├──────────────────────────────────────────────▶│
+   │                 │                  │                  │◀──────────────────────────────────────────────┤
+   │                 │                  │                  │  {"action": ...}                              │
+   │                 │                  │                  ▼                                                │
+   │                 │                  │           Brain.Actions → Assistant.Lights → WizHome.set_state    │
+   │                 │                  │                  │                              (UDP to bulb)     │
 ```
 
 ---
@@ -390,17 +414,17 @@ Microphone      AudioChunk     VoiceController    WhisperClient    OpenAI
 | Pattern | Usage |
 |---------|-------|
 | **Supervision Tree** | `WizHome.Application` supervises all services |
-| **GenServer** | `VoiceController` manages voice command state |
-| **Membrane Pipeline** | Audio capture and processing |
-| **Task.async_stream** | Parallel audio chunk processing |
-| **Process Registry** | Named GenServer for `VoiceController` |
+| **`:rest_for_one` sub-supervisor** | `WizHome.Assistant.Supervisor` restarts the orchestrator whenever the wake-word listener restarts |
+| **GenServer** | `Conversation.Orchestrator` and `WakeWord.Listener` manage voice assistant state |
+| **Membrane Pipeline** | Audio capture and processing (wake-word listening and command capture) |
+| **Process Registry** | Named GenServers for the voice assistant's listener and orchestrator |
 
 ---
 
 ## Security Considerations
 
 1. **Network Isolation**: Wiz bulbs communicate on local network only (UDP)
-2. **API Key Management**: OpenAI keys should be provided via environment variables
+2. **On-device Voice Processing**: Wake word detection, transcription (`whisper.cpp`), and command interpretation (local Ollama model) all run on-device — no audio or transcript leaves the network
 3. **CSRF Protection**: Phoenix's built-in CSRF tokens for form submissions
 4. **Input Validation**: IP address format validation on bulb registration
 
@@ -434,9 +458,15 @@ _build/prod/rel/wiz_home/bin/wiz_home start
 - `membrane_portaudio_plugin` - Audio capture
 - `membrane_wav_plugin` - WAV encoding
 - `membrane_file_plugin` - File output
+- `membrane_ffmpeg_swresample_plugin` - Resamples mic audio to 16kHz mono for the voice assistant
+
+### Local Voice Assistant
+- `ortex` - ONNX Runtime bindings, for local wake-word inference
+- `ollama` - Client for the local Ollama server (voice command interpretation)
+- `whisper.cpp` (native, built under `priv/whisper.cpp`, not a Hex dep) - Local speech-to-text
 
 ### HTTP & APIs
-- `finch` - HTTP client for OpenAI APIs
+- `finch` - HTTP client
 - `jason` - JSON encoding/decoding
 
 ### Frontend
@@ -453,7 +483,8 @@ _build/prod/rel/wiz_home/bin/wiz_home start
 3. **Multi-room Support**: Group bulbs by room/location
 4. **Real-time Sync**: PubSub for multi-user state synchronization
 5. **Mobile App**: Phoenix LiveView native or dedicated mobile client
-6. **Local Voice Processing**: Replace OpenAI with on-device Whisper model
+6. **Per-bulb Voice Targeting**: Extend `Brain.Ollama`'s action schema so commands can target a specific bulb, not just "all lights"
+7. **Hailo Acceleration**: The Pi's Hailo NPU is present but unused by the voice pipeline today — wake-word/whisper inference could move onto it for lower latency
 
 ---
 

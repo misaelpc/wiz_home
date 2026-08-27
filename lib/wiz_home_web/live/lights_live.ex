@@ -4,6 +4,7 @@ defmodule WizHomeWeb.LightsLive do
 
   use WizHomeWeb, :html
 
+  alias WizHome.Assistant.Conversation.Orchestrator
   alias WizHome.Lights
   alias WizHome.Lights.Bulb
 
@@ -13,9 +14,19 @@ defmodule WizHomeWeb.LightsLive do
     bulbs = Lights.list_bulbs()
     default_hsl = rgb_to_hsl(@default_color)
 
+    assistant_status =
+      if connected?(socket) do
+        Phoenix.PubSub.subscribe(WizHome.PubSub, Orchestrator.status_topic())
+        Phoenix.PubSub.subscribe(WizHome.PubSub, WizHome.Assistant.Lights.topic())
+        Orchestrator.current_status()
+      else
+        :idle
+      end
+
     socket =
       socket
       |> assign(:bulbs, bulbs)
+      |> assign(:assistant_status, assistant_status)
       |> assign(:bulb_states, %{})
       |> assign(:all_lights_on, false)
       |> assign(:selected_bulb, nil)
@@ -61,6 +72,16 @@ defmodule WizHomeWeb.LightsLive do
       end
 
     {:noreply, socket}
+  end
+
+  @impl true
+  def handle_info({:assistant_status, status}, socket) do
+    {:noreply, assign(socket, :assistant_status, status)}
+  end
+
+  @impl true
+  def handle_info(:lights_changed, socket) do
+    {:noreply, refresh_lights(socket)}
   end
 
   @impl true

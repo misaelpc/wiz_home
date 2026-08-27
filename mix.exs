@@ -68,7 +68,13 @@ defmodule WizHome.MixProject do
       # for writing WAV, optional
       {:membrane_wav_plugin, "~> 0.10"},
       # for writing files
-      {:membrane_file_plugin, "~> 0.17"}
+      {:membrane_file_plugin, "~> 0.17"},
+      # for resampling mic audio to 16kHz mono for the local voice assistant
+      {:membrane_ffmpeg_swresample_plugin, "~> 0.20.5"},
+      # ONNX runtime, for local wake word detection
+      {:ortex, "~> 0.1.10"},
+      # local LLM ("brain") client for the voice assistant
+      {:ollama, "~> 0.9.0"}
     ]
   end
 

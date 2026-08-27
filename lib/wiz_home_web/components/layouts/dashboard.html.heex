@@ -1,7 +1,10 @@
 <main class="min-h-screen bg-[#3b60e4] px-4 py-6 sm:px-6 lg:px-8">
   <.flash_group flash={@flash} />
   <div class="mx-auto w-full max-w-[1506px]">
-    <WizHomeWeb.Components.Header.header current_section={@current_section} />
+    <WizHomeWeb.Components.Header.header
+      current_section={@current_section}
+      assistant_status={@assistant_status}
+    />
     {@inner_content}
   </div>
 </main>

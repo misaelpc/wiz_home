@@ -16,8 +16,8 @@ defmodule WizHome.Application do
       {Phoenix.PubSub, name: WizHome.PubSub},
       # Start the Finch HTTP client for sending emails
       {Finch, name: WizHome.Finch},
-      # Start a worker by calling: WizHome.Worker.start_link(arg)
-      # {WizHome.Worker, arg},
+      # Local voice assistant: wake word listener + conversation orchestrator
+      WizHome.Assistant.Supervisor,
       # Start to serve requests, typically the last entry
       WizHomeWeb.Endpoint
     ]

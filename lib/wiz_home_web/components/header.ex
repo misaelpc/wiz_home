@@ -5,6 +5,7 @@ defmodule WizHomeWeb.Components.Header do
   use WizHomeWeb, :html
 
   attr :current_section, :string, default: "home"
+  attr :assistant_status, :atom, default: :idle
 
   def header(assigns) do
     ~H"""
@@ -21,6 +22,8 @@ defmodule WizHomeWeb.Components.Header do
             Home<br />Controller
           </p>
         </.link>
+
+        <.assistant_indicator status={@assistant_status} />
 
         <nav class="hidden items-center gap-10 text-[20px] text-white/80 lg:flex">
           <.link
@@ -71,4 +74,35 @@ defmodule WizHomeWeb.Components.Header do
     </section>
     """
   end
+
+  attr :status, :atom, default: :idle
+
+  defp assistant_indicator(assigns) do
+    ~H"""
+    <div
+      id="assistant-status"
+      class="flex items-center gap-2 rounded-full border border-white/45 bg-white/10 px-4 py-2"
+      title="Beemo voice assistant status"
+    >
+      <span class={[
+        "h-[10px] w-[10px] rounded-full",
+        assistant_dot_class(@status)
+      ]}>
+      </span>
+      <span class="text-sm font-medium text-white/90">
+        {assistant_label(@status)}
+      </span>
+    </div>
+    """
+  end
+
+  defp assistant_dot_class(:listening), do: "bg-emerald-400"
+  defp assistant_dot_class(:capturing), do: "bg-amber-400 animate-pulse"
+  defp assistant_dot_class(:transcribing), do: "bg-sky-400 animate-pulse"
+  defp assistant_dot_class(_), do: "bg-white/40"
+
+  defp assistant_label(:listening), do: "Listening for \"Hey Beemo\""
+  defp assistant_label(:capturing), do: "Listening..."
+  defp assistant_label(:transcribing), do: "Thinking..."
+  defp assistant_label(_), do: "Voice assistant offline"
 end

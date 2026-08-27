@@ -1,5 +1,14 @@
 # POC: Local Voice Control with Wake Word Detection
 
+> **Status: Implemented.** The local voice pipeline this POC explores is now live under
+> `lib/wiz_home/assistant/` — see `ARCHITECTURE.md`'s "Voice Control System" section. It took
+> a different technical path than explored below (`Ortex`/ONNX for wake-word detection and a
+> compiled `whisper.cpp` CLI for transcription, ported from the standalone
+> [`beemo_elixir_agent`](https://github.com/misaelpc/beemo_elixir_agent) project, rather than
+> training a custom Axon model or using Bumblebee's Whisper serving), but it hits the same
+> goals: on-device, no per-request cost, no audio leaving the network. This document is kept
+> for historical context on the alternatives considered.
+
 ## Overview
 
 This document explores replacing the current OpenAI-dependent voice control system with a fully local solution using Elixir's machine learning ecosystem (Nx, Axon, Bumblebee).
